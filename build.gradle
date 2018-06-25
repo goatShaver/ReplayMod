@@ -9,23 +9,21 @@ def currentCommit = command('git', 'rev-parse', 'HEAD').first()
 if (releaseCommit == currentCommit) {
     version = latestVersion
 } else {
-	println 'CurrentCommit:'
-	println currentCommit
-	println 'ReleaseCommit:'
-	println releaseCommit
+    println '****************************************************************************'
+	println 'CurrentCommit:' + currentCommit
+	println 'ReleaseCommit:' + releaseCommit
     def diff = command('git', 'log', '--format=oneline', "$releaseCommit..$currentCommit").size()
-	println '***********************************************'
-	println 'Diff:'
-	println diff
+	
+	println '\tDiff:' + diff
     version = "$latestVersion-$diff-g${currentCommit.substring(0, 7)}"
-	println 'Version:'
-	println version
+	println '\tVersion:' + version
 }
 if (gitDescribe().endsWith('*')) {
-	println gitDescribe()
-	println 'Dirty'
+	println '\tDescribe:'+gitDescribe()
+	println '\t\tYou have uncommitted file modifications. Tagging build as -dirty'
     version = "$version-dirty"
 }
+println '****************************************************************************'
 
 return 'Real Bad'
 
