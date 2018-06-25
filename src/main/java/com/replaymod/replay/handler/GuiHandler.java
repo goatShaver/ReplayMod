@@ -152,7 +152,8 @@ public class GuiHandler {
 					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
 						LOGGER.info("Found file {}",file.toString());
 						FileInfo fileInfo = file.fileInfo;
-						ReplayMetaData metaData = fileInfo.getMetadata();
+						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
+						ReplayMetaData metaData = replayFile.getMetadata();
 						LOGGER.info("Length: {}",metaData.getDuration());
 
 						mod.startReplay(file);
