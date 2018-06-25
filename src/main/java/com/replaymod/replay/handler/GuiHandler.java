@@ -139,7 +139,7 @@ public class GuiHandler {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
 				File folder = mod.getCore().getReplayFolder();
 				for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
-					LOGGER.info("Found file {}",file.name());
+					LOGGER.info("Found file {}",file.toString());
 				}
 				LOGGER.info("Launching replay viewer.");
                 new GuiReplayViewer(mod).display();
