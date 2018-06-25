@@ -9,12 +9,26 @@ def currentCommit = command('git', 'rev-parse', 'HEAD').first()
 if (releaseCommit == currentCommit) {
     version = latestVersion
 } else {
+	println 'CurrentCommit:'
+	println currentCommit
+	println 'ReleaseCommit:'
+	println releaseCommit
     def diff = command('git', 'log', '--format=oneline', "$releaseCommit..$currentCommit").size()
+	println '***********************************************'
+	println 'Diff:'
+	println diff
     version = "$latestVersion-$diff-g${currentCommit.substring(0, 7)}"
+	println 'Version:'
+	println version
 }
 if (gitDescribe().endsWith('*')) {
+	println gitDescribe()
+	println 'Dirty'
     version = "$version-dirty"
 }
+
+return 'Real Bad'
+
 
 group= "com.replaymod"
 
