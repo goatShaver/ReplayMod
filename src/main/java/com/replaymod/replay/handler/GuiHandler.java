@@ -22,6 +22,10 @@ import java.util.List;
 
 import java.io.File; // RAH
 import java.io.FileFilter; // RAH
+import java.io.IOException; // RAH 
+import org.apache.commons.io.FileUtils; // RAH
+import org.apache.commons.io.IOCase; // RAH
+import org.apache.commons.io.filefilter.SuffixFileFilter; // RAH
 
 import static com.replaymod.core.versions.MCVer.*;
 import static com.replaymod.replay.ReplayModReplay.LOGGER;
