@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 // RAH Start
+import com.replaymod.core.ReplayMod;
+import com.replaymod.core.utils.Utils;
+import com.replaymod.replaystudio.PacketData;
+import com.replaymod.replaystudio.Studio;
 import java.io.File; // RAH
 import java.io.FileFilter; // RAH
 import java.io.IOException; // RAH 
