@@ -22,8 +22,12 @@ if (gitDescribe().endsWith('*')) {
 	println '\tDescribe:'+gitDescribe()
 	println '\t\tYou have uncommitted file modifications. Tagging build as -dirty'
     version = "$version-dirty"
+	println 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+} else {
+	println '\t\tgit commit is good - still may not be pushed'
+	println '****************************************************************************'
 }
-println '****************************************************************************'
+
 
 return 'Real Bad'
 
