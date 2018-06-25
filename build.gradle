@@ -29,9 +29,6 @@ if (gitDescribe().endsWith('*')) {
 }
 
 
-return 'Real Bad'
-
-
 group= "com.replaymod"
 
 subprojects {
