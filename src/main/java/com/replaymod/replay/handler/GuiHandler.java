@@ -134,7 +134,9 @@ public class GuiHandler {
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
+				LOGGER.info("Launching replay viewer.");
                 new GuiReplayViewer(mod).display();
+				LOGGER.info("Done with replay viewer.");
             }
         }
 
