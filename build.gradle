@@ -23,7 +23,7 @@ if (gitDescribe().endsWith('*')) {
 	println '\t\tYou have uncommitted file modifications. Tagging build as -dirty'
     version = "$version-dirty"
 	println 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-	println 'You need to commit files before build command, or things get seriously out of whack and we dont' know how to fix that. So do a committ'
+	println 'You need to commit files before build command, or things get seriously out of whack and we do not know how to fix that. So do a committ'
 	return 'crap the bed'
 } else {
 	println '\t\tgit commit is good - still may not be pushed'
