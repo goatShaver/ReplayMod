@@ -157,7 +157,7 @@ public class GuiHandler {
 						LOGGER.info("Found file {}",file.toString());
 						//FileInfo fileInfo = file.fileInfo;
 						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
-						ReplayMetaData metaData = replayFile.getMetadata();
+						ReplayMetaData metaData = replayFile.getMetaData();
 						LOGGER.info("Length: {}",metaData.getDuration());
 
 						mod.startReplay(file);
