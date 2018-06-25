@@ -20,6 +20,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// RAH Start
+import com.replaymod.core.ReplayMod;
+import com.replaymod.core.utils.Utils;
+import com.replaymod.replaystudio.PacketData;
+import com.replaymod.replaystudio.Studio;
+import java.io.File; // RAH
+import java.io.FileFilter; // RAH
+import java.io.IOException; // RAH 
+import org.apache.commons.io.FileUtils; // RAH
+import org.apache.commons.io.IOCase; // RAH
+import org.apache.commons.io.filefilter.SuffixFileFilter; // RAH
+import com.replaymod.replaystudio.replay.ReplayFile;
+import com.replaymod.replaystudio.replay.ReplayMetaData;
+import com.replaymod.replaystudio.replay.ZipReplayFile;
+import com.replaymod.replaystudio.studio.ReplayStudio;
+// RAH end
+
 import static com.replaymod.core.versions.MCVer.*;
 import static com.replaymod.replay.ReplayModReplay.LOGGER;
 
@@ -134,13 +151,25 @@ public class GuiHandler {
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
-				File folder = mod.getCore().getReplayFolder();
-				for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
-					LOGGER.info("Found file {}",file.name());
+				try {
+					File folder = mod.getCore().getReplayFolder();
+					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
+						LOGGER.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+						LOGGER.info("\tFound file {}",file.toString());
+						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
+						ReplayMetaData metaData = replayFile.getMetaData();
+						LOGGER.info("\tLength: {}",metaData.getDuration());
+
+						// - This causes auto start - effectivley does what 'Load' Button does
+						// mod.startReplay(file);
+						
+						new GuiReplayViewer(mod).display();
+						LOGGER.info("-----------------------------------------------------------------------");
+					}
+				} catch (IOException e) {
+					LOGGER.error("IO Exception {}",e);
 				}
-				LOGGER.info("Launching replay viewer.");
-                new GuiReplayViewer(mod).display();
-				LOGGER.info("Done with replay viewer.");
+
             }
         }
 
@@ -156,3 +185,4 @@ public class GuiHandler {
         }
     }
 }
+

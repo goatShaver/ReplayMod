@@ -180,11 +180,14 @@ public class ReplayModReplay {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+		LOGGER.debug("RAH: postInit");
         Setting.CAMERA.setChoices(new ArrayList<>(cameraControllerRegistry.getControllers()));
     }
 
     public void startReplay(File file) throws IOException {
+		LOGGER.debug("RAH: startReplay start");
         startReplay(new ZipReplayFile(new ReplayStudio(), file));
+		LOGGER.debug("RAH: startReplay done");
     }
 
     public void startReplay(ReplayFile replayFile) throws IOException {
@@ -202,7 +205,11 @@ public class ReplayModReplay {
                 return;
             }
         }
+		// RAH - Added this - we can pause playback, however things aren't initialized yet
         replayHandler = new ReplayHandler(replayFile, true);
+		ReplaySender replaySender = replayHandler.getReplaySender();
+		replaySender.setReplaySpeed(0.5);
+
     }
 
     public void forcefullyStopReplay() {

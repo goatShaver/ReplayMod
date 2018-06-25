@@ -51,6 +51,9 @@ import static net.minecraft.client.renderer.GlStateManager.*;
 //$$ import static com.replaymod.replay.ReplayModReplay.LOGGER;
 //#endif
 
+import org.apache.logging.log4j.LogManager; // RAH 
+import org.apache.logging.log4j.Logger; // RAH
+
 import static com.replaymod.core.versions.MCVer.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
@@ -58,6 +61,7 @@ import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 public class ReplayHandler {
 
     private static Minecraft mc = Minecraft.getMinecraft();
+	private static final Logger logger = LogManager.getLogger(); // RAH
 
     /**
      * The file currently being played.
@@ -107,9 +111,30 @@ public class ReplayHandler {
         overlay = new GuiReplayOverlay(this);
         overlay.setVisible(true);
 
-        FML_BUS.post(new ReplayOpenEvent.Post(this));
+        // RAh - moving to below FML_BUS.post(new ReplayOpenEvent.Post(this));
 
-        replaySender.setAsyncMode(asyncMode);
+        replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
+
+		// RAH - dumb idea?
+		// Query replaySender for entity, once we have a non-zero value, set it
+		int playerID = -1;
+		while (playerID < 0 ) {
+			playerID = replaySender.getPlayerId();
+			logger.debug("RAH: playerID= " + playerID);
+			if (playerID < 0)
+			try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+					logger.debug(e);
+                    return;
+                }
+		}
+		logger.debug("RAH: Spectating " + playerID);
+		//spectateEntity(e);
+
+
+		FML_BUS.post(new ReplayOpenEvent.Post(this));
+		// RAH end
     }
 
     void restartedReplay() {
@@ -120,7 +145,7 @@ public class ReplayHandler {
             mc.setIngameNotInFocus();
             mc.loadWorld(null);
         });
-
+			
         restrictions = new Restrictions();
 
         setup();
@@ -236,6 +261,7 @@ public class ReplayHandler {
         //$$
         //$$ FMLNetworkHandler.fmlClientHandshake(networkManager);
         //#endif
+		
     }
 
     public ReplayFile getReplayFile() {

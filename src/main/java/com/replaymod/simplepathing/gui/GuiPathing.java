@@ -70,6 +70,18 @@ import static com.replaymod.core.utils.Utils.error;
 import static com.replaymod.core.versions.MCVer.*;
 import static com.replaymod.simplepathing.ReplayModSimplePathing.LOGGER;
 
+// RAH
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import com.replaymod.core.ReplayMod;
+import com.replaymod.core.utils.Utils;
+import com.replaymod.extras.Extra;
+import java.util.*;
+import java.util.stream.Collectors;
+import com.google.common.base.Predicate;
+import com.replaymod.extras.playeroverview.PlayerOverview;
+import net.minecraft.init.MobEffects;
+
 
 /**
  * Gui plug-in to the GuiReplayOverlay for simple pathing.
@@ -97,6 +109,10 @@ public class GuiPathing {
     public final GuiTexturedButton renderButton = new GuiTexturedButton().onClick(new Runnable() {
         @Override
         public void run() {
+			// RAH begin
+			initKeyFrames();
+			// RAH end
+
             if (!preparePathsForPlayback()) return;
 
             // Clone the timeline passed to the settings gui as it may be stored for later rendering in a queue
@@ -278,6 +294,8 @@ public class GuiPathing {
         this.replayHandler = replayHandler;
         this.player = new RealtimeTimelinePlayer(replayHandler);
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
+		LOGGER.debug("RAH: GuiPathing - Created");
+
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
@@ -297,6 +315,7 @@ public class GuiPathing {
         }).onClick(new Runnable() {
             @Override
             public void run() {
+				LOGGER.debug("RAH - Running");
                 if (player.isActive()) {
                     player.getFuture().cancel(false);
                 } else {
@@ -410,7 +429,127 @@ public class GuiPathing {
         });
 
         startLoadingEntityTracker();
+
     }
+
+	// RAH
+	/**
+	* This is for automation, set keyframes (time and position) so this file can be rendered
+	* It is called from renderButton.run() - at that point in the code, the framework is loaded and available to query
+	*
+	**/
+		public void initKeyFrames() {
+
+		int startTime_ms = 100;
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
+		SPTimeline tmpTimeline = mod.getCurrentTimeline();
+
+        List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
+            @Override
+            public boolean apply(Object input) {
+                return !(input instanceof CameraEntity); // Exclude the camera entity
+            }
+        });
+		//Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
+		for (final EntityPlayer p : players) {
+			LOGGER.debug("Player");
+			replayHandler.spectateEntity(p);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				LOGGER.debug(e);
+				return;
+			}
+			//if (!replayHandler.isCameraView()) {
+			//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+			//}
+			spectatedId = p.getEntityId();
+			LOGGER.debug("EntityID:" + spectatedId);
+			//UUID foo = replayHandler.getSpectatedUUID();
+			//LOGGER.debug("EntityID:" + foo);
+		}
+
+
+        //if (!ensureEntityTracker(() -> initKeyFrames())) return;
+		LOGGER.debug("RAH Manually adding new TIME keyframe");
+		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
+		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms);
+
+		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose - I don't believe it is necessary
+		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
+
+		CameraEntity camera = replayHandler.getCameraEntity();
+		if (camera == null ) {
+			LOGGER.debug("RAH Camera is NULL");
+			return;
+		}
+		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
+		
+		spectatedId = -1;
+		//replayHandler.spectateEntity(p);
+		// int cursor = timeline.getCursorPosition();
+		// Position cursor at begining so we can get camera parameters there
+		timeline.setCursorPosition(startTime_ms);
+		camera = replayHandler.getCameraEntity();
+		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		mod.setSelected(SPPath.POSITION, startTime_ms);
+		try {
+            Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+           return;
+		}
+		// Position cursor at end of playback so we can get camera parameters there
+		timeline.setCursorPosition(endTime_ms);
+		try {
+            Thread.sleep(100);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+           return;
+		}
+		camera = replayHandler.getCameraEntity();
+		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		mod.setSelected(SPPath.POSITION, endTime_ms);
+
+		try {
+            Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+           return;
+		}
+
+		timeline.setCursorPosition(5000);
+		try {
+            Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+           return;
+		}
+	}
+
+	// RAH, brought in from another module
+
+	private static boolean isSpectator(EntityPlayer e) {
+        //#if MC>=10904
+        return e.isInvisible() && e.getActivePotionEffect(MobEffects.INVISIBILITY) == null;
+        //#else
+        //$$ return e.isInvisible() && e.getActivePotionEffect(Potion.invisibility) == null;
+        //#endif
+    }
+	private static final class PlayerComparator implements Comparator<EntityPlayer> {
+        @Override
+        public int compare(EntityPlayer o1, EntityPlayer o2) {
+            if (isSpectator(o1) && !isSpectator(o2)) return 1;
+            if (isSpectator(o2) && !isSpectator(o1)) return -1;
+            //#if MC>=10800
+            return o1.getName().compareToIgnoreCase(o2.getName());
+            //#else
+            //$$ return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
+            //#endif
+        }
+    }
+	//RAH end brought in
 
     public void keyframeRepoButtonPressed() {
         try {
