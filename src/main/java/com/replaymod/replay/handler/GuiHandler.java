@@ -145,6 +145,7 @@ public class GuiHandler {
 					File folder = mod.getCore().getReplayFolder();
 					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
 						LOGGER.info("Found file {}",file.toString());
+						mod.startReplay(file);
 					}
 				} catch (IOException e) {
 					LOGGER.error("IO Exception {}",e);
