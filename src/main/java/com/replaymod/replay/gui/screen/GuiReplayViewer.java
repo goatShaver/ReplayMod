@@ -71,6 +71,8 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
                 File folder = mod.getCore().getReplayFolder();
                 for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
                     if (Thread.interrupted()) break;
+
+					mod.startReplay(file);
                     try (ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file)) {
 
                         Optional<BufferedImage> thumb = replayFile.getThumb();
