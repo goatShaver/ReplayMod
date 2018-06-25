@@ -134,6 +134,10 @@ public class GuiHandler {
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
+				File folder = mod.getCore().getReplayFolder();
+				for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
+					LOGGER.info("Found file {}",file.name());
+				}
 				LOGGER.info("Launching replay viewer.");
                 new GuiReplayViewer(mod).display();
 				LOGGER.info("Done with replay viewer.");
