@@ -20,12 +20,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// RAH Start
 import java.io.File; // RAH
 import java.io.FileFilter; // RAH
 import java.io.IOException; // RAH 
 import org.apache.commons.io.FileUtils; // RAH
 import org.apache.commons.io.IOCase; // RAH
 import org.apache.commons.io.filefilter.SuffixFileFilter; // RAH
+import com.replaymod.replaystudio.replay.ReplayFile;
+import com.replaymod.replaystudio.replay.ReplayMetaData;
+import com.replaymod.replaystudio.replay.ZipReplayFile;
+import com.replaymod.replaystudio.studio.ReplayStudio;
+// RAH end
 
 import static com.replaymod.core.versions.MCVer.*;
 import static com.replaymod.replay.ReplayModReplay.LOGGER;
@@ -145,6 +151,10 @@ public class GuiHandler {
 					File folder = mod.getCore().getReplayFolder();
 					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
 						LOGGER.info("Found file {}",file.toString());
+						FileInfo fileInfo = file.fileInfo;
+						ReplayMetaData metaData = fileInfo.getMetadata();
+						LOGGER.info("Length: {}",metaData.getDuration())
+
 						mod.startReplay(file);
 					}
 				} catch (IOException e) {
