@@ -153,7 +153,7 @@ public class GuiHandler {
 						LOGGER.info("Found file {}",file.toString());
 						FileInfo fileInfo = file.fileInfo;
 						ReplayMetaData metaData = fileInfo.getMetadata();
-						LOGGER.info("Length: {}",metaData.getDuration())
+						LOGGER.info("Length: {}",metaData.getDuration());
 
 						mod.startReplay(file);
 					}
