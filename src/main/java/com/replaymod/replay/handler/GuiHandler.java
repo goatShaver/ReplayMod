@@ -166,9 +166,9 @@ public class GuiHandler {
 				} catch (IOException e) {
 					LOGGER.error("IO Exception {}",e);
 				}
-				LOGGER.info("Launching replay viewer.");
+				LOGGER.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 new GuiReplayViewer(mod).display();
-				LOGGER.info("Done with replay viewer.");
+				LOGGER.info("-----------------------------------------------------------------------");
             }
         }
 
