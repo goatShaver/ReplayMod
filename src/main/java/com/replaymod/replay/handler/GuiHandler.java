@@ -161,7 +161,7 @@ public class GuiHandler {
 
 						mod.startReplay(file);
 						LOGGER.info("Done playing this file {}",file.toString());
-						mod.getReplayHandler.endReplay();
+						mod.getReplayHandler().endReplay();
 					}
 				} catch (IOException e) {
 					LOGGER.error("IO Exception {}",e);
