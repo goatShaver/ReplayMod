@@ -161,6 +161,7 @@ public class GuiHandler {
 						LOGGER.info("Length: {}",metaData.getDuration());
 
 						mod.startReplay(file);
+						LOGGER.info("Done playing this file {}",file.toString());
 					}
 				} catch (IOException e) {
 					LOGGER.error("IO Exception {}",e);
@@ -168,6 +169,13 @@ public class GuiHandler {
 				LOGGER.info("Launching replay viewer.");
                 new GuiReplayViewer(mod).display();
 				LOGGER.info("Done with replay viewer.");
+				try {
+					mod.getReplayHandler.endReplay();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+					
             }
         }
 
@@ -183,3 +191,4 @@ public class GuiHandler {
         }
     }
 }
+
