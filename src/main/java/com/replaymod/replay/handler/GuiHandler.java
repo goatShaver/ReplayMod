@@ -155,13 +155,13 @@ public class GuiHandler {
 					File folder = mod.getCore().getReplayFolder();
 					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
 						LOGGER.info("Found file {}",file.toString());
-						//FileInfo fileInfo = file.fileInfo;
 						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
 						ReplayMetaData metaData = replayFile.getMetaData();
 						LOGGER.info("Length: {}",metaData.getDuration());
 
 						mod.startReplay(file);
 						LOGGER.info("Done playing this file {}",file.toString());
+						mod.getReplayHandler.endReplay();
 					}
 				} catch (IOException e) {
 					LOGGER.error("IO Exception {}",e);
@@ -169,13 +169,6 @@ public class GuiHandler {
 				LOGGER.info("Launching replay viewer.");
                 new GuiReplayViewer(mod).display();
 				LOGGER.info("Done with replay viewer.");
-				try {
-					mod.getReplayHandler.endReplay();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-					
             }
         }
 
