@@ -160,7 +160,7 @@ public class GuiHandler {
 						ReplayMetaData metaData = replayFile.getMetaData();
 						LOGGER.info("\tLength: {}",metaData.getDuration());
 
-						mod.startReplay(file);
+						//mod.startReplay(file);
 						LOGGER.info("\tDone playing this file {}",file.toString());
 						//mod.getReplayHandler().endReplay();
 						
