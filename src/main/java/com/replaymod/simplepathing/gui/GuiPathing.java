@@ -282,6 +282,7 @@ public class GuiPathing {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 		LOGGER.debug("RAH Manually adding new keyframe");
 		SPPath path = TIME;
+		SPTimeline timeline = mod.getCurrentTimeline();
 		timeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
         mod.setSelected(path, 0);
 
