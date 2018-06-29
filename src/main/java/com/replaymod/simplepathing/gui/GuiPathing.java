@@ -298,6 +298,7 @@ public class GuiPathing {
         }).onClick(new Runnable() {
             @Override
             public void run() {
+				LOGGER.debug("RAH - Running");
                 if (player.isActive()) {
                     player.getFuture().cancel(false);
                 } else {
@@ -413,36 +414,37 @@ public class GuiPathing {
         startLoadingEntityTracker();
 
 
+		if (0) {}
+			// RAH Start - Set keyframes to start and end of file so we can automate encoding
+			// Need the entity tracker to exist - 
+			try {
+				Thread.sleep(2000);
+			} catch (Exception e)
+			{
+				System.out.println(e);
+			}
+			LOGGER.debug("RAH Sleep done");
+			if (mod.getCurrentTimeline().getEntityTracker() == null) {
+				mod.getCurrentTimeline().setEntityTracker(entityTracker);
+				LOGGER.debug("Set entity Tracker");
+			}
 
-		// RAH Start - Set keyframes to start and end of file so we can automate encoding
-		// Need the entity tracker to exist - 
-		try {
-			Thread.sleep(5000);
-		} catch (Exception e)
-		{
-			System.out.println(e);
+			LOGGER.debug("RAH Manually adding new TIME keyframe");
+			SPPath path = SPPath.TIME;
+			//SPTimeline tmpTimeline = mod.getCurrentTimeline();
+			mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
+			mod.setSelected(path, 0);
+
+			LOGGER.debug("RAH Manually adding new POSITION keyframe");
+			CameraEntity camera = replayHandler.getCameraEntity();
+			int spectatedId = -1;
+			//if (!replayHandler.isCameraView()) {
+			//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+			//}
+			mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+			mod.setSelected(path, 0);
+			// RAH End
 		}
-		LOGGER.debug("RAH Sleep done");
-        if (mod.getCurrentTimeline().getEntityTracker() == null) {
-            mod.getCurrentTimeline().setEntityTracker(entityTracker);
-			LOGGER.debug("Set entity Tracker");
-        }
-
-		LOGGER.debug("RAH Manually adding new TIME keyframe");
-		SPPath path = SPPath.TIME;
-		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
-		mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-        mod.setSelected(path, 0);
-
-		LOGGER.debug("RAH Manually adding new POSITION keyframe");
-        CameraEntity camera = replayHandler.getCameraEntity();
-        int spectatedId = -1;
-        //if (!replayHandler.isCameraView()) {
-        //    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-        //}
-        mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-        mod.setSelected(path, 0);
-		// RAH End
 		LOGGER.debug("RAH Done with GuiPathing....");
     }
 
