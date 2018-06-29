@@ -417,11 +417,17 @@ public class GuiPathing {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 		// Need the entity tracker to exist - 
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (Exception e)
 		{
 			System.out.println(e);
 		}
+		LOGGER.debug("RAH Sleep done");
+        if (mod.getCurrentTimeline().getEntityTracker() == null) {
+            mod.getCurrentTimeline().setEntityTracker(entityTracker);
+			LOGGER.debug("Set entity Tracker");
+        }
+
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		SPPath path = SPPath.TIME;
 		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
