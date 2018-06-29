@@ -432,7 +432,7 @@ public class GuiPathing {
 		SPPath path = SPPath.TIME;
 		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
 		mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-        //mod.setSelected(path, 0);
+        mod.setSelected(path, 0);
 
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
         CameraEntity camera = replayHandler.getCameraEntity();
@@ -441,9 +441,9 @@ public class GuiPathing {
         //    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
         //}
         mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-        //mod.setSelected(path, 0);
+        mod.setSelected(path, 0);
 		// RAH End
-
+		LOGGER.debug("RAH Done with GuiPathing....");
     }
 
     public void keyframeRepoButtonPressed() {
