@@ -414,7 +414,7 @@ public class GuiPathing {
         startLoadingEntityTracker();
 
 
-		if (0) {
+		if (false) {
 			// RAH Start - Set keyframes to start and end of file so we can automate encoding
 			// Need the entity tracker to exist - 
 			try {
