@@ -413,36 +413,26 @@ public class GuiPathing {
 
         startLoadingEntityTracker();
 
-
-		if (true) {
-			// RAH Start - Set keyframes to start and end of file so we can automate encoding
-			// Need the entity tracker to exist - 
-			try {
-				Thread.sleep(2000);
-			} catch (Exception e)
-			{
-				System.out.println(e);
-			}
-			LOGGER.debug("RAH Sleep done");
-
-
-			LOGGER.debug("RAH Manually adding new TIME keyframe");
-			//SPTimeline tmpTimeline = mod.getCurrentTimeline();
-			mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-			mod.setSelected(SPPath.TIME, 0);
-
-			LOGGER.debug("RAH Manually adding new POSITION keyframe");
-			CameraEntity camera = replayHandler.getCameraEntity();
-			int spectatedId = -1;
-			//if (!replayHandler.isCameraView()) {
-			//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-			//}
-			mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-			mod.setSelected(SPPath.POSITION, 0);
-			// RAH End
-		}
-		LOGGER.debug("RAH Done with GuiPathing....");
     }
+
+	// RAH
+	public void initKeyFrames() {
+		// RAH Start - Set keyframes to start and end of file so we can automate encoding
+
+		LOGGER.debug("RAH Manually adding new TIME keyframe");
+		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
+		mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
+		mod.setSelected(SPPath.TIME, 0);
+
+		LOGGER.debug("RAH Manually adding new POSITION keyframe");
+		CameraEntity camera = replayHandler.getCameraEntity();
+		int spectatedId = -1;
+		//if (!replayHandler.isCameraView()) {
+		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+		//}
+		mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		mod.setSelected(SPPath.POSITION, 0);
+	}
 
     public void keyframeRepoButtonPressed() {
         try {
