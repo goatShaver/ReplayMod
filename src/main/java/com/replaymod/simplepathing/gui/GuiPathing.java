@@ -651,7 +651,7 @@ public class GuiPathing {
     }
 
     public ReplayModSimplePathing getMod() {
-        r eturn mod;
+        return mod;
     }
 
     public EntityPositionTracker getEntityTracker() {
