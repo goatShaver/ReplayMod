@@ -414,7 +414,7 @@ public class GuiPathing {
         startLoadingEntityTracker();
 
 
-		if (false) {
+		if (true) {
 			// RAH Start - Set keyframes to start and end of file so we can automate encoding
 			// Need the entity tracker to exist - 
 			try {
@@ -424,16 +424,12 @@ public class GuiPathing {
 				System.out.println(e);
 			}
 			LOGGER.debug("RAH Sleep done");
-			if (mod.getCurrentTimeline().getEntityTracker() == null) {
-				mod.getCurrentTimeline().setEntityTracker(entityTracker);
-				LOGGER.debug("Set entity Tracker");
-			}
+
 
 			LOGGER.debug("RAH Manually adding new TIME keyframe");
-			SPPath path = SPPath.TIME;
 			//SPTimeline tmpTimeline = mod.getCurrentTimeline();
 			mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-			mod.setSelected(path, 0);
+			mod.setSelected(SPPath.TIME, 0);
 
 			LOGGER.debug("RAH Manually adding new POSITION keyframe");
 			CameraEntity camera = replayHandler.getCameraEntity();
@@ -442,7 +438,7 @@ public class GuiPathing {
 			//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 			//}
 			mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-			mod.setSelected(path, 0);
+			mod.setSelected(SPPath.POSITION, 0);
 			// RAH End
 		}
 		LOGGER.debug("RAH Done with GuiPathing....");
