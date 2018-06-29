@@ -280,20 +280,20 @@ public class GuiPathing {
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
 
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
-		LOGGER.debug("RAH Manually adding new keyframe");
+		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		SPPath path = SPPath.TIME;
-		SPTimeline tmpTimeline = mod.getCurrentTimeline();
-		tmpTimeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-        mod.setSelected(path, 0);
+		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
+		this.timeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
+        //mod.setSelected(path, 0);
 
-        //CameraEntity camera = replayHandler.getCameraEntity();
-        //int spectatedId = -1;
-        //if (!replayHandler.isCameraView()) {
-        //    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-        //}
-        //timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
-        //       camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-        //mod.setSelected(path, time);
+		LOGGER.debug("RAH Manually adding new POSITION keyframe");
+        CameraEntity camera = replayHandler.getCameraEntity();
+        int spectatedId = -1;
+        if (!replayHandler.isCameraView()) {
+            spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+        }
+        this.timeline.addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+        //mod.setSelected(path, 0);
 		// RAH End
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
