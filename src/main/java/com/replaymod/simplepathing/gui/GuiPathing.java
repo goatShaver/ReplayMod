@@ -437,9 +437,9 @@ public class GuiPathing {
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
         CameraEntity camera = replayHandler.getCameraEntity();
         int spectatedId = -1;
-        if (!replayHandler.isCameraView()) {
-            spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-        }
+        //if (!replayHandler.isCameraView()) {
+        //    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+        //}
         mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
         //mod.setSelected(path, 0);
 		// RAH End
