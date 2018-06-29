@@ -279,6 +279,22 @@ public class GuiPathing {
         this.player = new RealtimeTimelinePlayer(replayHandler);
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
 
+		// RAH Start - Set keyframes to start and end of file so we can automate encoding
+		LOGGER.debug("RAH Manually adding new keyframe");
+		SPPath path = TIME;
+		timeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
+        mod.setSelected(path, 0);
+
+        //CameraEntity camera = replayHandler.getCameraEntity();
+        //int spectatedId = -1;
+        //if (!replayHandler.isCameraView()) {
+        //    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+        //}
+        //timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
+        //       camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+        //mod.setSelected(path, time);
+		// RAH End
+
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
             public int getX() {
@@ -635,7 +651,7 @@ public class GuiPathing {
     }
 
     public ReplayModSimplePathing getMod() {
-        return mod;
+        r eturn mod;
     }
 
     public EntityPositionTracker getEntityTracker() {
