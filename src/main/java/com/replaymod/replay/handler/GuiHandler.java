@@ -160,9 +160,8 @@ public class GuiHandler {
 						ReplayMetaData metaData = replayFile.getMetaData();
 						LOGGER.info("\tLength: {}",metaData.getDuration());
 
-						//mod.startReplay(file);
-						LOGGER.info("\tDone playing this file {}",file.toString());
-						//mod.getReplayHandler().endReplay();
+						// - This causes auto start - effectivley does what 'Load' Button does
+						// mod.startReplay(file);
 						
 						new GuiReplayViewer(mod).display();
 						LOGGER.info("-----------------------------------------------------------------------");
