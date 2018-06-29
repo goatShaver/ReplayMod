@@ -279,23 +279,6 @@ public class GuiPathing {
         this.player = new RealtimeTimelinePlayer(replayHandler);
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
 
-		// RAH Start - Set keyframes to start and end of file so we can automate encoding
-		LOGGER.debug("RAH Manually adding new TIME keyframe");
-		 if (!ensureEntityTracker(() -> GuiPathing(core,mod,replayHandler))) return; // WTH?
-		SPPath path = SPPath.TIME;
-		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
-		mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-        //mod.setSelected(path, 0);
-
-		LOGGER.debug("RAH Manually adding new POSITION keyframe");
-        CameraEntity camera = replayHandler.getCameraEntity();
-        int spectatedId = -1;
-        if (!replayHandler.isCameraView()) {
-            spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-        }
-        mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-        //mod.setSelected(path, 0);
-		// RAH End
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
@@ -428,6 +411,28 @@ public class GuiPathing {
         });
 
         startLoadingEntityTracker();
+
+
+
+		// RAH Start - Set keyframes to start and end of file so we can automate encoding
+		// Need the entity tracker to exist - 
+		Thread.sleep(2000);
+		LOGGER.debug("RAH Manually adding new TIME keyframe");
+		SPPath path = SPPath.TIME;
+		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
+		mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
+        //mod.setSelected(path, 0);
+
+		LOGGER.debug("RAH Manually adding new POSITION keyframe");
+        CameraEntity camera = replayHandler.getCameraEntity();
+        int spectatedId = -1;
+        if (!replayHandler.isCameraView()) {
+            spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+        }
+        mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+        //mod.setSelected(path, 0);
+		// RAH End
+
     }
 
     public void keyframeRepoButtonPressed() {
