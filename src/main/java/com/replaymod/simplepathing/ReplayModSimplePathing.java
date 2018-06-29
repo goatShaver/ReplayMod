@@ -76,6 +76,7 @@ public class ReplayModSimplePathing {
     public void postReplayOpen(ReplayOpenEvent.Post event) {
         clearCurrentTimeline();
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
+		guiPathing.initKeyFrames();
     }
 
     @SubscribeEvent
