@@ -117,15 +117,15 @@ public class ReplayHandler {
 
 		// RAH - dumb idea?
 		// Query replaySender for entity, once we have a non-zero value, set it
-		Entity e = -1;
-		while (e < 0 ) {
-			e = replaySender.getPlayerId();
-			logger.debug("RAH: playerID= ",e);
+		int playerID = -1;
+		while (playerID < 0 ) {
+			playerID = replaySender.getPlayerId();
+			logger.debug("RAH: playerID= ",playerID);
 			if (e < 0)
 				Thread.sleep(100);
 		}
-		logger.debug("RAH: Spectating ",e);
-		spectateEntity(e);
+		logger.debug("RAH: Spectating ",playerID);
+		//spectateEntity(e);
 		// RAH end
     }
 
