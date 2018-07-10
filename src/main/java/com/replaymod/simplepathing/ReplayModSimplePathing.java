@@ -89,6 +89,7 @@ public class ReplayModSimplePathing {
 
     @SubscribeEvent
     public void onSettingsChanged(SettingsChangedEvent event) {
+		LOGGER.debug("RAH: onSettingsChanged");
         if (event.getKey() == Setting.DEFAULT_INTERPOLATION) {
             if (currentTimeline != null && guiPathing != null) {
                 updateDefaultInterpolatorType();
