@@ -122,7 +122,12 @@ public class ReplayHandler {
 			playerID = replaySender.getPlayerId();
 			logger.debug("RAH: playerID= ",playerID);
 			if (playerID < 0)
-				Thread.sleep(100);
+			try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+					logger.debug(e)
+                    return;
+                }
 		}
 		logger.debug("RAH: Spectating ",playerID);
 		//spectateEntity(e);
