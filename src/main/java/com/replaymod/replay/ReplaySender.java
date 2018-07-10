@@ -251,7 +251,7 @@ public class ReplaySender extends ChannelDuplexHandler {
 	* RAH - Added
 	*
 	*/
-	public Entity getPlayerId()
+	public int getPlayerId()
 	{
 		return actualID;
 	}
