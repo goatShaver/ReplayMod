@@ -117,7 +117,7 @@ public class ReplayHandler {
 
 		// RAH - dumb idea?
 		// Query replaySender for entity, once we have a non-zero value, set it
-		Entity e = -1
+		Entity e = -1;
 		while (e < 0 ) {
 			e = replaySender.getPlayerId();
 			logger.debug("RAH: playerID= ",e);
