@@ -241,7 +241,13 @@ public class ReplayHandler {
         //$$
         //$$ FMLNetworkHandler.fmlClientHandshake(networkManager);
         //#endif
-		logger.debug("RAH Manually adding new POSITION keyframe");
+		logger.debug("RAH: setup is done.");
+		CameraEntity camera = getCameraEntity();
+		if (camera == null)
+		{
+			LOGGER.debug("RAH Camera is NULL");
+			return;
+		}
     }
 
     public ReplayFile getReplayFile() {
