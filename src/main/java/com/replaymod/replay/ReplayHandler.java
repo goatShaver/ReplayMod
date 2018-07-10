@@ -125,7 +125,7 @@ public class ReplayHandler {
 			try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
-					logger.debug(e)
+					logger.debug(e);
                     return;
                 }
 		}
