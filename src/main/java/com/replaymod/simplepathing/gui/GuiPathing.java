@@ -420,10 +420,12 @@ public class GuiPathing {
 	public void initKeyFrames() {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 
+        if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
-		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
-		//mod.getCurrentTimeline().addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-		//mod.setSelected(SPPath.TIME, 0);
+		SPTimeline tmpTimeline = mod.getCurrentTimeline();
+		//tmpTimeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
+		tmpTimeline.addTimeKeyframe(0, 0);
+		mod.setSelected(SPPath.TIME, 0);
 
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
 		//CameraEntity camera = replayHandler.getCameraEntity();
