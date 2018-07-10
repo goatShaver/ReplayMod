@@ -242,10 +242,10 @@ public class ReplayHandler {
         //$$ FMLNetworkHandler.fmlClientHandshake(networkManager);
         //#endif
 		logger.debug("RAH: setup is done.");
-		CameraEntity camera = getCameraEntity();
+		CameraEntity camera =	getCameraEntity();
 		if (camera == null)
 		{
-			LOGGER.debug("RAH Camera is NULL");
+			logger.debug("RAH Camera is NULL");
 			return;
 		}
     }
