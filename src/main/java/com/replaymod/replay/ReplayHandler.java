@@ -113,7 +113,20 @@ public class ReplayHandler {
 
         FML_BUS.post(new ReplayOpenEvent.Post(this));
 
-        // RAH replaySender.setAsyncMode(asyncMode);
+        replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
+
+		// RAH - dumb idea?
+		// Query replaySender for entity, once we have a non-zero value, set it
+		Entity e = -1
+		while (e < 0 ) {
+			e = replaySender.getPlayerId();
+			logger.debug("RAH: playerID= ",e);
+			if (e < 0)
+				Thread.sleep(100);
+		}
+		logger.debug("RAH: Spectating ",e);
+		spectateEntity(e);
+		// RAH end
     }
 
     void restartedReplay() {
