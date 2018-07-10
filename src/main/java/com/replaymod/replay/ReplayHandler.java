@@ -134,7 +134,7 @@ public class ReplayHandler {
 
 		CameraEntity camera = getCameraEntity();
 		while (camera == null ) {
-			LOGGER.debug("RAH Camera is NULL");
+			logger.debug("RAH Camera is NULL");
 			try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
