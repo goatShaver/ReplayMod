@@ -77,7 +77,7 @@ public class ReplayModSimplePathing {
         clearCurrentTimeline();
 		LOGGER.debug("RAH: Initiating guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		//guiPathing.initKeyFrames(); // RAH - This doesn't work, things aren't setup or not ready
+		guiPathing.initKeyFrames(); // RAH - This doesn't work, things aren't setup or not ready
     }
 
     @SubscribeEvent
