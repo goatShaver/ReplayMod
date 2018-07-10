@@ -121,7 +121,7 @@ public class ReplayHandler {
 		while (playerID < 0 ) {
 			playerID = replaySender.getPlayerId();
 			logger.debug("RAH: playerID= ",playerID);
-			if (e < 0)
+			if (playerID < 0)
 				Thread.sleep(100);
 		}
 		logger.debug("RAH: Spectating ",playerID);
