@@ -278,6 +278,7 @@ public class GuiPathing {
         this.replayHandler = replayHandler;
         this.player = new RealtimeTimelinePlayer(replayHandler);
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
+		LOGGER.debug("RAH: GuiPathing - Created");
 
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
