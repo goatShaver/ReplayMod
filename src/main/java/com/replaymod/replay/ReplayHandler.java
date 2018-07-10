@@ -143,7 +143,7 @@ public class ReplayHandler {
             mc.setIngameNotInFocus();
             mc.loadWorld(null);
         });
-
+			
         restrictions = new Restrictions();
 
         setup();
