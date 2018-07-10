@@ -247,6 +247,15 @@ public class ReplaySender extends ChannelDuplexHandler {
         return asyncMode;
     }
 
+	/**
+	* RAH - Added
+	*
+	*/
+	public Entity getPlayerId()
+	{
+		return actualID;
+	}
+
     /**
      * Set whether this replay sender  to operate in sync mode.
      * When in sync mode, it will send packets when {@link #sendPacketsTill(int)} is called.
