@@ -111,7 +111,7 @@ public class ReplayHandler {
         overlay = new GuiReplayOverlay(this);
         overlay.setVisible(true);
 
-        FML_BUS.post(new ReplayOpenEvent.Post(this));
+        // RAh - moving to below FML_BUS.post(new ReplayOpenEvent.Post(this));
 
         replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
 
@@ -131,6 +131,7 @@ public class ReplayHandler {
 		}
 		logger.debug("RAH: Spectating ",playerID);
 		//spectateEntity(e);
+		FML_BUS.post(new ReplayOpenEvent.Post(this));
 		// RAH end
     }
 
