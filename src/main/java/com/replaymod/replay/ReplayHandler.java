@@ -162,6 +162,7 @@ public class ReplayHandler {
     }
 
     private void setup() {
+		LOGGER.debug("RAH: replayHandler setup");
         //#if MC>=11100
         mc.ingameGUI.getChatGUI().clearChatMessages(false);
         //#else
@@ -236,6 +237,7 @@ public class ReplayHandler {
         //$$
         //$$ FMLNetworkHandler.fmlClientHandshake(networkManager);
         //#endif
+		LOGGER.debug("RAH: replayHandler setup");
     }
 
     public ReplayFile getReplayFile() {
