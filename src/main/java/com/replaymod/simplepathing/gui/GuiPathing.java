@@ -425,7 +425,7 @@ public class GuiPathing {
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 		//tmpTimeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
 		tmpTimeline.addTimeKeyframe(0, 0);
-		mod.setSelected(SPPath.TIME, 0);
+		//mod.setSelected(SPPath.TIME, 0);
 
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
 		//CameraEntity camera = replayHandler.getCameraEntity();
