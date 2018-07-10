@@ -549,8 +549,6 @@ public class GuiPathing {
                 entityTrackerFuture.set(null);
             });
         }).start();
-		LOGGER.debug("RAH: Entity Tracker DONE!");
-		initKeyFrames(); // RAH
     }
 
     private boolean preparePathsForPlayback() {
