@@ -50,6 +50,7 @@ import static net.minecraft.client.renderer.GlStateManager.*;
 //$$ import static com.replaymod.core.versions.MCVer.GlStateManager.*;
 //$$ import static com.replaymod.replay.ReplayModReplay.LOGGER;
 //#endif
+import static com.replaymomd.replay.ReplayModReplay.LOGGER; // RAH
 
 import static com.replaymod.core.versions.MCVer.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -237,7 +238,7 @@ public class ReplayHandler {
         //$$
         //$$ FMLNetworkHandler.fmlClientHandshake(networkManager);
         //#endif
-		LOGGER.debug("RAH: replayHandler setup");
+		LOGGER.debug("RAH Manually adding new POSITION keyframe");
     }
 
     public ReplayFile getReplayFile() {
