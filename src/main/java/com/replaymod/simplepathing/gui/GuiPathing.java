@@ -420,7 +420,7 @@ public class GuiPathing {
 	public void initKeyFrames() {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 
-        //if (!ensureEntityTracker(() -> initKeyFrames())) return;
+        if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 		//tmpTimeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
@@ -428,12 +428,12 @@ public class GuiPathing {
 		//mod.setSelected(SPPath.TIME, 0);
 
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
-		//CameraEntity camera = replayHandler.getCameraEntity();
-		//int spectatedId = -1;
+		CameraEntity camera = replayHandler.getCameraEntity();
+		int spectatedId = -1;
 		//if (!replayHandler.isCameraView()) {
 		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 		//}
-		//mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		mod.getCurrentTimeline().addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		//mod.setSelected(SPPath.POSITION, 0);
 	}
 
@@ -544,7 +544,7 @@ public class GuiPathing {
             });
         }).start();
 		LOGGER.debug("RAH: Entity Tracker DONE!");
-		initKeyFrames(); // RAH
+		//initKeyFrames(); // RAH
     }
 
     private boolean preparePathsForPlayback() {
