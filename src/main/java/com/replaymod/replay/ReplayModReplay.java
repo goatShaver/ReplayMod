@@ -191,7 +191,7 @@ public class ReplayModReplay {
 		try {
 			Thread.sleep(5000);
         } catch (InterruptedException e) {
-			logger.debug(e);
+			LOGGER.debug(e);
             return;
 		}
 		LOGGER.debug("RAH: Done sleeping");
