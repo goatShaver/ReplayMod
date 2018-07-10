@@ -428,10 +428,16 @@ public class GuiPathing {
 		//mod.setSelected(SPPath.TIME, 0);
 
 		CameraEntity camera = replayHandler.getCameraEntity();
-		if (camera == null)
-		{
+
+		while (camera == null ) {
 			LOGGER.debug("RAH Camera is NULL");
-			return;
+			try	 {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+					logger.debug(e);
+                    return;
+                }
+			camera = replayHandler.getCameraEntity();
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
 		
