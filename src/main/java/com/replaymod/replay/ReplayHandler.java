@@ -132,17 +132,7 @@ public class ReplayHandler {
 		logger.debug("RAH: Spectating " + playerID);
 		//spectateEntity(e);
 
-		CameraEntity camera = getCameraEntity();
-		while (camera == null ) {
-			logger.debug("RAH Camera is NULL");
-			try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-					logger.debug(e);
-                    return;
-                }
-			camera = getCameraEntity();
-		}
+
 		FML_BUS.post(new ReplayOpenEvent.Post(this));
 		// RAH end
     }
