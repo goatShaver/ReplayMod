@@ -113,7 +113,7 @@ public class ReplayHandler {
 
         FML_BUS.post(new ReplayOpenEvent.Post(this));
 
-        replaySender.setAsyncMode(asyncMode);
+        // RAH replaySender.setAsyncMode(asyncMode);
     }
 
     void restartedReplay() {
@@ -166,7 +166,6 @@ public class ReplayHandler {
     }
 
     private void setup() {
-		logger.debug("RAH: replayHandler setup");
         //#if MC>=11100
         mc.ingameGUI.getChatGUI().clearChatMessages(false);
         //#else
@@ -241,13 +240,7 @@ public class ReplayHandler {
         //$$
         //$$ FMLNetworkHandler.fmlClientHandshake(networkManager);
         //#endif
-		logger.debug("RAH: setup is done.");
-		CameraEntity camera =	getCameraEntity();
-		if (camera == null)
-		{
-			logger.debug("RAH Camera is NULL");
-			return;
-		}
+		
     }
 
     public ReplayFile getReplayFile() {
