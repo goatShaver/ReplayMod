@@ -188,6 +188,19 @@ public class ReplayModReplay {
 		LOGGER.debug("RAH: startReplay start");
         startReplay(new ZipReplayFile(new ReplayStudio(), file));
 		LOGGER.debug("RAH: startReplay done");
+		try {
+			Thread.sleep(5000);
+        } catch (InterruptedException e) {
+			logger.debug(e);
+            return;
+		}
+		LOGGER.debug("RAH: Done sleeping");
+        CameraEntity camera = replayHandler.getCameraEntity();
+        if (camera != null) {
+			LOGGER.debug("RAH: Camera not null");
+		} else {
+			LOGGER.debug("RAH: Camera null");
+		}
     }
 
     public void startReplay(ReplayFile replayFile) throws IOException {
