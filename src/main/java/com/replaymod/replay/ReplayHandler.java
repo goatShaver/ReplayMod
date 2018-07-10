@@ -120,17 +120,29 @@ public class ReplayHandler {
 		int playerID = -1;
 		while (playerID < 0 ) {
 			playerID = replaySender.getPlayerId();
-			logger.debug("RAH: playerID= ",playerID);
+			logger.debug("RAH: playerID= " + playerID);
 			if (playerID < 0)
 			try {
-                    Thread.sleep(50);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
 					logger.debug(e);
                     return;
                 }
 		}
-		logger.debug("RAH: Spectating ",playerID);
+		logger.debug("RAH: Spectating " + playerID);
 		//spectateEntity(e);
+
+		CameraEntity camera = getCameraEntity();
+		while (camera == null ) {
+			LOGGER.debug("RAH Camera is NULL");
+			try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+					logger.debug(e);
+                    return;
+                }
+			camera = getCameraEntity();
+		}
 		FML_BUS.post(new ReplayOpenEvent.Post(this));
 		// RAH end
     }
