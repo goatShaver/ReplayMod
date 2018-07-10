@@ -420,7 +420,7 @@ public class GuiPathing {
 	public void initKeyFrames() {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 
-        if (!ensureEntityTracker(() -> initKeyFrames())) return;
+        //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 		//tmpTimeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
@@ -543,6 +543,8 @@ public class GuiPathing {
                 entityTrackerFuture.set(null);
             });
         }).start();
+		LOGGER.debug("RAH: Entity Tracker DONE!");
+		initKeyFrames(); // RAH
     }
 
     private boolean preparePathsForPlayback() {
