@@ -71,6 +71,7 @@ public class ReplayModReplay {
         LOGGER = event.getModLog();
         core = ReplayMod.instance;
 
+		LOGGER.debug("RAH: preInit");
         core.getSettingsRegistry().register(Setting.class);
 
         core.getKeyBindingRegistry().registerKeyBinding("replaymod.input.marker", Keyboard.KEY_M, new Runnable() {
@@ -78,6 +79,10 @@ public class ReplayModReplay {
             public void run() {
                 if (replayHandler != null ) {
                     CameraEntity camera = replayHandler.getCameraEntity();
+					if (camera == null ) {
+						LOGGER.debug("RAH Camera is NULL");
+						return;
+					}
                     if (camera != null) {
                         Marker marker = new Marker();
                         marker.setTime(replayHandler.getReplaySender().currentTimeStamp());
@@ -180,11 +185,14 @@ public class ReplayModReplay {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+		LOGGER.debug("RAH: postInit");
         Setting.CAMERA.setChoices(new ArrayList<>(cameraControllerRegistry.getControllers()));
     }
 
     public void startReplay(File file) throws IOException {
+		LOGGER.debug("RAH: startReplay start");
         startReplay(new ZipReplayFile(new ReplayStudio(), file));
+		LOGGER.debug("RAH: startReplay done");
     }
 
     public void startReplay(ReplayFile replayFile) throws IOException {
