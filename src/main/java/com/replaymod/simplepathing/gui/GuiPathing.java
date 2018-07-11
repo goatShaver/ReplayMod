@@ -433,7 +433,7 @@ public class GuiPathing {
 		int spectatedId = -1;
 
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
-		LOGGER.debug("RAH Manually adding new TIME keyframe"+SPPath.time);
+		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
 		// I probably have to do this is in multiple steps:
