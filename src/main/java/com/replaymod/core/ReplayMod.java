@@ -233,6 +233,7 @@ public class ReplayMod {
                 e.printStackTrace();
             }
         });
+		click ("Replay Viewer");
     }
 
     /**
