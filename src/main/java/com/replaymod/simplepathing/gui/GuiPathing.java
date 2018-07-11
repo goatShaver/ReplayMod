@@ -73,6 +73,12 @@ import static com.replaymod.simplepathing.ReplayModSimplePathing.LOGGER;
 // RAH
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import com.replaymod.core.ReplayMod;
+import com.replaymod.core.utils.Utils;
+import com.replaymod.extras.Extra;
+import java.util.*;
+import java.util.stream.Collectors;
+import com.google.common.base.Predicate;
 
 
 /**
