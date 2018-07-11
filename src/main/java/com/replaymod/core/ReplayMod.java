@@ -131,7 +131,7 @@ public class ReplayMod {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         settingsRegistry.setConfiguration(config);
-		LogManager.getLogger().warn("ReplayMod.java - PreInit");
+		LogManager.getLogger().warn("RAH: ReplayMod.java - PreInit");
     }
 
     //#ifdef DEV_ENV
@@ -185,13 +185,13 @@ public class ReplayMod {
         getKeyBindingRegistry().registerKeyBinding("replaymod.input.settings", 0, () -> {
             new GuiReplaySettings(null, settingsRegistry).display();
         });
-		LogManager.getLogger().warn("ReplayMod.java - init");
+		LogManager.getLogger().warn("RAH: ReplayMod.java - init");
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) throws IOException {
         settingsRegistry.save(); // Save default values to disk
-		LogManager.getLogger().warn("ReplayMod.java - PostInit");
+		LogManager.getLogger().warn("RAH: ReplayMod.java - PostInit");
 
         // 1.7.10 crashes when render distance > 16
         //#if MC>=10800
