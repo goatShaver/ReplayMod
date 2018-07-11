@@ -80,6 +80,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
 import com.replaymod.extras.playeroverview.PlayerOverview;
+import net.minecraft.init.MobEffects;
 
 
 /**
