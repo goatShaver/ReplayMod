@@ -492,6 +492,14 @@ public class GuiPathing {
 	}
 
 	// RAH, brought in from another module
+
+	private static boolean isSpectator(EntityPlayer e) {
+        //#if MC>=10904
+        return e.isInvisible() && e.getActivePotionEffect(MobEffects.INVISIBILITY) == null;
+        //#else
+        //$$ return e.isInvisible() && e.getActivePotionEffect(Potion.invisibility) == null;
+        //#endif
+    }
 	private static final class PlayerComparator implements Comparator<EntityPlayer> {
         @Override
         public int compare(EntityPlayer o1, EntityPlayer o2) {
@@ -504,6 +512,7 @@ public class GuiPathing {
             //#endif
         }
     }
+	//RAH end brought in
 
     public void keyframeRepoButtonPressed() {
         try {
