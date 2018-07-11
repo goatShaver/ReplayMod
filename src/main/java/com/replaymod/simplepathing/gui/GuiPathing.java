@@ -491,6 +491,20 @@ public class GuiPathing {
 		timeline.setCursorPosition(startTime_ms);
 	}
 
+	// RAH, brought in from another module
+	private static final class PlayerComparator implements Comparator<EntityPlayer> {
+        @Override
+        public int compare(EntityPlayer o1, EntityPlayer o2) {
+            if (isSpectator(o1) && !isSpectator(o2)) return 1;
+            if (isSpectator(o2) && !isSpectator(o1)) return -1;
+            //#if MC>=10800
+            return o1.getName().compareToIgnoreCase(o2.getName());
+            //#else
+            //$$ return o1.getDisplayName().compareToIgnoreCase(o2.getDisplayName());
+            //#endif
+        }
+    }
+
     public void keyframeRepoButtonPressed() {
         try {
             GuiKeyframeRepository gui = new GuiKeyframeRepository(
