@@ -474,7 +474,9 @@ public class GuiPathing {
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
+		mod.setSelected(SPPath.TIME,startTime_ms);
 		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms);
+		mod.setSelected(SPPath.TIME,endTime_ms);
 
 		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose - I don't believe it is necessary
 		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
@@ -519,7 +521,7 @@ public class GuiPathing {
            return;
 		}
 
-		timeline.setCursorPosition(5000);
+		timeline.setCursorPosition(0);
 		try {
             Thread.sleep(1000);
 		} catch (InterruptedException e) {
