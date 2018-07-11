@@ -464,7 +464,6 @@ public class GuiPathing {
 		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 		//}
 
-		spectatedId = -1;
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
