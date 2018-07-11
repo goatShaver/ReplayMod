@@ -444,7 +444,7 @@ public class GuiPathing {
 		// 5.) add end time key frame
 
 		tmpTimeline.addTimeKeyframe(SPPath.TIME, startTime_ms);
-		tmpTimeline.addTimeKeyframe(SPPATH.TIME, endTime_ms);
+		tmpTimeline.addTimeKeyframe(SPPath.TIME, endTime_ms);
 		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
 		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
 
