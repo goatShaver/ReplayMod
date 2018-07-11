@@ -159,7 +159,7 @@ public class GuiHandler {
 						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
 
 						// RAH- This causes auto start - effectivley does what 'Load' Button does
-						mod.startReplay(file); // RAH auto start the first file.
+						//mod.startReplay(file); // RAH auto start the first file.
 						
 						new GuiReplayViewer(mod).display();
 						LOGGER.info("-----------------------------------------------------------------------");
