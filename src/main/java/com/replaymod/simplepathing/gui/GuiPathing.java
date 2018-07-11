@@ -477,12 +477,14 @@ public class GuiPathing {
 				LOGGER.debug("EntityID:" + spectatedId);
 
 			}
+		spectatedId = -1;
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
 		timeline.setCursorPosition(startTime_ms);
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		mod.setSelected(SPPath.POSITION, startTime_ms);
 		try {
             Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -493,7 +495,7 @@ public class GuiPathing {
 		timeline.setCursorPosition(endTime_ms);
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		//mod.setSelected(SPPath.POSITION, 0);
+		mod.setSelected(SPPath.POSITION, endTime_ms);
 
 		try {
             Thread.sleep(1000);
