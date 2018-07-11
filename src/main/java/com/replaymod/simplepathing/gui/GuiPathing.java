@@ -464,7 +464,7 @@ public class GuiPathing {
 		//}
 
 		spectatedId = -1;
-        List<EntityPlayer> players = world(mod.getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
+        List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
                 return !(input instanceof CameraEntity); // Exclude the camera entity
