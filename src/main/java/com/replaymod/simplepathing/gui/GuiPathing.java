@@ -463,12 +463,12 @@ public class GuiPathing {
 
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
-		tmpTimeline.setCursorPosition(startTime_ms);
+		timeline.setCursorPosition(startTime_ms);
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 
 		// Position cursor at end of playback so we can get camera parameters there
-		tmpTimeline.setCursorPosition(endTime_ms);
+		timeline.setCursorPosition(endTime_ms);
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		//mod.setSelected(SPPath.POSITION, 0);
