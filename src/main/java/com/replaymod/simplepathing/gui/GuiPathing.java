@@ -470,13 +470,20 @@ public class GuiPathing {
 			for (final EntityPlayer p : players) {
 				LOGGER.debug("Player");
 				replayHandler.spectateEntity(p);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					LOGGER.debug(e);
+				   return;
+				}
 				//if (!replayHandler.isCameraView()) {
 				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 				//}
 				spectatedId = p.getEntityId();
 				LOGGER.debug("EntityID:" + spectatedId);
-
-			}
+				spectatedId = replayHandler.getSpectatedUUID();
+				LOGGER.debug("EntityID:" + spectatedId);
+							}
 		spectatedId = -1;
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
