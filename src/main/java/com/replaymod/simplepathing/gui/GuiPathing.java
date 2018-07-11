@@ -440,7 +440,7 @@ public class GuiPathing {
 	**/
 		public void initKeyFrames() {
 
-		int startTime_ms = 0;
+		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
@@ -460,10 +460,6 @@ public class GuiPathing {
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
 		
-		//if (!replayHandler.isCameraView()) {
-		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-		//}
-
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -474,10 +470,10 @@ public class GuiPathing {
 			for (final EntityPlayer p : players) {
 				LOGGER.debug("Player");
 				replayHandler.spectateEntity(p);
-				if (!replayHandler.isCameraView()) {
-					spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-				}
-				//spectatedId = p.getEntityId();
+				//if (!replayHandler.isCameraView()) {
+				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+				//}
+				spectatedId = p.getEntityId();
 				LOGGER.debug("EntityID:" + spectatedId);
 
 			}
