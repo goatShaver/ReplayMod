@@ -422,32 +422,23 @@ public class GuiPathing {
 
 	// RAH
 	/**
-	* Create necessary key frame
+	* This is for automation, set keyframes (time and position) so this file can be rendered
+	* It is called from renderButton.run() - at that point in the code, the framework is loaded and available to query
 	*
 	**/
 		public void initKeyFrames() {
-		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 
-		int startTime_ms = 500;
+		int startTime_ms = 0;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
+		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
-		SPTimeline tmpTimeline = mod.getCurrentTimeline();
-
-		// I probably have to do this is in multiple steps:
-		// 1.) set currentPosition at beginning
-		// 2.) pause
-		// 3.) add start time key frame
-		// 4.) set current Position to end of file
-		// 5.) add end time key frame
-
-
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms);
 
-		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
+		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose - I don't believe it is necessary
 		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
 
 		CameraEntity camera = replayHandler.getCameraEntity();
@@ -462,6 +453,18 @@ public class GuiPathing {
 		//}
 
 		spectatedId = -1;
+        List<EntityPlayer> players = world(mod.getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
+            @Override
+            public boolean apply(Object input) {
+                return !(input instanceof CameraEntity); // Exclude the camera entity
+            }
+        });
+		Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
+			for (final EntityPlayer p : players) {
+				LOGGER.debug("Player");
+				replayHandler.spectateEntity(p);
+			}
+		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
 		timeline.setCursorPosition(startTime_ms);
@@ -473,6 +476,8 @@ public class GuiPathing {
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		//mod.setSelected(SPPath.POSITION, 0);
+
+		timeline.setCursorPosition(startTime_ms);
 	}
 
     public void keyframeRepoButtonPressed() {
