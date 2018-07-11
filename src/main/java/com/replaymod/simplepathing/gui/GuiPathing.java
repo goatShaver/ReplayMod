@@ -428,12 +428,12 @@ public class GuiPathing {
 		public void initKeyFrames() {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 
-		int startTime_ms = 0;
+		int startTime_ms = 1000;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
-		LOGGER.debug("RAH Manually adding new TIME keyframe");
+		LOGGER.debug("RAH Manually adding new TIME keyframe"+SPPath.time);
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
 		// I probably have to do this is in multiple steps:
@@ -443,10 +443,9 @@ public class GuiPathing {
 		// 4.) set current Position to end of file
 		// 5.) add end time key frame
 
-		//tmpTimeline.addTimeKeyframe(SPPath.TIME, startTime_ms);
-		//tmpTimeline.addTimeKeyframe(SPPath.TIME, endTime_ms);
-		tmpTimeline.addTimeKeyframe(0, startTime_ms);
-		tmpTimeline.addTimeKeyframe(0, endTime_ms);
+
+		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
+		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms);
 
 		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
 		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
