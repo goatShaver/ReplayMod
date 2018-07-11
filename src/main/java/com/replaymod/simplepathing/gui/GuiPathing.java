@@ -421,15 +421,32 @@ public class GuiPathing {
     }
 
 	// RAH
-	public void initKeyFrames() {
+	/**
+	* Create necessary key frame
+	*
+	**/
+		public void initKeyFrames() {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
+
+		int startTime_ms = 0;
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		int spectatedId = -1;
 
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
-		//tmpTimeline.addTimeKeyframe(0, replayHandler.getReplaySender().currentTimeStamp());
-		tmpTimeline.addTimeKeyframe(0, 0);
-		//mod.setSelected(SPPath.TIME, 0);
+
+		// I probably have to do this is in multiple steps:
+		// 1.) set currentPosition at beginning
+		// 2.) pause
+		// 3.) add start time key frame
+		// 4.) set current Position to end of file
+		// 5.) add end time key frame
+
+		tmpTimeline.addTimeKeyframe(SPPath.TIME, startTime_ms);
+		tmpTimeline.addTimeKeyframe(SPPATH.TIME, endTime_ms);
+		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
+		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
 
 		CameraEntity camera = replayHandler.getCameraEntity();
 		if (camera == null ) {
@@ -438,11 +455,11 @@ public class GuiPathing {
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe");
 		
-		int spectatedId = -1;
-		//if (!replayHandler.isCameraView()) {
-		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-		//}
-		tmpTimeline.addPositionKeyframe(0, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		if (!replayHandler.isCameraView()) {
+		    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+		}
+		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		//mod.setSelected(SPPath.POSITION, 0);
 	}
 
