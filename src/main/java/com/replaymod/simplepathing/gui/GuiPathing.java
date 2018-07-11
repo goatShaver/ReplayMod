@@ -445,6 +445,32 @@ public class GuiPathing {
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
+        List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
+            @Override
+            public boolean apply(Object input) {
+                return !(input instanceof CameraEntity); // Exclude the camera entity
+            }
+        });
+		//Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
+		for (final EntityPlayer p : players) {
+			LOGGER.debug("Player");
+			replayHandler.spectateEntity(p);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				LOGGER.debug(e);
+				return;
+			}
+			//if (!replayHandler.isCameraView()) {
+			//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+			//}
+			spectatedId = p.getEntityId();
+			LOGGER.debug("EntityID:" + spectatedId);
+			//UUID foo = replayHandler.getSpectatedUUID();
+			//LOGGER.debug("EntityID:" + foo);
+		}
+
+
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
@@ -460,30 +486,6 @@ public class GuiPathing {
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
 		
-        List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
-            @Override
-            public boolean apply(Object input) {
-                return !(input instanceof CameraEntity); // Exclude the camera entity
-            }
-        });
-		Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
-			for (final EntityPlayer p : players) {
-				LOGGER.debug("Player");
-				replayHandler.spectateEntity(p);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					LOGGER.debug(e);
-				   return;
-				}
-				//if (!replayHandler.isCameraView()) {
-				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-				//}
-				spectatedId = p.getEntityId();
-				LOGGER.debug("EntityID:" + spectatedId);
-				//UUID foo = replayHandler.getSpectatedUUID();
-				//LOGGER.debug("EntityID:" + foo);
-							}
 		spectatedId = -1;
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
