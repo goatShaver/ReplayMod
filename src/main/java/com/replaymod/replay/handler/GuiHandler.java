@@ -157,11 +157,9 @@ public class GuiHandler {
 						LOGGER.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 						LOGGER.info("\tFound file {}",file.toString());
 						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
-						ReplayMetaData metaData = replayFile.getMetaData();
-						LOGGER.info("\tLength: {}",metaData.getDuration());
 
-						// - This causes auto start - effectivley does what 'Load' Button does
-						// mod.startReplay(file);
+						// RAH- This causes auto start - effectivley does what 'Load' Button does
+						mod.startReplay(file); // RAH auto start the first file.
 						
 						new GuiReplayViewer(mod).display();
 						LOGGER.info("-----------------------------------------------------------------------");
