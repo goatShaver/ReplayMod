@@ -70,6 +70,10 @@ import static com.replaymod.core.utils.Utils.error;
 import static com.replaymod.core.versions.MCVer.*;
 import static com.replaymod.simplepathing.ReplayModSimplePathing.LOGGER;
 
+// RAH
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+
 
 /**
  * Gui plug-in to the GuiReplayOverlay for simple pathing.
