@@ -481,8 +481,8 @@ public class GuiPathing {
 				//}
 				spectatedId = p.getEntityId();
 				LOGGER.debug("EntityID:" + spectatedId);
-				UUID foo = replayHandler.getSpectatedUUID();
-				LOGGER.debug("EntityID:" + foo);
+				//UUID foo = replayHandler.getSpectatedUUID();
+				//LOGGER.debug("EntityID:" + foo);
 							}
 		spectatedId = -1;
 		//replayHandler.spectateEntity(p);
@@ -511,7 +511,7 @@ public class GuiPathing {
            return;
 		}
 
-		timeline.setCursorPosition(startTime_ms);
+		timeline.setCursorPosition(5000);
 		try {
             Thread.sleep(1000);
 		} catch (InterruptedException e) {
