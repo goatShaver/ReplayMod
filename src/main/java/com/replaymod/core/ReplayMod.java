@@ -67,6 +67,7 @@ import java.util.Queue;
 import java.util.concurrent.FutureTask;
 
 import static com.replaymod.core.versions.MCVer.*;
+import org.apache.logging.log4j.LogManager; // RAH - Added
 
 @Mod(modid = ReplayMod.MOD_ID,
         useMetadata = true,
@@ -130,6 +131,7 @@ public class ReplayMod {
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
         settingsRegistry.setConfiguration(config);
+		LogManager.getLogger().warn("ReplayMod.java - PreInit");
     }
 
     //#ifdef DEV_ENV
@@ -183,11 +185,13 @@ public class ReplayMod {
         getKeyBindingRegistry().registerKeyBinding("replaymod.input.settings", 0, () -> {
             new GuiReplaySettings(null, settingsRegistry).display();
         });
+		LogManager.getLogger().warn("ReplayMod.java - init");
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) throws IOException {
         settingsRegistry.save(); // Save default values to disk
+		LogManager.getLogger().warn("ReplayMod.java - PostInit");
 
         // 1.7.10 crashes when render distance > 16
         //#if MC>=10800
