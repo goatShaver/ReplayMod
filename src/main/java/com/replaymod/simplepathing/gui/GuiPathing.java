@@ -474,6 +474,9 @@ public class GuiPathing {
 			for (final EntityPlayer p : players) {
 				LOGGER.debug("Player");
 				replayHandler.spectateEntity(p);
+				spectatedId = p.getEntityId();
+				LOGGER.debug("EntityID:" + spectatedId);
+
 			}
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
