@@ -500,6 +500,12 @@ public class GuiPathing {
 		}
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
+		try {
+            Thread.sleep(100);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+           return;
+		}
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, endTime_ms);
