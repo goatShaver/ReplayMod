@@ -79,7 +79,7 @@ import com.replaymod.extras.Extra;
 import java.util.*;
 import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
-import com.replaymod.extras.PlayerOverviewGui;
+import com.replaymod.extras.playeroverview.PlayerOverviewGui;
 
 
 /**
