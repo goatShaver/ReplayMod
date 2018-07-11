@@ -428,7 +428,7 @@ public class GuiPathing {
 		public void initKeyFrames() {
 		// RAH Start - Set keyframes to start and end of file so we can automate encoding
 
-		int startTime_ms = 1000;
+		int startTime_ms = 500;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 
@@ -461,6 +461,7 @@ public class GuiPathing {
 		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 		//}
 
+		spectatedId = -1;
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
 		timeline.setCursorPosition(startTime_ms);
