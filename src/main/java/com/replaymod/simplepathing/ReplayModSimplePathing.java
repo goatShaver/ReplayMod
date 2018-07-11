@@ -26,6 +26,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static com.replaymod.core.versions.MCVer.*;
 
+import org.apache.logging.log4j.LogManager; // RAH
+import org.apache.logging.log4j.Logger; // RAH
+import com.replaymod.replay.events.ReplayPlayingEvent; // RAH
+
 @Mod(modid = ReplayModSimplePathing.MOD_ID,
         version = "@MOD_VERSION@",
         acceptedMinecraftVersions = "@MC_VERSION@",
@@ -75,10 +79,16 @@ public class ReplayModSimplePathing {
     @SubscribeEvent
     public void postReplayOpen(ReplayOpenEvent.Post event) {
         clearCurrentTimeline();
-		LOGGER.debug("RAH: Initiating guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		//guiPathing.initKeyFrames(); // RAH - This doesn't work, things aren't setup or not ready
     }
+
+	/** RAH  
+	@SubscribeEvent
+	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		LogManager.getLogger().debug(" ////////////////////////// Video is playing per replaySender ");
+		guiPathing.renderButton.onClick();
+	}
+	*/
 
     @SubscribeEvent
     public void onReplayClose(ReplayCloseEvent.Post event) {
@@ -89,7 +99,6 @@ public class ReplayModSimplePathing {
 
     @SubscribeEvent
     public void onSettingsChanged(SettingsChangedEvent event) {
-		LOGGER.debug("RAH: onSettingsChanged");
         if (event.getKey() == Setting.DEFAULT_INTERPOLATION) {
             if (currentTimeline != null && guiPathing != null) {
                 updateDefaultInterpolatorType();

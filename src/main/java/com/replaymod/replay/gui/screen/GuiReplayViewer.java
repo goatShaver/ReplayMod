@@ -59,10 +59,12 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
     public final GuiResourceLoadingList<GuiReplayEntry> list = new GuiResourceLoadingList<GuiReplayEntry>(this).onSelectionChanged(new Runnable() {
         @Override
         public void run() {
-            replayButtonPanel.forEach(IGuiButton.class).setEnabled(list.getSelected() != null);
-            if (list.getSelected() != null && list.getSelected().incompatible) {
-                loadButton.setDisabled();
-            }
+			// RAH - added below line, commented out other lines
+			replayButtonPanel.forEach(IGuiButton.class).setEnabled();
+            //replayButtonPanel.forEach(IGuiButton.class).setEnabled(list.getSelected() != null);
+            //if (list.getSelected() != null && list.getSelected().incompatible) {
+            //    loadButton.setDisabled();
+            //}
         }
     }).onLoad(new Consumer<Consumer<Supplier<GuiReplayEntry>>> () {
         @Override
@@ -113,9 +115,31 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
         }
     }).setDrawShadow(true).setDrawSlider(true);
 
+	/**
+	* RAH - An attempt to process all the files in the input directory - not sure to detect when we are done
+	*
+	**/
+	public void processAllFiles()
+	{
+		LogManager.getLogger().debug("Process All Files");
+        try {
+			File folder = mod.getCore().getReplayFolder();
+            for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
+                if (Thread.interrupted()) break;
+				LogManager.getLogger().debug("mod.startReplay("+file+")");
+				mod.startReplay(file);
+				LogManager.getLogger().debug("Done with ("+file+")");
+			}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }	
+	}
+
     public final GuiButton loadButton = new GuiButton().onClick(new Runnable() {
         @Override
         public void run() {
+			LogManager.getLogger().debug("Called loadButton");
+			//processAllFiles();
             try {
                 mod.startReplay(list.getSelected().file);
             } catch (IOException e) {

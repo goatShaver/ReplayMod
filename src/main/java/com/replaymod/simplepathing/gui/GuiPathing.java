@@ -12,7 +12,7 @@ import com.replaymod.pathing.player.RealtimeTimelinePlayer;
 import com.replaymod.pathing.properties.CameraProperties;
 import com.replaymod.pathing.properties.SpectatorProperty;
 import com.replaymod.pathing.properties.TimestampProperty;
-import com.replaymod.render.gui.GuiRenderSettings;
+import com.replaymod.render.gui.noGuiRenderSettings;
 import com.replaymod.replay.ReplayHandler;
 import com.replaymod.replay.camera.CameraEntity;
 import com.replaymod.replay.gui.overlay.GuiReplayOverlay;
@@ -81,6 +81,9 @@ import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
 import com.replaymod.extras.playeroverview.PlayerOverview;
 import net.minecraft.init.MobEffects;
+import com.replaymod.replay.events.ReplayPlayingEvent; // RAH
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent; //RAH
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent; // RAH
 
 
 /**
@@ -88,6 +91,14 @@ import net.minecraft.init.MobEffects;
  */
 public class GuiPathing {
     private static final Logger logger = LogManager.getLogger();
+
+	// RAH Added event - unfortunately sending events to a separate thread doesnt appear to work, but this seems silly
+	// Either way, the event is throwing by replaySender, however it is not received here
+	@SubscribeEvent
+	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		LogManager.getLogger().debug("**************************** Video is playing per replaySender ");
+		renderButton.onClick();
+	}
 
     public final GuiTexturedButton playPauseButton = new GuiTexturedButton() {
         @Override
@@ -109,9 +120,8 @@ public class GuiPathing {
     public final GuiTexturedButton renderButton = new GuiTexturedButton().onClick(new Runnable() {
         @Override
         public void run() {
-			// RAH begin
-			initKeyFrames();
-			// RAH end
+
+			initKeyFrames(); // RAH - before doing render, set start/stop keyframes
 
             if (!preparePathsForPlayback()) return;
 
@@ -127,7 +137,14 @@ public class GuiPathing {
                 return;
             }
 
-            new GuiRenderSettings(replayHandler, timeline).display();
+			// RAH removed - GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
+			// RAH removed - renderSettings.display();
+
+			// RAH Added - begin
+			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			renderSettings.doRender(renderStartTime_ms,renderEndTime_ms); // Since our rendering is not static, need render start/end relative to the whole 'file' or 'session'
+			// RAH Added - end
+
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
             .setTooltip(new GuiTooltip().setI18nText("replaymod.gui.ingame.menu.renderpath"));
@@ -287,6 +304,8 @@ public class GuiPathing {
     private EntityPositionTracker entityTracker;
     private Consumer<Double> entityTrackerLoadingProgress;
     private SettableFuture<Void> entityTrackerFuture;
+	private int renderStartTime_ms = 0; // RAH
+	private int renderEndTime_ms = 0; // RAH
 
     public GuiPathing(final ReplayMod core, final ReplayModSimplePathing mod, final ReplayHandler replayHandler) {
         this.core = core;
@@ -294,8 +313,8 @@ public class GuiPathing {
         this.replayHandler = replayHandler;
         this.player = new RealtimeTimelinePlayer(replayHandler);
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
-		LOGGER.debug("RAH: GuiPathing - Created");
 
+		replayHandler.setGuiPathing(this);
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
@@ -315,7 +334,6 @@ public class GuiPathing {
         }).onClick(new Runnable() {
             @Override
             public void run() {
-				LOGGER.debug("RAH - Running");
                 if (player.isActive()) {
                     player.getFuture().cancel(false);
                 } else {
@@ -432,19 +450,28 @@ public class GuiPathing {
 
     }
 
-	// RAH
-	/**
+
+	/** RAH - all new
 	* This is for automation, set keyframes (time and position) so this file can be rendered
 	* It is called from renderButton.run() - at that point in the code, the framework is loaded and available to query
 	*
 	**/
-		public void initKeyFrames() {
+	public void initKeyFrames() {
 
-		int startTime_ms = 100;
-		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
-		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
-		SPTimeline tmpTimeline = mod.getCurrentTimeline();
+		// Trying to set keyframes for automation.
+		// Steps:
+		//        1.) Spectate the first player that comes up
+		//        2.) Set currentTimeStamp to beginning of the video
+		//        3.) updateKeyframe for time and Position 
+		//        repeat 2 and 3 for end of file
 
+		LOGGER.debug("-------------------------------------------------------------------------");
+		int startTime_ms = 0; // This is set below
+		int endTime_ms = replayHandler.getReplaySender().replayLength()- 2000; // 3 seconds, because after a jump, we need to play some and I want some cushion
+		int spectatedId = -1; // This is set below
+
+		// Step 1
+		// - This code foolishly takes the first player
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -453,83 +480,60 @@ public class GuiPathing {
         });
 		//Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
 		for (final EntityPlayer p : players) {
-			LOGGER.debug("Player");
-			replayHandler.spectateEntity(p);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				LOGGER.debug(e);
-				return;
+			LOGGER.debug("Players");
+			if (spectatedId < 0) 
+			{
+				replayHandler.spectateEntity(p);
+				//if (!replayHandler.isCameraView()) {
+				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+				//}
+				spectatedId = p.getEntityId();
+				LOGGER.debug("\tSpectatedId-> " + spectatedId);
 			}
-			//if (!replayHandler.isCameraView()) {
-			//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-			//}
-			spectatedId = p.getEntityId();
-			LOGGER.debug("EntityID:" + spectatedId);
-			//UUID foo = replayHandler.getSpectatedUUID();
-			//LOGGER.debug("EntityID:" + foo);
 		}
-
-
-        //if (!ensureEntityTracker(() -> initKeyFrames())) return;
-		LOGGER.debug("RAH Manually adding new TIME keyframe");
-		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
-		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms);
-
-		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose - I don't believe it is necessary
-		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
-
-		CameraEntity camera = replayHandler.getCameraEntity();
-		if (camera == null ) {
-			LOGGER.debug("RAH Camera is NULL");
-			return;
-		}
-		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
 		
-		spectatedId = -1;
-		//replayHandler.spectateEntity(p);
-		// int cursor = timeline.getCursorPosition();
-		// Position cursor at begining so we can get camera parameters there
-		timeline.setCursorPosition(startTime_ms);
-		camera = replayHandler.getCameraEntity();
-		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		mod.setSelected(SPPath.POSITION, startTime_ms);
-		try {
-            Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
+		// Step 2
+		// There were problems with doJump, so we simply take the 'current' state and use this as the 'starting' point and position the end
+		//timeline.setCursorPosition(startTime_ms);
+		//replayHandler.doJump(startTime_ms,false);
+
+		// Set the start of the render at the current position - we will need to reserve this time somewhere so we can use it in the filename
+		replayHandler.getReplaySender().setReplaySpeed(0);
+		startTime_ms = replayHandler.getReplaySender().currentTimeStamp();
+		timeline.setCursorPosition(0);
+		renderStartTime_ms = startTime_ms;
+	
+
+		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
+		//replayHandler.doJump(starTime_ms,false); // true means maintain camera position. Should be true
+		//replayHandler.getReplaySender().setReplaySpeed(0);
+
+		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
+		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
+		updateKeyframe(SPPath.TIME);
+		updateKeyframe(SPPath.POSITION,spectatedId);
+
+		
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
+		replayHandler.doJump(endTime_ms,false);
+		replayHandler.getReplaySender().setReplaySpeed(1); // doJump pauses video, however internal variables aren't updated until a play happens
+		// Sleep a bit so the engine and play and update variables.
+		// Maybe we could just fix doJump?
 		try {
-            Thread.sleep(100);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
-		camera = replayHandler.getCameraEntity();
-		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		mod.setSelected(SPPath.POSITION, endTime_ms);
-
-		try {
-            Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
-
-		timeline.setCursorPosition(5000);
-		try {
-            Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+				logger.debug(e);
+                return;
+        }
+		renderEndTime_ms = replayHandler.getReplaySender().currentTimeStamp();
+		replayHandler.getReplaySender().setReplaySpeed(0);
+		updateKeyframe(SPPath.TIME); 
+		updateKeyframe(SPPath.POSITION,spectatedId); 
+		LOGGER.debug("-------------------------------------------------------------------------");
 	}
 
-	// RAH, brought in from another module
-
+	// RAH, brought in from another package
 	private static boolean isSpectator(EntityPlayer e) {
         //#if MC>=10904
         return e.isInvisible() && e.getActivePotionEffect(MobEffects.INVISIBILITY) == null;
@@ -667,6 +671,7 @@ public class GuiPathing {
         int lastTime = 0;
         for (Keyframe keyframe : timeline.getTimePath().getKeyframes()) {
             int time = keyframe.getValue(TimestampProperty.PROPERTY).orElseThrow(IllegalStateException::new);
+			LOGGER.debug("RAH: keyframe time: " + time);
             if (time < lastTime) {
                 // We are going backwards in time
                 GuiInfoPopup.open(replayHandler.getOverlay(),
@@ -679,12 +684,10 @@ public class GuiPathing {
         }
 
         // Make sure there are at least two position- and two time-keyframes
-        if (timeline.getPositionPath().getSegments().isEmpty()
-                || timeline.getTimePath().getSegments().isEmpty()) {
+        if (timeline.getPositionPath().getSegments().isEmpty() || timeline.getTimePath().getSegments().isEmpty()) {
             GuiInfoPopup.open(replayHandler.getOverlay(), "replaymod.chat.morekeyframes");
             return false;
         }
-
         return true;
     }
 
@@ -727,11 +730,11 @@ public class GuiPathing {
      * @param path {@code TIME} for the time property button, {@code POSITION} for the place property button
      */
     private void updateKeyframe(SPPath path) {
-        LOGGER.debug("Updating keyframe on path {}" + path);
         if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
 
         int time = timeline.getCursorPosition();
         SPTimeline timeline = mod.getCurrentTimeline();
+		LOGGER.debug("Updating keyframe on path {}" + path + "@ " + time);
 
         switch (path) {
             case TIME:
@@ -766,6 +769,55 @@ public class GuiPathing {
                         spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
                     }
                     timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
+                            camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+                    mod.setSelected(path, time);
+                }
+                break;
+        }
+    }
+
+	private void updateKeyframe(SPPath path, int spectatedId) {
+        if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
+
+        int time = timeline.getCursorPosition();
+        SPTimeline timeline = mod.getCurrentTimeline();
+		LOGGER.debug("Updating keyframe on path {}" + path + "@ " + time);
+
+        switch (path) {
+            case TIME:
+                if (mod.getSelectedPath() == path) {
+                    LOGGER.debug("Selected keyframe is time keyframe -> removing keyframe");
+                    timeline.removeTimeKeyframe(mod.getSelectedTime());
+                    mod.setSelected(null, 0);
+                } else if (timeline.isTimeKeyframe(time)) {
+                    LOGGER.debug("Keyframe at cursor position is time keyframe -> removing keyframe");
+                    timeline.removeTimeKeyframe(time);
+                    mod.setSelected(null, 0);
+                } else {
+                    LOGGER.debug("No time keyframe found -> adding new keyframe");
+                    timeline.addTimeKeyframe(time, replayHandler.getReplaySender().currentTimeStamp()	);
+                    mod.setSelected(path, time);
+                }
+                break;
+            case POSITION:
+                if (mod.getSelectedPath() == path) {
+                    LOGGER.debug("Selected keyframe is position keyframe -> removing keyframe");
+                    timeline.removePositionKeyframe(mod.getSelectedTime());
+                    mod.setSelected(null, 0);
+                } else if (timeline.isPositionKeyframe(time)) {
+                    LOGGER.debug("Keyframe at cursor position is position keyframe -> removing keyframe");
+                    timeline.removePositionKeyframe(time);
+                    mod.setSelected(null, 0);
+                } else {
+                    LOGGER.debug("No position keyframe found -> adding new keyframe");
+                    CameraEntity camera = replayHandler.getCameraEntity();
+					/*
+                    int spectatedId = -1;
+                    if (!replayHandler.isCameraView()) {
+                        spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+                    }
+					*/
+					timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
                             camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
                     mod.setSelected(path, time);
                 }

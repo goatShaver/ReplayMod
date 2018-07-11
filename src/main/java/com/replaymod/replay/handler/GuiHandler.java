@@ -53,6 +53,10 @@ public class GuiHandler {
 
     private final ReplayModReplay mod;
 
+	// RAH begin
+	private   GuiReplayViewer guiReplayViewer;
+	//RAH end
+
     public GuiHandler(ReplayModReplay mod) {
         this.mod = mod;
     }
@@ -143,31 +147,71 @@ public class GuiHandler {
                 getGui(event).height / 4 + 10 + 3 * 24, I18n.format("replaymod.gui.replayviewer"));
         button.width = button.width / 2 - 2;
         getButtonList(event).add(button);
+		//processFile(); // RAH Can we call this directly from the main menu?
     }
+
+	// RAH 
+	/**
+	* Delay initiating the load button so that things can come up operationally
+	*
+	**/
+	private void delayedClick(int delay_ms)
+	{
+		LOGGER.debug("GuiHandler.delayedClick()" + delay_ms);
+		if (delay_ms > 0) {
+			new Thread(() -> {
+				try {
+					Thread.sleep(delay_ms);
+				} catch (InterruptedException e) {
+					LOGGER.debug(e);
+					return;
+				}
+				LOGGER.debug("calling guiReplayViewer.loadButton");
+				guiReplayViewer.loadButton.onClick();
+			}).start(); // End of thread
+		}
+	}
+
+	/**
+	* RAH - There must be 1 and only 1 .mcpr file in the directory - otherwise things get whacky - we'll address this later
+	*
+	**/
+	public void processFile()
+	{
+		LOGGER.debug("Process Single File");
+		//try {
+		//	Thread.sleep(500);
+		//} catch (InterruptedException e) {
+		//	LOGGER.debug(e);
+		//	return;
+		//}
+        try {
+			File folder = mod.getCore().getReplayFolder();
+            for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
+                if (Thread.interrupted()) break;
+				LOGGER.debug("mod.startReplay("+file+")");
+				mod.startReplay(file); // RAH - this returns after setup, so we can't loop through all the files - just one at a time
+			}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }	
+	}
 
     @SubscribeEvent
     public void onButton(GuiScreenEvent.ActionPerformedEvent.Pre event) {
+		LOGGER.debug("Replay Viewer Called");
         if(!getButton(event).enabled) return;
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
-				try {
-					File folder = mod.getCore().getReplayFolder();
-					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
-						LOGGER.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-						LOGGER.info("\tFound file {}",file.toString());
-						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
-
-						// RAH- This causes auto start - effectivley does what 'Load' Button does
-						mod.startReplay(file); // RAH auto start the first file.
-						
-						new GuiReplayViewer(mod).display();
-						LOGGER.info("-----------------------------------------------------------------------");
-					}
-				} catch (IOException e) {
-					LOGGER.error("IO Exception {}",e);
-				}
-
+				LOGGER.debug("Main Menu Replay Viewer Button Press");
+				// RAH - we can bypass guiReplayViewer completely
+				//guiReplayViewer = new GuiReplayViewer(mod);
+				//guiReplayViewer.display(); // RAH - added variable and made it a member variable
+				processFile();
+				// RAH, this doesn't work because we are not the MC thread.
+				//delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
+				//guiReplayViewer.loadButton.onClick();
             }
         }
 

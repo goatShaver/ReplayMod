@@ -93,7 +93,8 @@ public class ReplayModOnline {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         // Initial login prompt
-        if (!core.getSettingsRegistry().get(Setting.SKIP_LOGIN_PROMPT)) {
+        //if (!core.getSettingsRegistry().get(Setting.SKIP_LOGIN_PROMPT)) {
+		if (false) {
             if (!isLoggedIn()) {
                 core.runLater(() -> {
                     GuiScreen parent = GuiScreen.wrap(getMinecraft().currentScreen);
