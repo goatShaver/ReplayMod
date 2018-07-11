@@ -69,9 +69,6 @@ import java.util.concurrent.FutureTask;
 import static com.replaymod.core.versions.MCVer.*;
 // RAH begin
 import org.apache.logging.log4j.LogManager; // RAH - Added
-import com.replaymod.core.AbstractTask;
-import com.replaymod.replay.gui.screen.GuiReplayViewer;
-import net.minecraft.client.gui.GuiMainMenu;
 // RAH end
 
 @Mod(modid = ReplayMod.MOD_ID,
@@ -238,7 +235,6 @@ public class ReplayMod {
                 e.printStackTrace();
             }
         });
-		click ("Replay Viewer");
     }
 
     /**
