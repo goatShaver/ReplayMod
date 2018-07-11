@@ -430,7 +430,7 @@ public class GuiPathing {
 
 		int startTime_ms = 1000;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
-		int spectatedId = -1;
+		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 
         //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
@@ -455,12 +455,21 @@ public class GuiPathing {
 			LOGGER.debug("RAH Camera is NULL");
 			return;
 		}
-		LOGGER.debug("RAH Manually adding new POSITION keyframe");
+		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
 		
-		if (!replayHandler.isCameraView()) {
-		    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-		}
+		//if (!replayHandler.isCameraView()) {
+		//    spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+		//}
+
+		// int cursor = timeline.getCursorPosition();
+		// Position cursor at begining so we can get camera parameters there
+		tmpTimeline.setCursorPosition(startTime_ms);
+		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+
+		// Position cursor at end of playback so we can get camera parameters there
+		tmpTimeline.setCursorPosition(endTime_ms);
+		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		//mod.setSelected(SPPath.POSITION, 0);
 	}
