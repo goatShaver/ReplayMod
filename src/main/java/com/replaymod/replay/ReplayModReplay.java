@@ -205,9 +205,11 @@ public class ReplayModReplay {
                 return;
             }
         }
+		// RAH - Added this - we can pause playback, however things aren't initialized yet
         replayHandler = new ReplayHandler(replayFile, true);
 		ReplaySender replaySender = replayHandler.getReplaySender();
 		replaySender.setReplaySpeed(0);
+
     }
 
     public void forcefullyStopReplay() {
