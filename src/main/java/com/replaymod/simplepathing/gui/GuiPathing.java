@@ -126,15 +126,16 @@ public class GuiPathing {
 
             // RAH OLD: new GuiRenderSettings(replayHandler, timeline).display();
 			// RAH - this just launched the settings gui - we might be able to call the 'click' button here
-			GuiRenderSettings fubar = new GuiRenderSettings(replayHandler, timeline); 
-			fubar.display();
+			GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
+			renderSettings.display();
 			try {
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					LOGGER.debug(e);
 					return;
 				}
-			fubar.renderButton.onClick();
+			// HERE renderSettings.renderButton.onClick();
+			// RAH end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
             .setTooltip(new GuiTooltip().setI18nText("replaymod.gui.ingame.menu.renderpath"));
