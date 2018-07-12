@@ -118,6 +118,7 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
     public final GuiButton loadButton = new GuiButton().onClick(new Runnable() {
         @Override
         public void run() {
+			LogManager.getLogger().debug("Called loadButton");
             try {
                 mod.startReplay(list.getSelected().file);
             } catch (IOException e) {
