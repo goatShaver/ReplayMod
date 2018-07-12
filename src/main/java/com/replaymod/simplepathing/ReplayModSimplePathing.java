@@ -77,8 +77,30 @@ public class ReplayModSimplePathing {
         clearCurrentTimeline();
 		LOGGER.debug("RAH: Initiating guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
+		delayedClick(5000);
 		//guiPathing.initKeyFrames(); // RAH - This doesn't work, things aren't setup or not ready
     }
+
+	// RAH 
+	/**
+	* Delay initiating the render button so that things can come up operationally
+	*
+	**/
+	private void delayedClick(int delay_ms)
+	{
+		if (delay > 0) {
+			new Thread(() -> {
+				try {
+					Thread.sleep(delay_ms);
+				} catch (InterruptedException e) {
+					LOGGER.debug(e);
+					return;
+				}
+				guiPathing.renderButton();
+			}); // End of thread
+		}
+
+	}
 
     @SubscribeEvent
     public void onReplayClose(ReplayCloseEvent.Post event) {
