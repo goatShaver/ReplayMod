@@ -179,7 +179,8 @@ public class GuiHandler {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
 				guiReplayViewer = new GuiReplayViewer(mod);
 				guiReplayViewer.display(); // RAH - added variable and made it a member variable
-				delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
+				//delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
+				guiReplayViewer.loadButton.onClick();
             }
         }
 
