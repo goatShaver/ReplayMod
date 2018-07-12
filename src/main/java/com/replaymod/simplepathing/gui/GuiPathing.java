@@ -128,6 +128,9 @@ public class GuiPathing {
             }
 
             new GuiRenderSettings(replayHandler, timeline).display();
+			// RAH - this just launched the settings gui - we might be able to call the 'click' button here
+			// GuiRendereSettings fubar = new GuiRenderSettings(replayHandler, timeline).display();
+			// fubar.renderButton();
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
             .setTooltip(new GuiTooltip().setI18nText("replaymod.gui.ingame.menu.renderpath"));
@@ -493,33 +496,16 @@ public class GuiPathing {
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
 		timeline.setCursorPosition(startTime_ms);
+		
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, startTime_ms);
-		try {
-            Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
-		try {
-            Thread.sleep(100);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
+		
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, endTime_ms);
-
-		try {
-            Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
 
 		timeline.setCursorPosition(0);
 		try {
