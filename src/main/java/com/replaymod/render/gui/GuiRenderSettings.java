@@ -193,6 +193,7 @@ public class GuiRenderSettings extends GuiScreen implements Closeable {
             new GuiRenderQueue(GuiRenderSettings.this, GuiRenderSettings.this, replayHandler, timeline).open();
         }
     }).setSize(100, 20).setI18nLabel("replaymod.gui.renderqueue.open");
+	// RAH - this kicks off the render
     public final GuiButton renderButton = new GuiButton(buttonPanel).onClick(new Runnable() {
         @Override
         public void run() {
