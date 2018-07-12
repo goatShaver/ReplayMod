@@ -176,7 +176,8 @@ public class GuiHandler {
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
-				guiReplayViewer = new GuiReplayViewer(mod).display(); // RAH - added variable and made it a member variable
+				guiReplayViewer = new GuiReplayViewer(mod);
+				guiReplayViewer.display(); // RAH - added variable and made it a member variable
 				delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
             }
         }
