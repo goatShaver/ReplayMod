@@ -88,7 +88,7 @@ public class ReplayModSimplePathing {
 	**/
 	private void delayedClick(int delay_ms)
 	{
-		LOGGER.debug("delayedClick()" + delay_ms)
+		LOGGER.debug("delayedClick()" + delay_ms);
 		if (delay_ms > 0) {
 			new Thread(() -> {
 				try {
