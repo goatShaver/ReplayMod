@@ -99,7 +99,7 @@ public class ReplayModSimplePathing {
 				}
 				guiPathing.initKeyFrames();
 				LOGGER.debug("Calling guiPathing.renderButton.onClick()");
-				guiPathing.renderButton.onClick();
+				// HERE guiPathing.renderButton.onClick();
 			}).start(); // End of thread
 		}
 
