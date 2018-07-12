@@ -156,7 +156,7 @@ public class GuiHandler {
 	**/
 	private void delayedClick(int delay_ms)
 	{
-		LOGGER.debug("delayedClick()" + delay_ms);
+		LOGGER.debug("GuiHandler.delayedClick()" + delay_ms);
 		if (delay_ms > 0) {
 			new Thread(() -> {
 				try {
@@ -165,6 +165,7 @@ public class GuiHandler {
 					LOGGER.debug(e);
 					return;
 				}
+				LOGGER.debug("calling guiReplayViewer.loadButton");
 				guiReplayViewer.loadButton.onClick();
 			}).start(); // End of thread
 		}
