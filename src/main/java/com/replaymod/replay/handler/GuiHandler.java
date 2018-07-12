@@ -180,6 +180,12 @@ public class GuiHandler {
 				guiReplayViewer = new GuiReplayViewer(mod);
 				guiReplayViewer.display(); // RAH - added variable and made it a member variable
 				//delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					LOGGER.debug(e);
+					return;
+				}
 				guiReplayViewer.loadButton.onClick();
             }
         }
