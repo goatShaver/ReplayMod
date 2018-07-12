@@ -491,8 +491,7 @@ public class GuiPathing {
 			return;
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
-		ReplaySender replaySender = replayHandler.getReplaySender();
-		replaySender.setReplaySpeed(0);
+		replayHandler.getReplaySender.setReplaySpeed(0);
 
 		//spectatedId = -1;
 		//replayHandler.spectateEntity(p);
@@ -511,8 +510,10 @@ public class GuiPathing {
 			return;
 		}
 		// Position cursor at end of playback so we can get camera parameters there
+		LOGGER.debug("RAH setting cursor to end");
 		timeline.setCursorPosition(endTime_ms);
-				try {
+		LOGGER.debug("RAH cursor at end");
+		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
