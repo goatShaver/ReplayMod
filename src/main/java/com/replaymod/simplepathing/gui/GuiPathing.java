@@ -109,9 +109,6 @@ public class GuiPathing {
     public final GuiTexturedButton renderButton = new GuiTexturedButton().onClick(new Runnable() {
         @Override
         public void run() {
-			// RAH begin
-			//initKeyFrames();
-			// RAH end
 
             if (!preparePathsForPlayback()) return;
 
@@ -127,10 +124,16 @@ public class GuiPathing {
                 return;
             }
 
-            new GuiRenderSettings(replayHandler, timeline).display();
+            // RAH OLD: new GuiRenderSettings(replayHandler, timeline).display();
 			// RAH - this just launched the settings gui - we might be able to call the 'click' button here
-			// GuiRendereSettings fubar = new GuiRenderSettings(replayHandler, timeline).display();
-			// fubar.renderButton();
+			GuiRendereSettings fubar = new GuiRenderSettings(replayHandler, timeline).display();
+			try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					LOGGER.debug(e);
+					return;
+				}
+			fubar.renderButton.onClick();
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
             .setTooltip(new GuiTooltip().setI18nText("replaymod.gui.ingame.menu.renderpath"));
@@ -444,7 +447,7 @@ public class GuiPathing {
 		public void initKeyFrames() {
 
 		int startTime_ms = 100;
-		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-100; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
@@ -458,12 +461,7 @@ public class GuiPathing {
 		for (final EntityPlayer p : players) {
 			LOGGER.debug("Player");
 			replayHandler.spectateEntity(p);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				LOGGER.debug(e);
-				return;
-			}
+
 			//if (!replayHandler.isCameraView()) {
 			//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 			//}
