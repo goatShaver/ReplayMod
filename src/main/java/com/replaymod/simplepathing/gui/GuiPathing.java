@@ -134,7 +134,7 @@ public class GuiPathing {
 					LOGGER.debug(e);
 					return;
 				}
-			// HERE renderSettings.renderButton.onClick();
+			renderSettings.renderButton.onClick();
 			// RAH end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
@@ -490,7 +490,7 @@ public class GuiPathing {
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
 		
-		spectatedId = -1;
+		//spectatedId = -1;
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
