@@ -110,7 +110,7 @@ public class GuiPathing {
         @Override
         public void run() {
 			// RAH begin
-			initKeyFrames();
+			//initKeyFrames();
 			// RAH end
 
             if (!preparePathsForPlayback()) return;
@@ -474,7 +474,6 @@ public class GuiPathing {
 		}
 
 
-        //if (!ensureEntityTracker(() -> initKeyFrames())) return;
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
