@@ -60,7 +60,7 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
         @Override
         public void run() {
 			// RAH - added below line, commented out other lines
-			replayButtonPanel.forEach(IGuiButton.class).setEnabled());
+			replayButtonPanel.forEach(IGuiButton.class).setEnabled();
             //replayButtonPanel.forEach(IGuiButton.class).setEnabled(list.getSelected() != null);
             //if (list.getSelected() != null && list.getSelected().incompatible) {
             //    loadButton.setDisabled();
