@@ -77,8 +77,7 @@ public class ReplayModSimplePathing {
         clearCurrentTimeline();
 		LOGGER.debug("RAH: Initiating guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		delayedClick(5000);
-		//guiPathing.initKeyFrames(); // RAH - This doesn't work, things aren't setup or not ready
+		delayedClick(2500); // RAH
     }
 
 	// RAH 
@@ -99,7 +98,7 @@ public class ReplayModSimplePathing {
 				}
 				guiPathing.initKeyFrames();
 				LOGGER.debug("Calling guiPathing.renderButton.onClick()");
-				// HERE guiPathing.renderButton.onClick();
+				guiPathing.renderButton.onClick();
 			}).start(); // End of thread
 		}
 
@@ -114,7 +113,6 @@ public class ReplayModSimplePathing {
 
     @SubscribeEvent
     public void onSettingsChanged(SettingsChangedEvent event) {
-		LOGGER.debug("RAH: onSettingsChanged");
         if (event.getKey() == Setting.DEFAULT_INTERPOLATION) {
             if (currentTimeline != null && guiPathing != null) {
                 updateDefaultInterpolatorType();
