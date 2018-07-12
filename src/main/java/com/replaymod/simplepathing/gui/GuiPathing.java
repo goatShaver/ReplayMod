@@ -499,16 +499,30 @@ public class GuiPathing {
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, startTime_ms);
+
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+			return;
+		}
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
-		
+				try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+			return;
+		}
+
+		LOGGER.debug("RAH Setting end position");
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, endTime_ms);
 
 		timeline.setCursorPosition(0);
 		try {
-            Thread.sleep(1000);
+            Thread.sleep(500);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
            return;
