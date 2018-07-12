@@ -99,7 +99,7 @@ public class ReplayModSimplePathing {
 				}
 				LOGGER.debug("Calling guiPathing.renderButton.onClick()");
 				guiPathing.renderButton.onClick();
-			}); // End of thread
+			}).start(); // End of thread
 		}
 
 	}
