@@ -126,7 +126,8 @@ public class GuiPathing {
 
             // RAH OLD: new GuiRenderSettings(replayHandler, timeline).display();
 			// RAH - this just launched the settings gui - we might be able to call the 'click' button here
-			GuiRenderSettings fubar = new GuiRenderSettings(replayHandler, timeline).display();
+			GuiRenderSettings fubar = new GuiRenderSettings(replayHandler, timeline); 
+			fubar.display();
 			try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
