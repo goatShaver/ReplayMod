@@ -101,7 +101,6 @@ public class ReplayModSimplePathing {
 				guiPathing.renderButton.onClick();
 			}).start(); // End of thread
 		}
-
 	}
 
     @SubscribeEvent
