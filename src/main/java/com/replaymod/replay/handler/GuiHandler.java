@@ -53,6 +53,10 @@ public class GuiHandler {
 
     private final ReplayModReplay mod;
 
+	// RAH begin
+	private final  GuiReplayViewer guiReplayViewer;
+	//RAH end
+
     public GuiHandler(ReplayModReplay mod) {
         this.mod = mod;
     }
@@ -145,29 +149,35 @@ public class GuiHandler {
         getButtonList(event).add(button);
     }
 
+	// RAH 
+	/**
+	* Delay initiating the load button so that things can come up operationally
+	*
+	**/
+	private void delayedClick(int delay_ms)
+	{
+		LOGGER.debug("delayedClick()" + delay_ms);
+		if (delay_ms > 0) {
+			new Thread(() -> {
+				try {
+					Thread.sleep(delay_ms);
+				} catch (InterruptedException e) {
+					LOGGER.debug(e);
+					return;
+				}
+				guiReplayViewer.loadButton.onClick();
+			}).start(); // End of thread
+		}
+	}
+
     @SubscribeEvent
     public void onButton(GuiScreenEvent.ActionPerformedEvent.Pre event) {
         if(!getButton(event).enabled) return;
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
-				try {
-					File folder = mod.getCore().getReplayFolder();
-					for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
-						LOGGER.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-						LOGGER.info("\tFound file {}",file.toString());
-						ReplayFile replayFile = new ZipReplayFile(new ReplayStudio(), file);
-
-						// RAH- This causes auto start - effectivley does what 'Load' Button does
-						//mod.startReplay(file); // RAH auto start the first file.
-						
-						new GuiReplayViewer(mod).display();
-						LOGGER.info("-----------------------------------------------------------------------");
-					}
-				} catch (IOException e) {
-					LOGGER.error("IO Exception {}",e);
-				}
-
+				guiReplayViewer = new GuiReplayViewer(mod).display(); // RAH - added variable and made it a member variable
+				delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
             }
         }
 
