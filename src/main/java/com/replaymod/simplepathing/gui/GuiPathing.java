@@ -491,7 +491,7 @@ public class GuiPathing {
 			return;
 		}
 		LOGGER.debug("RAH Manually adding new POSITION keyframe for " + spectatedId);
-		replayHandler.getReplaySender.setReplaySpeed(0);
+		replayHandler.getReplaySender().setReplaySpeed(0);
 
 		//spectatedId = -1;
 		//replayHandler.spectateEntity(p);
