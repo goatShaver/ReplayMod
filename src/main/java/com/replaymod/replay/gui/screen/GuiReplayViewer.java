@@ -103,8 +103,6 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
                         LOGGER.error("Could not load Replay File {}", file.getName(), e);
                     }
                 }
-				// RAH added
-				loadButton.onClick();
             } catch (IOException e) {
                 e.printStackTrace();
             }
