@@ -97,7 +97,7 @@ public class ReplayModSimplePathing {
 					LOGGER.debug(e);
 					return;
 				}
-				LOGGER.debug("Calling guiPathing.renderButton.onClick()")
+				LOGGER.debug("Calling guiPathing.renderButton.onClick()");
 				guiPathing.renderButton.onClick();
 			}); // End of thread
 		}
