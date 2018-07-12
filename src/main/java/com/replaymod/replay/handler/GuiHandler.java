@@ -54,7 +54,7 @@ public class GuiHandler {
     private final ReplayModReplay mod;
 
 	// RAH begin
-	private final  GuiReplayViewer guiReplayViewer;
+	private   GuiReplayViewer guiReplayViewer;
 	//RAH end
 
     public GuiHandler(ReplayModReplay mod) {
