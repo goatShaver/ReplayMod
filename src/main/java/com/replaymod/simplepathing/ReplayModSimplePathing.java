@@ -88,6 +88,7 @@ public class ReplayModSimplePathing {
 	**/
 	private void delayedClick(int delay_ms)
 	{
+		LOGGER.debug("delayedClick()" + delay_ms)
 		if (delay_ms > 0) {
 			new Thread(() -> {
 				try {
@@ -96,6 +97,7 @@ public class ReplayModSimplePathing {
 					LOGGER.debug(e);
 					return;
 				}
+				LOGGER.debug("Calling guiPathing.renderButton.onClick()")
 				guiPathing.renderButton.onClick();
 			}); // End of thread
 		}
