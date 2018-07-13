@@ -125,6 +125,7 @@ public class GuiHandler {
 
     @SubscribeEvent
     public void injectIntoMainMenu(GuiScreenEvent.InitGuiEvent event) {
+		LOGGER.debug("Injecting Replay Viwer into MainMenu");
         if (!(getGui(event) instanceof GuiMainMenu)) {
             return;
         }
@@ -192,10 +193,13 @@ public class GuiHandler {
 
     @SubscribeEvent
     public void onButton(GuiScreenEvent.ActionPerformedEvent.Pre event) {
+		LOGGER.debug("Replay Viewer Called");
         if(!getButton(event).enabled) return;
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
+				LOGGER.debug("Main Menu Replay Viewer Button Press");
+				// RAH - we can bypass guiReplayViewer completely
 				//guiReplayViewer = new GuiReplayViewer(mod);
 				//guiReplayViewer.display(); // RAH - added variable and made it a member variable
 				processFile();
