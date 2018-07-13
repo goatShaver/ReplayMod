@@ -449,17 +449,15 @@ public class GuiPathing {
 	* It is called from renderButton.run() - at that point in the code, the framework is loaded and available to query
 	*
 	**/
-		public void initKeyFrames() {
+	public void initKeyFrames() {
 
-		return;
-		/*
+		
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-100; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
-		
-
+		/*
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -479,16 +477,13 @@ public class GuiPathing {
 			//UUID foo = replayHandler.getSpectatedUUID();
 			//LOGGER.debug("EntityID:" + foo);
 		}
-
+		*/
 
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
-		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms); // Normally this is cursorPosition and timeStamp, but we want beginning to end
+		timeline.setCursorPosition(startTime_ms);
+		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
-		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms);
-		mod.setSelected(SPPath.TIME,endTime_ms);
-
-		//mod.setSelected(SPPath.TIME, startTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose - I don't believe it is necessary
-		//mod.setSelected(SPPath.TIME, endTime_ms); // This call is in updateKeyframe, but I don't understand it's purpose
+		
 
 		CameraEntity camera = replayHandler.getCameraEntity();
 		if (camera == null ) {
@@ -497,11 +492,10 @@ public class GuiPathing {
 		}
 		replayHandler.getReplaySender().setReplaySpeed(0);
 
-		spectatedId = -1;
+		//spectatedId = -1;
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
-		timeline.setCursorPosition(startTime_ms);
 		
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
@@ -522,6 +516,9 @@ public class GuiPathing {
 			return;
 		}
 
+		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms+1);
+		mod.setSelected(SPPath.TIME,endTime_ms);
+
 		LOGGER.debug("RAH Setting end position");
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
@@ -534,7 +531,6 @@ public class GuiPathing {
 			LOGGER.debug(e);
            return;
 		}
-		*/
 	}
 
 	// RAH, brought in from another module
