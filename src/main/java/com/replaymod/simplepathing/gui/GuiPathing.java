@@ -128,7 +128,9 @@ public class GuiPathing {
 			// RAH - this just launched the settings gui - we might be able to call the 'onCick' button here
 			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.display();
+			LOGGER.debug("Setting up renderer and then rendering the file");
 			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			renderSettings.doRender();
 			try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
