@@ -46,7 +46,7 @@ import java.util.Map;
 import static com.replaymod.core.utils.Utils.error;
 import static com.replaymod.render.ReplayModRender.LOGGER;
 
-public class noGuiRenderSettings extends GuiScreen implements Closeable {
+public class noGuiRenderSettings  {
 	/** RAH
 	* Attempt to remove the GUI
 	*
@@ -66,7 +66,6 @@ public class noGuiRenderSettings extends GuiScreen implements Closeable {
             } catch (Throwable t) {
                 error(LOGGER, GuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
             }
-        }
     }
 
 
@@ -88,79 +87,8 @@ public class noGuiRenderSettings extends GuiScreen implements Closeable {
         load(settings);
     }
 
-    protected void updateInputs() {
-        // Validate video width and height
-        String error = isResolutionValid();
-        if (error == null) {
-            renderButton.setEnabled().setTooltip(null);
-            videoWidth.setTextColor(Colors.WHITE);
-            videoHeight.setTextColor(Colors.WHITE);
-        } else {
-            renderButton.setDisabled().setTooltip(new GuiTooltip().setI18nText(error));
-            videoWidth.setTextColor(Colors.RED);
-            videoHeight.setTextColor(Colors.RED);
-        }
 
-        // Enable/Disable bitrate input field and dropdown
-        if (encodingPresetDropdown.getSelectedValue().hasBitrateSetting()) {
-            bitRateField.setEnabled();
-            bitRateUnit.setEnabled();
-        } else {
-            bitRateField.setDisabled();
-            bitRateUnit.setDisabled();
-        }
 
-        // Enable/Disable camera stabilization checkboxes
-        switch (renderMethodDropdown.getSelectedValue()) {
-            case CUBIC:
-            case EQUIRECTANGULAR:
-            case ODS:
-                stabilizePanel.forEach(IGuiCheckbox.class).setEnabled();
-                break;
-            default:
-                stabilizePanel.forEach(IGuiCheckbox.class).setDisabled();
-        }
-
-        // Enable/Disable inject metadata checkbox
-        if (encodingPresetDropdown.getSelectedValue().getFileExtension().equals("mp4")
-                && (renderMethodDropdown.getSelectedValue() == RenderSettings.RenderMethod.EQUIRECTANGULAR
-                || renderMethodDropdown.getSelectedValue() == RenderSettings.RenderMethod.ODS)) {
-            inject360Metadata.setEnabled().setTooltip(null);
-        } else {
-            inject360Metadata.setDisabled().setTooltip(new GuiTooltip().setColor(Colors.RED)
-                    .setI18nText("replaymod.gui.rendersettings.360metadata.error"));
-        }
-    }
-
-    protected String isResolutionValid() {
-        RenderSettings.EncodingPreset preset = encodingPresetDropdown.getSelectedValue();
-        RenderSettings.RenderMethod method = renderMethodDropdown.getSelectedValue();
-        int videoWidth = this.videoWidth.getInteger();
-        int videoHeight = this.videoHeight.getInteger();
-
-        // Make sure the export arguments haven't been changed manually
-        if (exportArguments.getText().equals(preset.getValue())) {
-            // Yuv420 requires both dimensions to be even
-            if (preset.isYuv420()
-                    && (videoWidth % 2 != 0 || videoHeight % 2 != 0)) {
-                return "replaymod.gui.rendersettings.customresolution.warning.yuv420";
-            }
-        }
-
-        if (method == RenderSettings.RenderMethod.CUBIC
-                && (videoWidth * 3 / 4 != videoHeight || videoWidth * 3 % 4 != 0)) {
-            return "replaymod.gui.rendersettings.customresolution.warning.cubic";
-        }
-        if (method == RenderSettings.RenderMethod.EQUIRECTANGULAR
-                && (videoWidth / 2 != videoHeight || videoWidth % 2 != 0)) {
-            return "replaymod.gui.rendersettings.customresolution.warning.equirectangular";
-        }
-        if (method == RenderSettings.RenderMethod.ODS
-                && videoWidth != videoHeight) {
-            return "replaymod.gui.rendersettings.customresolution.warning.ods";
-        }
-        return null;
-    }
 
     public void load(RenderSettings settings) {
         renderMethodDropdown.setSelected(settings.getRenderMethod());
