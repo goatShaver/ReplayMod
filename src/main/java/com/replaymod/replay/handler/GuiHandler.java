@@ -125,11 +125,12 @@ public class GuiHandler {
 
     @SubscribeEvent
     public void injectIntoMainMenu(GuiScreenEvent.InitGuiEvent event) {
-		LOGGER.debug("Injecting Replay Viwer into MainMenu");
+		LOGGER.debug("Injecting Replay Viwer:");
         if (!(getGui(event) instanceof GuiMainMenu)) {
             return;
         }
 
+		LOGGER.debug("\tinto to MainMenu");
         if (mod.getReplayHandler() != null) {
             // Something went terribly wrong and we ended up in the main menu with the replay still active.
             // To prevent players from joining live servers and using the CameraEntity, try to stop the replay now.
@@ -148,6 +149,7 @@ public class GuiHandler {
                 getGui(event).height / 4 + 10 + 3 * 24, I18n.format("replaymod.gui.replayviewer"));
         button.width = button.width / 2 - 2;
         getButtonList(event).add(button);
+		delayedClick(2500);
     }
 
 	// RAH 
