@@ -128,6 +128,7 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
                 if (Thread.interrupted()) break;
 				LogManager.getLogger().debug("mod.startReplay("+file+")");
 				mod.startReplay(file);
+				LogManager.getLogger().debug("Done with ("+file+")");
 			}
         } catch (Exception e) {
             e.printStackTrace();
