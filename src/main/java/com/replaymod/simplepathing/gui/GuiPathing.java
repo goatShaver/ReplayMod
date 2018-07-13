@@ -449,7 +449,7 @@ public class GuiPathing {
 		public void initKeyFrames() {
 
 		return;
-
+		/*
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-100; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
@@ -531,6 +531,7 @@ public class GuiPathing {
 			LOGGER.debug(e);
            return;
 		}
+		*/
 	}
 
 	// RAH, brought in from another module
