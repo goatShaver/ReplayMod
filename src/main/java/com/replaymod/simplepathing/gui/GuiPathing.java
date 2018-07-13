@@ -490,7 +490,7 @@ public class GuiPathing {
 			LOGGER.debug("RAH Camera is NULL");
 			return;
 		}
-		//replayHandler.getReplaySender().setReplaySpeed(0);
+		replayHandler.getReplaySender().setReplaySpeed(0);
 
 		//spectatedId = -1;
 		//replayHandler.spectateEntity(p);
@@ -499,10 +499,10 @@ public class GuiPathing {
 		
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		mod.setSelected(SPPath.POSITION, startTime_ms);
+		//mod.setSelected(SPPath.POSITION, startTime_ms);
 
 		try {
-			Thread.sleep(500);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
 			return;
@@ -510,7 +510,7 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
 			return;
