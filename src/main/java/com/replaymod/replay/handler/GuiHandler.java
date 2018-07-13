@@ -172,19 +172,18 @@ public class GuiHandler {
 	}
 
 	/**
-	* RAH - An attempt to process all the files in the input directory - not sure how detect when we are done
+	* RAH - There must be 1 and only 1 .mcpr file in the directory - otherwise things get whacky - we'll address this later
 	*
 	**/
 	public void processFile()
 	{
-		LOGGER.debug("Process All Files");
+		LOGGER.debug("Process Single File");
         try {
 			File folder = mod.getCore().getReplayFolder();
             for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
                 if (Thread.interrupted()) break;
 				LOGGER.debug("mod.startReplay("+file+")");
-				mod.startReplay(file);
-				LOGGER.debug("Done with ("+file+")");
+				mod.startReplay(file); // RAH - this returns after setup, so we can't loop through all the files - just one at a time
 			}
         } catch (Exception e) {
             e.printStackTrace();
