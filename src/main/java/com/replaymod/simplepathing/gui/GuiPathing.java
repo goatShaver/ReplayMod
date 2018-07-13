@@ -12,7 +12,7 @@ import com.replaymod.pathing.player.RealtimeTimelinePlayer;
 import com.replaymod.pathing.properties.CameraProperties;
 import com.replaymod.pathing.properties.SpectatorProperty;
 import com.replaymod.pathing.properties.TimestampProperty;
-import com.replaymod.render.gui.GuiRenderSettings;
+import com.replaymod.render.gui.noGuiRenderSettings;
 import com.replaymod.replay.ReplayHandler;
 import com.replaymod.replay.camera.CameraEntity;
 import com.replaymod.replay.gui.overlay.GuiReplayOverlay;
@@ -125,8 +125,10 @@ public class GuiPathing {
             }
 
             // RAH OLD: new GuiRenderSettings(replayHandler, timeline).display();
-			// RAH - this just launched the settings gui - we might be able to call the 'click' button here
-			GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
+			// RAH - this just launched the settings gui - we might be able to call the 'onCick' button here
+			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
+			//renderSettings.display();
+			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
 			renderSettings.display();
 			try {
 					Thread.sleep(500);
