@@ -483,7 +483,6 @@ public class GuiPathing {
 		LOGGER.debug("RAH Set cursor to 0");
 		timeline.setCursorPosition(startTime_ms);
 		//tmpTimeline.setCursorPosition(startTime_ms);
-		tmpTimeline.setCursorPosition(startTime_ms);
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
 		
@@ -515,7 +514,7 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Set cursor to"+endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
-		tmpTimeline.setCursorPosition(endTime_ms);
+		//tmpTimeline.setCursorPosition(endTime_ms);
 		LOGGER.debug("Sleeping");
 		try {
 			Thread.sleep(1000);
