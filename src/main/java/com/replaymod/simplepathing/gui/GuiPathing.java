@@ -134,7 +134,7 @@ public class GuiPathing {
 					LOGGER.debug(e);
 					return;
 				}
-			renderSettings.renderButton.onClick();
+			//renderSettings.renderButton.onClick();
 			// RAH end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
@@ -447,6 +447,8 @@ public class GuiPathing {
 	*
 	**/
 		public void initKeyFrames() {
+
+		return;
 
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-100; // In case there are complications, cut last second off
