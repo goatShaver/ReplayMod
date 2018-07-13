@@ -56,7 +56,8 @@ public class noGuiRenderSettings  {
             // Closing this GUI ensures that settings are saved
             //getMinecraft().displayGuiScreen(null);
             try {
-                VideoRenderer videoRenderer = new VideoRenderer(save(false), replayHandler, timeline);
+                //VideoRenderer videoRenderer = new VideoRenderer(save(false), replayHandler, timeline);
+				VideoRenderer videoRenderer = new VideoRenderer(getDefaultRenderSettings(), replayHandler, timeline);
                 videoRenderer.renderVideo();
             } catch (VideoWriter.NoFFmpegException e) {
                 LOGGER.error("Rendering video:", e);
