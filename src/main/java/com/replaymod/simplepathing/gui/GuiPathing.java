@@ -480,7 +480,9 @@ public class GuiPathing {
 		*/
 
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
+		LOGGER.debug("RAH Set cursor to 0");
 		timeline.setCursorPosition(startTime_ms);
+		tmpTimeline.setCursorPosition(startTime_ms);
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
 		
@@ -490,6 +492,7 @@ public class GuiPathing {
 			LOGGER.debug("RAH Camera is NULL");
 			return;
 		}
+		LOGGER.debug("RAH replaySpeed 0");
 		replayHandler.getReplaySender().setReplaySpeed(0);
 
 		//spectatedId = -1;
@@ -501,6 +504,7 @@ public class GuiPathing {
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		//mod.setSelected(SPPath.POSITION, startTime_ms);
 
+		LOGGER.debug("Sleeping");
 		try {
 			Thread.sleep(10000);
 		} catch (InterruptedException e) {
@@ -508,7 +512,10 @@ public class GuiPathing {
 			return;
 		}
 		// Position cursor at end of playback so we can get camera parameters there
+		LOGGER.debug("RAH Set cursor to"+endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
+		tmpTimeline.setCursorPosition(endTime_ms);
+		LOGGER.debug("Sleeping");
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -516,7 +523,7 @@ public class GuiPathing {
 			return;
 		}
 
-		/*
+		
 		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms+1);
 		mod.setSelected(SPPath.TIME,endTime_ms);
 
@@ -532,7 +539,6 @@ public class GuiPathing {
 			LOGGER.debug(e);
            return;
 		}
-		*/
 	}
 
 	// RAH, brought in from another module
