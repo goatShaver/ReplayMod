@@ -54,7 +54,7 @@ public class noGuiRenderSettings  {
 	public void doRender ()
 	{
             // Closing this GUI ensures that settings are saved
-            getMinecraft().displayGuiScreen(null);
+            //getMinecraft().displayGuiScreen(null);
             try {
                 VideoRenderer videoRenderer = new VideoRenderer(save(false), replayHandler, timeline);
                 videoRenderer.renderVideo();
@@ -64,7 +64,8 @@ public class noGuiRenderSettings  {
             } catch (VideoWriter.FFmpegStartupException e) {
 				e.printStackTrace();
             } catch (Throwable t) {
-                error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
+                //error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
+				LOGGER.error("Rendering video:", e);
             }
     }
 
@@ -84,11 +85,20 @@ public class noGuiRenderSettings  {
                 .registerTypeAdapter(RenderSettings.class, (InstanceCreator<RenderSettings>) type -> getDefaultRenderSettings())
                 .registerTypeAdapter(ReadableColor.class, new Gson().getAdapter(Color.class))
                 .create().fromJson(json, RenderSettings.class);
-        //load(settings);
+        load(settings);
     }
 
 
 
+
+    public void load(RenderSettings settings) {
+		return;
+    }
+
+    public RenderSettings save(boolean serialize) {
+        return null;
+
+    }
 
     protected File generateOutputFile(RenderSettings.EncodingPreset encodingPreset) {
         String fileName = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
