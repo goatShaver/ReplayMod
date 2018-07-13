@@ -119,7 +119,7 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
 	* RAH - An attempt to process all the files in the input directory - not sure to detect when we are done
 	*
 	**/
-	public final processAllFiles()
+	public void processAllFiles()
 	{
 		LogManager.getLogger().debug("Process All Files");
         try {
