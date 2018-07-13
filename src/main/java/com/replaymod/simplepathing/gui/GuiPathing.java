@@ -129,7 +129,6 @@ public class GuiPathing {
 			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.display();
 			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			renderSettings.display();
 			try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
