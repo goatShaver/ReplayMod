@@ -68,6 +68,7 @@ public class noGuiRenderSettings  {
                 //error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
 				LOGGER.error("Rendering video:", t);
             }
+			LOGGER.debug("Done with Render");
     }
 
 
