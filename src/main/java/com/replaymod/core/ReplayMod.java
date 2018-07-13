@@ -187,7 +187,6 @@ public class ReplayMod {
         getKeyBindingRegistry().registerKeyBinding("replaymod.input.settings", 0, () -> {
             new GuiReplaySettings(null, settingsRegistry).display();
         });
-		LogManager.getLogger().warn("RAH: ReplayMod.java - init");
     }
 
     @EventHandler
