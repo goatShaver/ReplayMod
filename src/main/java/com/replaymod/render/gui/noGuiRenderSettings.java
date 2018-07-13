@@ -1,4 +1,4 @@
-package com.replaymod.render.nogui;
+package com.replaymod.render.gui;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -64,7 +64,7 @@ public class noGuiRenderSettings  {
             } catch (VideoWriter.FFmpegStartupException e) {
 				e.printStackTrace();
             } catch (Throwable t) {
-                error(LOGGER, GuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
+                error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
             }
     }
 
