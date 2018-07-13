@@ -174,7 +174,7 @@ public class ReplayModReplay {
     public void init(FMLInitializationEvent event) {
         Minecraft mc = core.getMinecraft();
         mc.timer = new InputReplayTimer(mc.timer, this);
-		LOGGER.debug("RA: registering GuiHandler");
+		//LOGGER.debug("RA: registering GuiHandler");
         new GuiHandler(this).register();
     }
 
