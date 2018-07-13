@@ -129,7 +129,7 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
 				LogManager.getLogger().debug("mod.startReplay("+file+")");
 				mod.startReplay(file);
 			}
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }	
 	}
