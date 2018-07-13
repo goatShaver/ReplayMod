@@ -177,14 +177,14 @@ public class GuiHandler {
 	**/
 	public void processFile()
 	{
-		LogManager.getLogger().debug("Process All Files");
+		LOGGER.debug("Process All Files");
         try {
 			File folder = mod.getCore().getReplayFolder();
             for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
                 if (Thread.interrupted()) break;
-				LogManager.getLogger().debug("mod.startReplay("+file+")");
+				LOGGER.debug("mod.startReplay("+file+")");
 				mod.startReplay(file);
-				LogManager.getLogger().debug("Done with ("+file+")");
+				LOGGER.debug("Done with ("+file+")");
 			}
         } catch (Exception e) {
             e.printStackTrace();
