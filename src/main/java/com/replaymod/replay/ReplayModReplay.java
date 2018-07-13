@@ -66,6 +66,12 @@ public class ReplayModReplay {
         return replayHandler;
     }
 
+	@Mod.EventHandler
+    public void postInit(FMLPreInitializationEvent event) {
+		LOGGER = event.getModLog();
+		LOGGER.debug("RAH ReplayModReplay.java postInit");
+	}
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         LOGGER = event.getModLog();
