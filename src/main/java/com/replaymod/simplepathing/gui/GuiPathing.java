@@ -482,6 +482,7 @@ public class GuiPathing {
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		LOGGER.debug("RAH Set cursor to 0");
 		timeline.setCursorPosition(startTime_ms);
+		//tmpTimeline.setCursorPosition(startTime_ms);
 		tmpTimeline.setCursorPosition(startTime_ms);
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
