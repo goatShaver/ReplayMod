@@ -65,7 +65,7 @@ public class noGuiRenderSettings  {
 				e.printStackTrace();
             } catch (Throwable t) {
                 //error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
-				LOGGER.error("Rendering video:", e);
+				LOGGER.error("Rendering video:", t);
             }
     }
 
@@ -111,7 +111,6 @@ public class noGuiRenderSettings  {
                 true, false, false, false, null, false, RenderSettings.AntiAliasing.NONE, "", RenderSettings.EncodingPreset.MP4_DEFAULT.getValue(), false);
     }
 
-    @Override
     public void close() {
         RenderSettings settings = save(true);
         String json = new Gson().toJson(settings);
