@@ -101,14 +101,19 @@ public class noGuiRenderSettings  {
 
     }
 
-    protected File generateOutputFile(RenderSettings.EncodingPreset encodingPreset) {
+    //protected File generateOutputFile(RenderSettings.EncodingPreset encodingPreset) {
+	protected File generateOutputFile() {
         String fileName = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
         File folder = ReplayModRender.instance.getVideoFolder();
-        return new File(folder, fileName + "." + encodingPreset.getFileExtension());
+        //return new File(folder, fileName + "." + encodingPreset.getFileExtension());
+		// RAH - crap, we no longer have encodingPreset, hardcoding to MP4
+		return new File(folder, fileName + ".MP4");
     }
 
     private RenderSettings getDefaultRenderSettings() {
-        return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, 1920, 1080, 60, 10 << 20, null,
+	// RAh - the null was for serialized - we are going to file only
+        //return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, 1920, 1080, 60, 10 << 20, null,
+		return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, 1920, 1080, 60, 10 << 20, generateOutputFile(),
                 true, false, false, false, null, false, RenderSettings.AntiAliasing.NONE, "", RenderSettings.EncodingPreset.MP4_DEFAULT.getValue(), false);
     }
 
