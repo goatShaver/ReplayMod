@@ -149,7 +149,7 @@ public class GuiHandler {
                 getGui(event).height / 4 + 10 + 3 * 24, I18n.format("replaymod.gui.replayviewer"));
         button.width = button.width / 2 - 2;
         getButtonList(event).add(button);
-		processFile(); // RAH Can we call this directly from the main menu?
+		//processFile(); // RAH Can we call this directly from the main menu?
     }
 
 	// RAH 
@@ -181,12 +181,12 @@ public class GuiHandler {
 	public void processFile()
 	{
 		LOGGER.debug("Process Single File");
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-			return;
-		}
+		//try {
+		//	Thread.sleep(500);
+		//} catch (InterruptedException e) {
+		//	LOGGER.debug(e);
+		//	return;
+		//}
         try {
 			File folder = mod.getCore().getReplayFolder();
             for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
