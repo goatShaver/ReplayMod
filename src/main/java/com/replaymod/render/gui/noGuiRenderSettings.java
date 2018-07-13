@@ -84,76 +84,11 @@ public class noGuiRenderSettings  {
                 .registerTypeAdapter(RenderSettings.class, (InstanceCreator<RenderSettings>) type -> getDefaultRenderSettings())
                 .registerTypeAdapter(ReadableColor.class, new Gson().getAdapter(Color.class))
                 .create().fromJson(json, RenderSettings.class);
-        load(settings);
+        //load(settings);
     }
 
 
 
-
-    public void load(RenderSettings settings) {
-        renderMethodDropdown.setSelected(settings.getRenderMethod());
-        encodingPresetDropdown.setSelected(settings.getEncodingPreset());
-        videoWidth.setValue(settings.getTargetVideoWidth());
-        videoHeight.setValue(settings.getTargetVideoHeight());
-        frameRateSlider.setValue(settings.getFramesPerSecond() - 10);
-        if (settings.getBitRate() % (1 << 20) == 0) {
-            bitRateField.setValue(settings.getBitRate() >> 20);
-            bitRateUnit.setSelected(2);
-        } else if (settings.getBitRate() % (1 << 10) == 0) {
-            bitRateField.setValue(settings.getBitRate() >> 10);
-            bitRateUnit.setSelected(1);
-        } else {
-            bitRateField.setValue(settings.getBitRate());
-            bitRateUnit.setSelected(0);
-        }
-        if (settings.getOutputFile() == null) {
-            outputFile = generateOutputFile(settings.getEncodingPreset());
-            outputFileManuallySet = false;
-        } else {
-            outputFile = settings.getOutputFile();
-            outputFileManuallySet = true;
-        }
-        outputFileButton.setLabel(outputFile.getName());
-        nametagCheckbox.setChecked(settings.isRenderNameTags());
-        stabilizeYaw.setChecked(settings.isStabilizeYaw());
-        stabilizePitch.setChecked(settings.isStabilizePitch());
-        stabilizeRoll.setChecked(settings.isStabilizeRoll());
-        if (settings.getChromaKeyingColor() == null) {
-            chromaKeyingCheckbox.setChecked(false);
-            chromaKeyingColor.setColor(Colors.GREEN);
-        } else {
-            chromaKeyingCheckbox.setChecked(true);
-            chromaKeyingColor.setColor(settings.getChromaKeyingColor());
-        }
-        inject360Metadata.setChecked(settings.isInject360Metadata());
-        antiAliasingDropdown.setSelected(settings.getAntiAliasing());
-        exportCommand.setText(settings.getExportCommand());
-        exportArguments.setText(settings.getExportArguments());
-
-        updateInputs();
-    }
-
-    public RenderSettings save(boolean serialize) {
-        return new RenderSettings(
-                renderMethodDropdown.getSelectedValue(),
-                encodingPresetDropdown.getSelectedValue(),
-                videoWidth.getInteger(),
-                videoHeight.getInteger(),
-                frameRateSlider.getValue() + 10,
-                bitRateField.getInteger() << (10 * bitRateUnit.getSelected()),
-                serialize ? null : outputFile,
-                nametagCheckbox.isChecked(),
-                stabilizeYaw.isChecked() && (serialize || stabilizeYaw.isEnabled()),
-                stabilizePitch.isChecked() && (serialize || stabilizePitch.isEnabled()),
-                stabilizeRoll.isChecked() && (serialize || stabilizeRoll.isEnabled()),
-                chromaKeyingCheckbox.isChecked() ? chromaKeyingColor.getColor() : null,
-                inject360Metadata.isChecked() && (serialize || inject360Metadata.isEnabled()),
-                antiAliasingDropdown.getSelectedValue(),
-                exportCommand.getText(),
-                exportArguments.getText(),
-                net.minecraft.client.gui.GuiScreen.isCtrlKeyDown()
-        );
-    }
 
     protected File generateOutputFile(RenderSettings.EncodingPreset encodingPreset) {
         String fileName = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
