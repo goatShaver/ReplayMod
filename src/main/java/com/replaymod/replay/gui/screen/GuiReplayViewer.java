@@ -138,13 +138,12 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
         @Override
         public void run() {
 			LogManager.getLogger().debug("Called loadButton");
-            try {
-                // Was the oly line in this try/catch loop ---- mod.startReplay(list.getSelected().file);
-				processAllFiles();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+			processAllFiles();
+            //try {
+            //    mod.startReplay(list.getSelected().file);
+            //} catch (IOException e) {
+            //    e.printStackTrace();
+            //}
         }
     }).setSize(73, 20).setI18nLabel("replaymod.gui.load").setDisabled();
 
