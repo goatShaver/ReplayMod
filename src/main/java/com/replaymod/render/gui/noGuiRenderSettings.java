@@ -60,7 +60,7 @@ public class noGuiRenderSettings  {
                 videoRenderer.renderVideo();
             } catch (VideoWriter.NoFFmpegException e) {
                 LOGGER.error("Rendering video:", e);
-                getMinecraft().displayGuiScreen(errorScreen);
+                //getMinecraft().displayGuiScreen(errorScreen);
             } catch (VideoWriter.FFmpegStartupException e) {
 				e.printStackTrace();
             } catch (Throwable t) {
