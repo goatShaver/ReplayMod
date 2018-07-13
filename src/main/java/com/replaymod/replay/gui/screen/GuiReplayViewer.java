@@ -115,12 +115,33 @@ public class GuiReplayViewer extends GuiScreen implements Typeable {
         }
     }).setDrawShadow(true).setDrawSlider(true);
 
+	/**
+	* RAH - An attempt to process all the files in the input directory - not sure to detect when we are done
+	*
+	**/
+	public processAllFiles()
+	{
+		LogManager.getLogger().debug("Process All Files");
+        try {
+			File folder = mod.getCore().getReplayFolder();
+            for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
+                if (Thread.interrupted()) break;
+				LogManager.getLogger().debug("mod.startReplay("+file+")");
+				mod.startReplay(file);
+			}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }	
+	}
+
     public final GuiButton loadButton = new GuiButton().onClick(new Runnable() {
         @Override
         public void run() {
 			LogManager.getLogger().debug("Called loadButton");
             try {
-                mod.startReplay(list.getSelected().file);
+                // Was the oly line in this try/catch loop ---- mod.startReplay(list.getSelected().file);
+				processAllFiles();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
