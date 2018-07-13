@@ -171,14 +171,35 @@ public class GuiHandler {
 		}
 	}
 
+	/**
+	* RAH - An attempt to process all the files in the input directory - not sure how detect when we are done
+	*
+	**/
+	public void processFile()
+	{
+		LogManager.getLogger().debug("Process All Files");
+        try {
+			File folder = mod.getCore().getReplayFolder();
+            for (final File file : folder.listFiles((FileFilter) new SuffixFileFilter(".mcpr", IOCase.INSENSITIVE))) {
+                if (Thread.interrupted()) break;
+				LogManager.getLogger().debug("mod.startReplay("+file+")");
+				mod.startReplay(file);
+				LogManager.getLogger().debug("Done with ("+file+")");
+			}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }	
+	}
+
     @SubscribeEvent
     public void onButton(GuiScreenEvent.ActionPerformedEvent.Pre event) {
         if(!getButton(event).enabled) return;
 
         if (getGui(event) instanceof GuiMainMenu) {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
-				guiReplayViewer = new GuiReplayViewer(mod);
-				guiReplayViewer.display(); // RAH - added variable and made it a member variable
+				//guiReplayViewer = new GuiReplayViewer(mod);
+				//guiReplayViewer.display(); // RAH - added variable and made it a member variable
+				processFile();
 				// RAH, this doesn't work because we are not the MC thread.
 				//delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
 				//guiReplayViewer.loadButton.onClick();
