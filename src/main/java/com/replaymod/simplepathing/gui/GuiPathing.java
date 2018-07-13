@@ -490,7 +490,7 @@ public class GuiPathing {
 			LOGGER.debug("RAH Camera is NULL");
 			return;
 		}
-		replayHandler.getReplaySender().setReplaySpeed(0);
+		//replayHandler.getReplaySender().setReplaySpeed(0);
 
 		//spectatedId = -1;
 		//replayHandler.spectateEntity(p);
@@ -499,7 +499,7 @@ public class GuiPathing {
 		
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		//mod.setSelected(SPPath.POSITION, startTime_ms);
+		mod.setSelected(SPPath.POSITION, startTime_ms);
 
 		try {
 			Thread.sleep(500);
@@ -516,6 +516,7 @@ public class GuiPathing {
 			return;
 		}
 
+		/*
 		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms+1);
 		mod.setSelected(SPPath.TIME,endTime_ms);
 
@@ -531,6 +532,7 @@ public class GuiPathing {
 			LOGGER.debug(e);
            return;
 		}
+		*/
 	}
 
 	// RAH, brought in from another module
