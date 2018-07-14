@@ -326,7 +326,6 @@ public class GuiPathing {
         }).onClick(new Runnable() {
             @Override
             public void run() {
-				LOGGER.debug("RAH - Running");
                 if (player.isActive()) {
                     player.getFuture().cancel(false);
                 } else {
@@ -451,13 +450,12 @@ public class GuiPathing {
 	**/
 	public void initKeyFrames() {
 
-		
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-100; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
-		/*
+		/* - This code foolishly assumes only 1 player per world --- 
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -479,10 +477,13 @@ public class GuiPathing {
 		}
 		*/
 
+		// Need to look at synctimebuttonPressed () for more details - I'm probably confusing keyframe time/cursor
+		// may have to jump....
+		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		LOGGER.debug("RAH Set cursor to 0");
 		timeline.setCursorPosition(startTime_ms);
-		//tmpTimeline.setCursorPosition(startTime_ms);
+		replayHandler.doJump(startTime_ms);
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
 		
@@ -502,7 +503,7 @@ public class GuiPathing {
 		
 		camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		//mod.setSelected(SPPath.POSITION, startTime_ms);
+		mod.setSelected(SPPath.POSITION, startTime_ms);
 
 		LOGGER.debug("Sleeping");
 		try {
@@ -514,7 +515,7 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Set cursor to"+endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
-		//tmpTimeline.setCursorPosition(endTime_ms);
+		replayHandler.doJump(endTime_ms);
 		LOGGER.debug("Sleeping");
 		try {
 			Thread.sleep(1000);
@@ -533,6 +534,7 @@ public class GuiPathing {
 		mod.setSelected(SPPath.POSITION, endTime_ms);
 
 		timeline.setCursorPosition(0);
+		replayHandler.doJump(0);
 		try {
             Thread.sleep(500);
 		} catch (InterruptedException e) {
