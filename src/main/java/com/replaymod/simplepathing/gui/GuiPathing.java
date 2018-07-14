@@ -451,7 +451,7 @@ public class GuiPathing {
 	public void initKeyFrames() {
 
 		int startTime_ms = 100;
-		int endTime_ms = replayHandler.getReplaySender().replayLength()-100; // In case there are complications, cut last second off
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
