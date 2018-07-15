@@ -496,12 +496,12 @@ public class GuiPathing {
 		LOGGER.debug("RAH replaySpeed 0");
 		replayHandler.getReplaySender().setReplaySpeed(0);
 
-		//spectatedId = -1;
+		spectatedId = -1;
 		//replayHandler.spectateEntity(p);
 		// int cursor = timeline.getCursorPosition();
 		// Position cursor at begining so we can get camera parameters there
 		
-		camera = replayHandler.getCameraEntity();
+		//camera = replayHandler.getCameraEntity();
 		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, startTime_ms);
 
@@ -513,7 +513,7 @@ public class GuiPathing {
 			return;
 		}
 		// Position cursor at end of playback so we can get camera parameters there
-		LOGGER.debug("RAH Set cursor to"+endTime_ms);
+		LOGGER.debug("RAH Set cursor to "+endTime_ms);
 		//timeline.setCursorPosition(endTime_ms);
 		replayHandler.doJump(endTime_ms,true);
 		LOGGER.debug("Sleeping");
