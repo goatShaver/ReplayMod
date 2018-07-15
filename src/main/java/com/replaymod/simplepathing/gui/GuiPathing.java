@@ -110,6 +110,7 @@ public class GuiPathing {
         @Override
         public void run() {
 
+			initKeyFrames();
             if (!preparePathsForPlayback()) return;
 
             // Clone the timeline passed to the settings gui as it may be stored for later rendering in a queue
@@ -133,7 +134,7 @@ public class GuiPathing {
 			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
 			renderSettings.doRender();
 			} else {
-				initKeyFrames();
+				//initKeyFrames();
 			}
 			// RAH end
         }
