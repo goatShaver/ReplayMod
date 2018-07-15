@@ -120,7 +120,6 @@ public class ReplayHandler {
 		int playerID = -1;
 		while (playerID < 0 ) {
 			playerID = replaySender.getPlayerId();
-			logger.debug("RAH: playerID= " + playerID);
 			if (playerID < 0)
 			try {
                     Thread.sleep(100);
