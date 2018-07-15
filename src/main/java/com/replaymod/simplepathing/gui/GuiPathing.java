@@ -448,6 +448,7 @@ public class GuiPathing {
 
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		endTime_ms = int(endTime_ms/2);
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
@@ -490,7 +491,7 @@ public class GuiPathing {
 			LOGGER.debug("RAH Camera is NULL");
 			return;
 		}
-		LOGGER.debug("RAH replaySpeed 0");
+		LOGGER.debug("RAH replaySpeed 0.10");
 		replayHandler.getReplaySender().setReplaySpeed(0.10);
 
 		spectatedId = -1;
@@ -512,7 +513,7 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Set cursor to "+endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
-		//replayHandler.doJump(endTime_ms,true);
+		replayHandler.doJump(endTime_ms,true);
 
 		
 		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms+1);
