@@ -450,7 +450,6 @@ public class GuiPathing {
 
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
-		endTime_ms = 20000;
 		int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
@@ -484,9 +483,11 @@ public class GuiPathing {
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 
 		timeline.setCursorPosition(startTime_ms);
+		updateKeyFrame(SPPath.TIME);
+		updateKeyFrame(SPPath.POSITION);
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
-		mod.setSelected(SPPath.TIME,startTime_ms);
+		//mod.getCurrentTimeline().addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
+		//mod.setSelected(SPPath.TIME,startTime_ms);
 		
 		CameraEntity camera = replayHandler.getCameraEntity();
 		if (camera == null ) {
@@ -502,8 +503,8 @@ public class GuiPathing {
 		// Position cursor at begining so we can get camera parameters there
 		
 		//camera = replayHandler.getCameraEntity();
-		tmpTimeline.addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		mod.setSelected(SPPath.POSITION, startTime_ms);
+		//mod.getCurrentTimeline().addPositionKeyframe(startTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		//mod.setSelected(SPPath.POSITION, startTime_ms);
 
 		LOGGER.debug("Sleeping");
 		try {
@@ -518,22 +519,16 @@ public class GuiPathing {
 		//replayHandler.doJump(endTime_ms,true);
 
 		
-		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms+1);
+		mod.getCurentTimeline().addTimeKeyframe(endTime_ms, endTime_ms+1);
 		mod.setSelected(SPPath.TIME,endTime_ms);
 
 		LOGGER.debug("RAH Setting end position");
 		camera = replayHandler.getCameraEntity();
-		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		mod.getCurrentTimeline().addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, endTime_ms);
 
-		timeline.setCursorPosition(0);
+		//timeline.setCursorPosition(0);
 		//replayHandler.doJump(startTime_ms,true);
-		try {
-            Thread.sleep(500);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-           return;
-		}
 	}
 
 	// RAH, brought in from another module
