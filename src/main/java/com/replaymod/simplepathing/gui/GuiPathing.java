@@ -305,8 +305,6 @@ public class GuiPathing {
         this.replayHandler = replayHandler;
         this.player = new RealtimeTimelinePlayer(replayHandler);
         final GuiReplayOverlay overlay = replayHandler.getOverlay();
-		LOGGER.debug("RAH: GuiPathing - Created");
-
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
@@ -482,19 +480,18 @@ public class GuiPathing {
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		LOGGER.debug("RAH Set cursor to 0");
-		//timeline.setCursorPosition(startTime_ms);
-		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		timeline.setCursorPosition(startTime_ms);
+		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		mod.setSelected(SPPath.TIME,startTime_ms);
 		
-
 		CameraEntity camera = replayHandler.getCameraEntity();
 		if (camera == null ) {
 			LOGGER.debug("RAH Camera is NULL");
 			return;
 		}
 		LOGGER.debug("RAH replaySpeed 0");
-		replayHandler.getReplaySender().setReplaySpeed(0);
+		//replayHandler.getReplaySender().setReplaySpeed(0);
 
 		spectatedId = -1;
 		//replayHandler.spectateEntity(p);
@@ -514,8 +511,8 @@ public class GuiPathing {
 		}
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Set cursor to "+endTime_ms);
-		//timeline.setCursorPosition(endTime_ms);
-		replayHandler.doJump(endTime_ms,true);
+		timeline.setCursorPosition(endTime_ms);
+		//replayHandler.doJump(endTime_ms,true);
 		LOGGER.debug("Sleeping");
 		try {
 			Thread.sleep(1000);
@@ -533,8 +530,8 @@ public class GuiPathing {
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, endTime_ms);
 
-		//timeline.setCursorPosition(0);
-		replayHandler.doJump(startTime_ms,true);
+		timeline.setCursorPosition(0);
+		//replayHandler.doJump(startTime_ms,true);
 		try {
             Thread.sleep(500);
 		} catch (InterruptedException e) {
