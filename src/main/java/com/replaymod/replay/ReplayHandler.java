@@ -388,6 +388,7 @@ public class ReplayHandler {
     }
 
     public void doJump(int targetTime, boolean retainCameraPosition) {
+		LogManager.getLogger().debug("RAH: doJump " + targetTime + "RetainCameraPosition " + retainCameraPosition);
         if (replaySender.isHurrying()) {
             return; // When hurrying, no Timeline jumping etc. is possible
         }
