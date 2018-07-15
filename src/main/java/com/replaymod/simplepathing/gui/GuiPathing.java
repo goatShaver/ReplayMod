@@ -533,14 +533,15 @@ public class GuiPathing {
 		tmpTimeline.addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
 		mod.setSelected(SPPath.POSITION, endTime_ms);
 
-		timeline.setCursorPosition(0);
-		replayHandler.doJump(0,true);
+		//timeline.setCursorPosition(0);
+		replayHandler.doJump(startTime_ms,true);
 		try {
             Thread.sleep(500);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
            return;
 		}
+		preparePathsForPlayback();
 	}
 
 	// RAH, brought in from another module
