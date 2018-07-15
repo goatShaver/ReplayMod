@@ -532,7 +532,6 @@ public class GuiPathing {
 			LOGGER.debug(e);
            return;
 		}
-		preparePathsForPlayback();
 	}
 
 	// RAH, brought in from another module
@@ -674,6 +673,7 @@ public class GuiPathing {
         int lastTime = 0;
         for (Keyframe keyframe : timeline.getTimePath().getKeyframes()) {
             int time = keyframe.getValue(TimestampProperty.PROPERTY).orElseThrow(IllegalStateException::new);
+			LOGGER.debug("RAH: keyframe time: " + time);
             if (time < lastTime) {
                 // We are going backwards in time
                 GuiInfoPopup.open(replayHandler.getOverlay(),
@@ -686,12 +686,10 @@ public class GuiPathing {
         }
 
         // Make sure there are at least two position- and two time-keyframes
-        if (timeline.getPositionPath().getSegments().isEmpty()
-                || timeline.getTimePath().getSegments().isEmpty()) {
+        if (timeline.getPositionPath().getSegments().isEmpty() || timeline.getTimePath().getSegments().isEmpty()) {
             GuiInfoPopup.open(replayHandler.getOverlay(), "replaymod.chat.morekeyframes");
             return false;
         }
-
         return true;
     }
 
