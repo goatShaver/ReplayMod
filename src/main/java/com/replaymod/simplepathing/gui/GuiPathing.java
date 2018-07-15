@@ -476,7 +476,7 @@ public class GuiPathing {
 		// may have to jump....
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
-		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 
 		timeline.setCursorPosition(startTime_ms);
 		updateKeyframe(SPPath.TIME);
@@ -690,7 +690,6 @@ public class GuiPathing {
      * @param path {@code TIME} for the time property button, {@code POSITION} for the place property button
      */
     private void updateKeyframe(SPPath path) {
-        LOGGER.debug("Updating keyframe on path {}" + path);
         if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
 
         int time = timeline.getCursorPosition();
