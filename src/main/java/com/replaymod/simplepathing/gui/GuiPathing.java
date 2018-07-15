@@ -483,8 +483,8 @@ public class GuiPathing {
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 
 		timeline.setCursorPosition(startTime_ms);
-		updateKeyFrame(SPPath.TIME);
-		updateKeyFrame(SPPath.POSITION);
+		updateKeyframe(SPPath.TIME);
+		updateKeyframe(SPPath.POSITION);
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		//mod.getCurrentTimeline().addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
 		//mod.setSelected(SPPath.TIME,startTime_ms);
