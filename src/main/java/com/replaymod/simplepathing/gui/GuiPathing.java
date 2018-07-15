@@ -478,6 +478,8 @@ public class GuiPathing {
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME keyframe");
 		LOGGER.debug("RAH Set cursor to 0");
+		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+
 		timeline.setCursorPosition(startTime_ms);
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		tmpTimeline.addTimeKeyframe(startTime_ms, startTime_ms+1); // Normally this is cursorPosition and timeStamp, but we want beginning to end
@@ -511,13 +513,6 @@ public class GuiPathing {
 		LOGGER.debug("RAH Set cursor to "+endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
 		//replayHandler.doJump(endTime_ms,true);
-		LOGGER.debug("Sleeping");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			LOGGER.debug(e);
-			return;
-		}
 
 		
 		tmpTimeline.addTimeKeyframe(endTime_ms, endTime_ms+1);
@@ -536,7 +531,7 @@ public class GuiPathing {
 			LOGGER.debug(e);
            return;
 		}
-		//preparePathsForPlayback();
+		preparePathsForPlayback();
 	}
 
 	// RAH, brought in from another module
