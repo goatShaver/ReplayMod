@@ -516,16 +516,19 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Set cursor to "+endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
+		updateKeyframe(SPPath.TIME);
+		updateKeyframe(SPPath.POSITION);
+
 		//replayHandler.doJump(endTime_ms,true);
 
 		
-		mod.getCurentTimeline().addTimeKeyframe(endTime_ms, endTime_ms+1);
-		mod.setSelected(SPPath.TIME,endTime_ms);
+		//mod.getCurrentTimeline().addTimeKeyframe(endTime_ms, endTime_ms+1);
+		//mod.setSelected(SPPath.TIME,endTime_ms);
 
 		LOGGER.debug("RAH Setting end position");
 		camera = replayHandler.getCameraEntity();
-		mod.getCurrentTimeline().addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
-		mod.setSelected(SPPath.POSITION, endTime_ms);
+		//mod.getCurrentTimeline().addPositionKeyframe(endTime_ms, camera.posX, camera.posY, camera.posZ, camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+		//mod.setSelected(SPPath.POSITION, endTime_ms);
 
 		//timeline.setCursorPosition(0);
 		//replayHandler.doJump(startTime_ms,true);
@@ -734,6 +737,7 @@ public class GuiPathing {
 
         int time = timeline.getCursorPosition();
         SPTimeline timeline = mod.getCurrentTimeline();
+		LOGGER.debug("Updating keyframe on path {}" + path + "@" + time);
 
         switch (path) {
             case TIME:
