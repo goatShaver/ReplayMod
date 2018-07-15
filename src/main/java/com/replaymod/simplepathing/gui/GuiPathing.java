@@ -110,7 +110,7 @@ public class GuiPathing {
         @Override
         public void run() {
 
-			initKeyFrames();
+			initKeyFrames(); // RAH - before doing render, set start/stop keyframes
 
 
             if (!preparePathsForPlayback()) return;
@@ -131,13 +131,10 @@ public class GuiPathing {
 			// RAH - this just launched the settings gui - we might be able to call the 'onCick' button here
 			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.display();
-			if (false) {
-				LOGGER.debug("Setting up renderer and then rendering the file");
-				noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-				renderSettings.doRender();
-			} else {
-				//initKeyFrames();
-			}
+			LOGGER.debug("Setting up renderer and then rendering the file");
+			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			renderSettings.doRender();
+
 			// RAH end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
