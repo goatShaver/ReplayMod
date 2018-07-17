@@ -114,8 +114,7 @@ public class ReplayHandler {
         // RAh - moving to below FML_BUS.post(new ReplayOpenEvent.Post(this));
 
         replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
-		replaySender.setSpeed(0);
-
+		/*
 		// RAH - dumb idea?
 		// Query replaySender for entity, once we have a non-zero value, set it
 		int playerID = -1;
@@ -130,7 +129,7 @@ public class ReplayHandler {
                 }
 		}
 		//spectateEntity(e);
-
+		*/
 
 		FML_BUS.post(new ReplayOpenEvent.Post(this));
 		// RAH end
