@@ -483,10 +483,10 @@ public class GuiPathing {
 
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + endTime_ms);
-		replayHandler.doJump(5000,true);
+		replayHandler.doJump(10000,true);
 		//replayHandler.doJump(endTime_ms,true);
 
-		timeline.setCursorPosition(endTime_ms);
+		timeline.setCursorPosition(10000);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		
