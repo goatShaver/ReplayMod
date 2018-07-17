@@ -75,9 +75,8 @@ public class ReplayModSimplePathing {
     @SubscribeEvent
     public void postReplayOpen(ReplayOpenEvent.Post event) {
         clearCurrentTimeline();
-		LOGGER.debug("RAH: Initiating guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		delayedClick(5000); // RAH
+		//delayedClick(5000); // RAH
     }
 
 	// RAH 
