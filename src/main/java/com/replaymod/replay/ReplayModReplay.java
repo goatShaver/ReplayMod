@@ -204,8 +204,9 @@ public class ReplayModReplay {
         }
         replayHandler = new ReplayHandler(replayFile, true);
 		// RAH - Added this - we can pause playback or slowdown playback, however things aren't initialized yet
-		// ReplaySender replaySender = replayHandler.getReplaySender();
+		ReplaySender replaySender = replayHandler.getReplaySender();
 		//replaySender.setReplaySpeed(0.5);
+		replaySender.sendPacketsTill(100);
 
     }
 
