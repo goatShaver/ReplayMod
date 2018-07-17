@@ -487,6 +487,18 @@ public class GuiPathing {
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		//replayHandler.getReplaySender().setReplaySpeed(0);
+
+		for (i=0;i<5;i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				logger.debug(e);
+				return;
+			}
+			LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
+		}
+
+
 		
 		/*
 		// Position cursor at end of playback so we can get camera parameters there
