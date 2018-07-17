@@ -33,6 +33,9 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.MinecraftForge;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager; // RAH
+import org.apache.logging.log4j.Logger; // RAH
+
 
 //#if MC>=11200
 import com.replaymod.core.utils.WrappedTimer;
