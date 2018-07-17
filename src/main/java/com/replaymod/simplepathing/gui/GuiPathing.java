@@ -476,16 +476,14 @@ public class GuiPathing {
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		//timeline.setCursorPosition(startTime_ms);
-		replayHandler.doJump(endTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		timeline.setCursorPosition(endTime_ms);
+		timeline.setCursorPosition(startTime_ms);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		
 
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + endTime_ms);
-		//replayHandler.doJump(5000,true);
+		replayHandler.doJump(5000,true);
 		//replayHandler.doJump(endTime_ms,true);
 
 		timeline.setCursorPosition(endTime_ms);
