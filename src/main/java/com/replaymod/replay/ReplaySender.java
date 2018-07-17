@@ -1,4 +1,4 @@
-currpackage com.replaymod.replay;
+package com.replaymod.replay;
 
 import com.google.common.base.Preconditions;
 import com.google.common.io.Files;
