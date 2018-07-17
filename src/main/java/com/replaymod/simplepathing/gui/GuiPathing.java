@@ -486,9 +486,9 @@ public class GuiPathing {
 		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
-		replayHandler.getReplaySender().setReplaySpeed(0);
+		//replayHandler.getReplaySender().setReplaySpeed(0);
 		
-
+		/*
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
@@ -498,6 +498,7 @@ public class GuiPathing {
 		//timeline.setCursorPosition(endTime_ms);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
+		*/
 		
 	}
 
