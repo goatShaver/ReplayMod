@@ -430,7 +430,7 @@ public class ReplayHandler {
                 replaySender.setSyncModeAndWait();
 
                 // Perform the rendering using OpenGL
-                pushMatrix();`
+                pushMatrix();
                 clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 enableTexture2D();
                 mc.getFramebuffer().bindFramebuffer(true);
