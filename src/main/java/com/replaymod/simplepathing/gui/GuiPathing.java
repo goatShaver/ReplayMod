@@ -447,10 +447,11 @@ public class GuiPathing {
 
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		int spectatedId = -1;
 		//int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
-		/* - This code foolishly assumes only 1 player per world --- 
+		// - This code foolishly assumes only 1 player per world --- 
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -459,18 +460,18 @@ public class GuiPathing {
         });
 		//Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
 		for (final EntityPlayer p : players) {
-			LOGGER.debug("Player");
+			LOGGER.debug("Players");
 			replayHandler.spectateEntity(p);
 
 			//if (!replayHandler.isCameraView()) {
 			//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 			//}
-			spectatedId = p.getEntityId();
-			LOGGER.debug("EntityID:" + spectatedId);
-			//UUID foo = replayHandler.getSpectatedUUID();
-			//LOGGER.debug("EntityID:" + foo);
+			if (spectatedId < 0) 
+			{
+				spectatedId = p.getEntityId();
+				LOGGER.debug("EntityID:" + spectatedId);
+			}
 		}
-		*/
 
 		// Need to look at synctimebuttonPressed () for more details - I'm probably confusing keyframe time/cursor
 		// probably have to do jump....
