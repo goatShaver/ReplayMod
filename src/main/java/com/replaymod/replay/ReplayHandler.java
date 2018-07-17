@@ -412,6 +412,7 @@ public class ReplayHandler {
             if (diff > 0 && diff < 5000) { // Small difference and no time travel
                 replaySender.jumpToTime(targetTime);
             } else { // We either have to restart the replay or send a significant amount of packets
+				LogManager.getLogger().debug("RAH: doJump diff " + diff);
                 // Render our please-wait-screen
                 GuiScreen guiScreen = new GuiScreen() {
                     @Override
