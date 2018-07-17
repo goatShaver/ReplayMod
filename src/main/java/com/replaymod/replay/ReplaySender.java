@@ -933,6 +933,7 @@ public class ReplaySender extends ChannelDuplexHandler {
     public void jumpToTime(int millis) {
         Preconditions.checkState(asyncMode, "Can only jump in async mode. Use sendPacketsTill(int) instead.");
         if(millis < lastTimeStamp && !isHurrying()) {
+			LogManager.getLogger().debug("RAH: lastTimeStamp " + lastTimeStamp + " startFromBeginning"); 
             startFromBeginning = true;
         }
 
