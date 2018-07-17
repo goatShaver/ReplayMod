@@ -113,7 +113,9 @@ public class ReplayHandler {
 
         // RAh - moving to below FML_BUS.post(new ReplayOpenEvent.Post(this));
 
-        replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
+        //replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
+		replaySender.setAsyncMode(false); 
+		replaySender.doJump(100);
 
 		// RAH - dumb idea?
 		// Query replaySender for entity, once we have a non-zero value, set it
@@ -128,7 +130,6 @@ public class ReplayHandler {
                     return;
                 }
 		}
-		logger.debug("RAH: Spectating " + playerID);
 		//spectateEntity(e);
 
 
@@ -429,7 +430,7 @@ public class ReplayHandler {
                 replaySender.setSyncModeAndWait();
 
                 // Perform the rendering using OpenGL
-                pushMatrix();
+                pushMatrix();`
                 clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 enableTexture2D();
                 mc.getFramebuffer().bindFramebuffer(true);
