@@ -473,6 +473,7 @@ public class GuiPathing {
 			}
 		}
 
+		ReplayHandler.getReplaySender().setReplaySpeed(0.0);
 		// Need to look at synctimebuttonPressed () for more details - I'm probably confusing keyframe time/cursor
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
