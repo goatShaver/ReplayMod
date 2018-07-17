@@ -113,8 +113,8 @@ public class ReplayHandler {
 
         // RAh - moving to below FML_BUS.post(new ReplayOpenEvent.Post(this));
 
-		// RAH, by commenting this out, we don't go into asyncmode - not sure consequences
-        //replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
+        replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
+		replaySender.setSpeed(0);
 
 		// RAH - dumb idea?
 		// Query replaySender for entity, once we have a non-zero value, set it
