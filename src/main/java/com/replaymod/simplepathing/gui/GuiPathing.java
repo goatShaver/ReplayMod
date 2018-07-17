@@ -473,14 +473,17 @@ public class GuiPathing {
 			}
 		}
 
-		//ReplayHandler.getReplaySender().setReplaySpeed(0.0);
-		// Need to look at synctimebuttonPressed () for more details - I'm probably confusing keyframe time/cursor
-		// probably have to do jump....
+		// For some reason, I can't get the currentTimeStamp() to move - setCursorPosition is not sufficient, doJump is not doing what is expected
+
+
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
+		replayHandler.getReplaySender().setReplaySpeed(0);
 		timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
+		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		//timeline.setCursorPosition(startTime_ms);
+		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
+		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		
