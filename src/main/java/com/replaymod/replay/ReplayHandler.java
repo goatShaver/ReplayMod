@@ -407,8 +407,7 @@ public class ReplayHandler {
             }
         }
 
-        //long diff = targetTime - replaySender.getDesiredTimestamp();
-		long diff = targetTime - replaySender.currentTimeStamp(); // RAH - Trying it with currentTimeStamp because this seems to make more sense and above doesn't work as advertised
+        long diff = targetTime - replaySender.getDesiredTimestamp();
 		LogManager.getLogger().debug("RAH: diff " + diff);
         if (diff != 0) {
             if (diff > 0 && diff < 5000) { // Small difference and no time travel
