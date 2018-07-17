@@ -115,7 +115,7 @@ public class ReplayHandler {
 
         //replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
 		replaySender.setAsyncMode(false); 
-		replaySender.doJump(100);
+		doJump(100);
 
 		// RAH - dumb idea?
 		// Query replaySender for entity, once we have a non-zero value, set it
