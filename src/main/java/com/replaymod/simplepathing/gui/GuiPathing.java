@@ -476,8 +476,9 @@ public class GuiPathing {
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		replayHandler.doJump(5000,true);
-		timeline.setCursorPosition(startTime_ms);
+		//timeline.setCursorPosition(startTime_ms);
+		replayHandler.doJump(endTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		timeline.setCursorPosition(endTime_ms);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		
