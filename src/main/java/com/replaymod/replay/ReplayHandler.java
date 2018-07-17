@@ -388,12 +388,12 @@ public class ReplayHandler {
     }
 
     public void doJump(int targetTime, boolean retainCameraPosition) {
-		LogManager.getLogger().debug("RAH: doJump " + targetTime + "RetainCameraPosition " + retainCameraPosition + "hurrying: " + replaySender.isHurrying());
+		LogManager.getLogger().debug("RAH: doJump " + targetTime + " RetainCameraPosition-> " + retainCameraPosition + " hurrying-> " + replaySender.isHurrying());
         if (replaySender.isHurrying()) {
             return; // When hurrying, no Timeline jumping etc. is possible
         }
 
-		LogManager.getLogger().debug("RAH: targetTime " + targetTime + "currentTimeStamp() " + replaySender.currentTimeStamp());
+		LogManager.getLogger().debug("RAH: targetTime-> " + targetTime + " currentTimeStamp-> " + replaySender.currentTimeStamp() + " desiredTimestamp-> " + replaySender.getDesiredTimestamp());
         if (targetTime < replaySender.currentTimeStamp()) {
             mc.displayGuiScreen(null);
         }
@@ -409,7 +409,7 @@ public class ReplayHandler {
         }
 
         long diff = targetTime - replaySender.getDesiredTimestamp();
-		LogManager.getLogger().debug("RAH: doJump diff " + diff);
+		LogManager.getLogger().debug("RAH: diff " + diff);
         if (diff != 0) {
             if (diff > 0 && diff < 5000) { // Small difference and no time travel
                 replaySender.jumpToTime(targetTime);
