@@ -488,6 +488,7 @@ public class GuiPathing {
 		updateKeyframe(SPPath.POSITION);
 		//replayHandler.getReplaySender().setReplaySpeed(0);
 
+		int i = 0;
 		for (i=0;i<5;i++) {
 			try {
 				Thread.sleep(1000);
