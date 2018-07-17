@@ -476,16 +476,21 @@ public class GuiPathing {
 		// Need to look at synctimebuttonPressed () for more details - I'm probably confusing keyframe time/cursor
 		// probably have to do jump....
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
-		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		timeline.setCursorPosition(startTime_ms);
+		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition);
+		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		//timeline.setCursorPosition(startTime_ms);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		
 
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + endTime_ms);
-		replayHandler.doJump(endTime_ms,true);
 		timeline.setCursorPosition(endTime_ms);
+		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition);
+		replayHandler.doJump(endTime_ms,true);
+		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
+		//timeline.setCursorPosition(endTime_ms);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		
@@ -692,7 +697,7 @@ public class GuiPathing {
 
         int time = timeline.getCursorPosition();
         SPTimeline timeline = mod.getCurrentTimeline();
-		LOGGER.debug("Updating keyframe on path {}" + path + "@" + time);
+		LOGGER.debug("Updating keyframe on path {}" + path + "@ " + time);
 
         switch (path) {
             case TIME:
