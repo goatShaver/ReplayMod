@@ -132,8 +132,8 @@ public class GuiPathing {
 			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.display();
 			LOGGER.debug("Setting up renderer and then rendering the file");
-			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			renderSettings.doRender();
+			//noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			//renderSettings.doRender();
 
 			// RAH end
         }
