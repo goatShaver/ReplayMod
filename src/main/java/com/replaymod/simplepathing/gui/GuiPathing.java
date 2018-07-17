@@ -110,7 +110,7 @@ public class GuiPathing {
         @Override
         public void run() {
 
-			//initKeyFrames(); // RAH - before doing render, set start/stop keyframes
+			initKeyFrames(); // RAH - before doing render, set start/stop keyframes
 
 
             if (!preparePathsForPlayback()) return;
