@@ -485,7 +485,7 @@ public class GuiPathing {
 		//timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position. Should be true
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
+		replayHandler.getReplaySender().setReplaySpeed(1);
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -495,7 +495,6 @@ public class GuiPathing {
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
-		replayHandler.getReplaySender().setReplaySpeed(0);
 
 
 		
@@ -503,8 +502,8 @@ public class GuiPathing {
 		
 		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
 		//timeline.setCursorPosition(endTime_ms);
-		replayHandler.doJump(endTime_ms,true); // This is where everything fails - for some unknown reason
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
+		replayHandler.doJump(timeline.getCursorPosition() + 1000,true); // This is where everything fails - for some unknown reason
+		replayHandler.getReplaySender().setReplaySpeed(1);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
