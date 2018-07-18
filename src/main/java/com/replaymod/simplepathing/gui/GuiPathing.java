@@ -455,7 +455,6 @@ public class GuiPathing {
 
 		int startTime_ms = 0;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
-		//int endTime_ms = 30000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 
 		// Step 1
@@ -483,7 +482,7 @@ public class GuiPathing {
 		
 		// Step 2
 		//timeline.setCursorPosition(startTime_ms);
-		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
+		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position. Should be true
 		replayHandler.getReplaySender().setReplaySpeed(1);
 		try {
@@ -496,14 +495,13 @@ public class GuiPathing {
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 
-
 		
 		// Position cursor at end of playback so we can get camera parameters there
-		
 		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
+		endTime_ms = replayHandler.getReplaySender().currentTimeStamp() + 2000;
 		//timeline.setCursorPosition(endTime_ms);
-		replayHandler.doJump(timeline.getCursorPosition() + 1000,true); // This is where everything fails - for some unknown reason
-		replayHandler.getReplaySender().setReplaySpeed(1);
+		replayHandler.doJump(endTime_ms,true);
+		replayHandler.getReplaySender().setReplaySpeed(	1);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
