@@ -479,7 +479,7 @@ public class GuiPathing {
 			}
 		}
 
-		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
+		LOGGER.debug("RAH adding TIME/POSTIION keyframe @ " + startTime_ms);
 		
 		// Step 2
 		//timeline.setCursorPosition(startTime_ms);
