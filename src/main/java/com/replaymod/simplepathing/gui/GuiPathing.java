@@ -454,7 +454,8 @@ public class GuiPathing {
 		//        repeat 2 and 3 for end of file
 
 		int startTime_ms = 0;
-		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		//int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		int endTime_ms = 30000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 		//int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
