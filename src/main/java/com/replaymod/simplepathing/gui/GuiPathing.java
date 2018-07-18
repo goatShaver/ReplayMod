@@ -478,28 +478,29 @@ public class GuiPathing {
 			}
 		}
 
-		LOGGER.debug("RAH adding TIME/POSTIION keyframe @ " + startTime_ms);
+		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + startTime_ms);
 		
 		// Step 2
-		//timeline.setCursorPosition(startTime_ms);
+		timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position. Should be true
 		replayHandler.getReplaySender().setReplaySpeed(1);
 		try {
-			Thread.sleep(100);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			logger.debug(e);
 			return;
 		}
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
+		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 
 		
 		// Position cursor at end of playback so we can get camera parameters there
-		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
 		endTime_ms = replayHandler.getReplaySender().currentTimeStamp() + 2000;
-		//timeline.setCursorPosition(endTime_ms);
+		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + endTime_ms + "currentTimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
+		timeline.setCursorPosition(endTime_ms);
 		replayHandler.doJump(endTime_ms,true);
 		replayHandler.getReplaySender().setReplaySpeed(	1);
 		try {
@@ -508,6 +509,7 @@ public class GuiPathing {
 			logger.debug(e);
 			return;
 		}
+		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 		replayHandler.getReplaySender().setReplaySpeed(0);
