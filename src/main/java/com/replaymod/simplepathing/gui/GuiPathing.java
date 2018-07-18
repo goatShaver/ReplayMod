@@ -453,7 +453,7 @@ public class GuiPathing {
 		//        3.) updateKeyframe for time and Position 
 		//        repeat 2 and 3 for end of file
 
-		int startTime_ms = 100;
+		int startTime_ms = 0;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 		//int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
@@ -494,7 +494,7 @@ public class GuiPathing {
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
-			Thread.sleep(30);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			logger.debug(e);
 			return;
