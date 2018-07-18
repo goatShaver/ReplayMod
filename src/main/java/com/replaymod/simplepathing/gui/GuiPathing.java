@@ -484,7 +484,8 @@ public class GuiPathing {
 		// Step 2
 		timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		overlay.getTimeline().onCick().run(startTime_ms);
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
 			Thread.sleep(100);
@@ -495,6 +496,8 @@ public class GuiPathing {
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
+		replayHandler.getReplaySender().setReplaySpeed(0.1);
+
 
 		int i = 0;
 		for (i=0;i<5;i++) {
@@ -507,6 +510,7 @@ public class GuiPathing {
 			LOGGER.debug("\tcurrentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		}
 
+		/*
 		// Position cursor at end of playback so we can get camera parameters there
 		
 		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
@@ -521,6 +525,7 @@ public class GuiPathing {
 		}
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
+		*/
 	}
 
 	// RAH, brought in from another package
