@@ -492,7 +492,7 @@ public class GuiPathing {
 		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
 		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
+		replayHandler.getReplaySender().setReplaySpeed(1);
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -503,6 +503,7 @@ public class GuiPathing {
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 
+		replayHandler.getReplaySender().setReplaySpeed(1);
 		int i = 0;
 		for (i=0;i<5;i++) {
 			try {
@@ -520,7 +521,7 @@ public class GuiPathing {
 		timeline.setCursorPosition(endTime_ms);
 		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
 		replayHandler.doJump(endTime_ms,true);
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
+		replayHandler.getReplaySender().setReplaySpeed(1);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
