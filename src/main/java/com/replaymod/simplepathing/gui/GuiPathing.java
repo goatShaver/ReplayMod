@@ -112,7 +112,7 @@ public class GuiPathing {
 
 			initKeyFrames(); // RAH - before doing render, set start/stop keyframes
 
-
+			/*
             if (!preparePathsForPlayback()) return;
 
             // Clone the timeline passed to the settings gui as it may be stored for later rendering in a queue
@@ -134,7 +134,7 @@ public class GuiPathing {
 			LOGGER.debug("Setting up renderer and then rendering the file");
 			//noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.doRender();
-
+			*/
 			// RAH end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
@@ -454,8 +454,8 @@ public class GuiPathing {
 		//        repeat 2 and 3 for end of file
 
 		int startTime_ms = 0;
-		//int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
-		int endTime_ms = 30000; // In case there are complications, cut last second off
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		//int endTime_ms = 30000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 
 		// Step 1
@@ -484,7 +484,7 @@ public class GuiPathing {
 		// Step 2
 		//timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
+		replayHandler.doJump(startTime_ms,true); // true means maintain camera position. Should be true
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
 			Thread.sleep(100);
@@ -495,21 +495,10 @@ public class GuiPathing {
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
+		replayHandler.getReplaySender().setReplaySpeed(0);
 
 
-		int i = 0;
-		for (i=0;i<5;i++) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				logger.debug(e);
-				return;
-			}
-			LOGGER.debug("\tcurrentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
-		}
-
-		/*
+		
 		// Position cursor at end of playback so we can get camera parameters there
 		
 		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
@@ -524,7 +513,7 @@ public class GuiPathing {
 		}
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
-		*/
+		replayHandler.getReplaySender().setReplaySpeed(0);
 	}
 
 	// RAH, brought in from another package
