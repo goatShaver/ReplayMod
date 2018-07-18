@@ -454,7 +454,7 @@ public class GuiPathing {
 		//        repeat 2 and 3 for end of file
 
 		int startTime_ms = 0;
-		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
 		//int endTime_ms = 30000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 
@@ -502,7 +502,7 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		
 		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
-		timeline.setCursorPosition(endTime_ms);
+		//timeline.setCursorPosition(endTime_ms);
 		replayHandler.doJump(endTime_ms,true); // This is where everything fails - for some unknown reason
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
