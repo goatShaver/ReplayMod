@@ -126,10 +126,7 @@ public class GuiReplayOverlay extends AbstractGuiOverlay<GuiReplayOverlay> {
             }
         }).setValue(9);
 
-		// RAH added function
-		public void click(int time) {
-			timeline.onClick().run(time);
-		}
+
 
         timeline.onClick(new IGuiTimeline.OnClick() {
             @Override
@@ -139,6 +136,11 @@ public class GuiReplayOverlay extends AbstractGuiOverlay<GuiReplayOverlay> {
             }
         }).setLength(replayHandler.getReplaySender().replayLength());
     }
+
+	// RAH added function
+	public void click(int time) {
+		timeline.onClick().run(time);
+	}
 
     public double getSpeedSliderValue() {
         int value = speedSlider.getValue() + 1;
