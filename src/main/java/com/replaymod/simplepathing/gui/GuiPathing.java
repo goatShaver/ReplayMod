@@ -457,8 +457,6 @@ public class GuiPathing {
 		//int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int endTime_ms = 30000; // In case there are complications, cut last second off
 		int spectatedId = -1;
-		//int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
-		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
 		// Step 1
 		// - This code foolishly assumes only 1 player per world --- or it takes the first player
@@ -471,29 +469,23 @@ public class GuiPathing {
 		//Collections.sort(players, new PlayerComparator()); // Sort by name, spectators last
 		for (final EntityPlayer p : players) {
 			LOGGER.debug("Players");
-			replayHandler.spectateEntity(p);
-
-			//if (!replayHandler.isCameraView()) {
-			//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
-			//}
 			if (spectatedId < 0) 
 			{
+				replayHandler.spectateEntity(p);
+				//if (!replayHandler.isCameraView()) {
+				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+				//}
 				spectatedId = p.getEntityId();
-				LOGGER.debug("EntityID:" + spectatedId);
 			}
 		}
-
-		// For some reason, I can't get the currentTimeStamp() to move - setCursorPosition is not sufficient, doJump is not doing what is expected
-
 
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
 		
 		// Step 2
 		timeline.setCursorPosition(startTime_ms);
-		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
-		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
+		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		replayHandler.getReplaySender().setReplaySpeed(1);
+		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
@@ -504,7 +496,6 @@ public class GuiPathing {
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 
-		replayHandler.getReplaySender().setReplaySpeed(1);
 		int i = 0;
 		for (i=0;i<5;i++) {
 			try {
@@ -513,23 +504,21 @@ public class GuiPathing {
 				logger.debug(e);
 				return;
 			}
-			LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
+			LOGGER.debug("\tcurrentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		}
 
 		// Position cursor at end of playback so we can get camera parameters there
-		// This is where everything fails
-		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + endTime_ms);
+		
+		LOGGER.debug("\tAdding new TIME/POSTIION keyframe @ " + endTime_ms + "getCursorPosition-> " + timeline.getCursorPosition());
 		timeline.setCursorPosition(endTime_ms);
-		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
-		replayHandler.doJump(endTime_ms,true);
-		replayHandler.getReplaySender().setReplaySpeed(1);
+		replayHandler.doJump(endTime_ms,true); // This is where everything fails - for some unknown reason
+		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			logger.debug(e);
 			return;
 		}
-		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
 	}
