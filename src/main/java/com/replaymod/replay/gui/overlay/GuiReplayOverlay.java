@@ -21,6 +21,9 @@ import org.lwjgl.util.ReadableDimension;
 import org.lwjgl.util.ReadablePoint;
 import org.lwjgl.util.WritablePoint;
 
+import org.apache.logging.log4j.LogManager; // RAH 
+import org.apache.logging.log4j.Logger; // RAH
+
 //#if MC>=10800
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -126,6 +129,7 @@ public class GuiReplayOverlay extends AbstractGuiOverlay<GuiReplayOverlay> {
         timeline.onClick(new IGuiTimeline.OnClick() {
             @Override
             public void run(int time) {
+				LogManager.getLogger().debug("RAH: OnClick.run().doJump-> "+time);
                 replayHandler.doJump(time, true);
             }
         }).setLength(replayHandler.getReplaySender().replayLength());
