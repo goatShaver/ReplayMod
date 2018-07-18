@@ -132,8 +132,8 @@ public class GuiReplayOverlay extends AbstractGuiOverlay<GuiReplayOverlay> {
             @Override
             public void run(int time) {
 				LogManager.getLogger().debug("RAH: OnClick.run().doJump-> "+time);
-				throw new ArithmeticException("Throwing this so we can see path to this function."); 
                 replayHandler.doJump(time, true);
+				throw new ArithmeticException("Throwing this so we can see path to this function."); 
             }
         }).setLength(replayHandler.getReplaySender().replayLength());
     }
