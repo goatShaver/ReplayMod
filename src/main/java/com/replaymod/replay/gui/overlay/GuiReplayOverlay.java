@@ -126,6 +126,11 @@ public class GuiReplayOverlay extends AbstractGuiOverlay<GuiReplayOverlay> {
             }
         }).setValue(9);
 
+		// RAH added function
+		public void click(int time) {
+			timeline.onClick().run(time);
+		}
+
         timeline.onClick(new IGuiTimeline.OnClick() {
             @Override
             public void run(int time) {
