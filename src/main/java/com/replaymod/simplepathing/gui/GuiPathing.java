@@ -132,8 +132,8 @@ public class GuiPathing {
 			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.display();
 			LOGGER.debug("Setting up renderer and then rendering the file");
-			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			renderSettings.doRender();
+			//noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			//renderSettings.doRender();
 
 			// RAH end
         }
@@ -522,7 +522,7 @@ public class GuiPathing {
 		replayHandler.doJump(endTime_ms,true);
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
-			Thread.sleep(50);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			logger.debug(e);
 			return;
