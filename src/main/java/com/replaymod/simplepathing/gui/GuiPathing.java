@@ -482,10 +482,9 @@ public class GuiPathing {
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
 		
 		// Step 2
-		timeline.setCursorPosition(startTime_ms);
+		//timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		timeline.run(startTime_ms);
+		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
 			Thread.sleep(100);
