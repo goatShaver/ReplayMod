@@ -485,7 +485,7 @@ public class GuiPathing {
 		timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\tgetCursorPosition-> " + timeline.getCursorPosition() + "timeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		//replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		replayHandler.getOverlay().getTimeline().onCick().run(startTime_ms);
+		replayHandler.getOverlay().timeline.onCick().run(startTime_ms);
 		replayHandler.getReplaySender().setReplaySpeed(0.1);
 		try {
 			Thread.sleep(100);
