@@ -494,7 +494,7 @@ public class GuiPathing {
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
 		replayHandler.getReplaySender().setReplaySpeed(0.01);
 		try {
-			Thread.sleep(30);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			logger.debug(e);
 			return;
