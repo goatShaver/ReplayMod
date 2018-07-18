@@ -445,13 +445,22 @@ public class GuiPathing {
 	**/
 	public void initKeyFrames() {
 
+		// Trying to set keyframes for automation.
+		// Not setting keyframes at very edge in case there are boundary issues - or start -up issues
+		// Steps:
+		//        1.) Spectate the first player that comes up
+		//        2.) Set currentTimeStamp to beginning of the video - use doJump for this - doJump won't update until it plays so setReplaySpeed to non zero before updateKeyframe
+		//        3.) updateKeyframe for time and Position 
+		//        repeat 2 and 3 for end of file
+
 		int startTime_ms = 100;
 		int endTime_ms = replayHandler.getReplaySender().replayLength()-1000; // In case there are complications, cut last second off
 		int spectatedId = -1;
 		//int spectatedId = replayHandler.getReplaySender().getPlayerId(); // Return the Id of the player so we can spectate them
 		//SPTimeline tmpTimeline = mod.getCurrentTimeline();
 
-		// - This code foolishly assumes only 1 player per world --- 
+		// Step 1
+		// - This code foolishly assumes only 1 player per world --- or it takes the first player
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -478,23 +487,21 @@ public class GuiPathing {
 
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + startTime_ms);
 		
+		// Step 2
 		timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
 		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		replayHandler.doJump(startTime_ms,true); // true means maintain camera position = not sure if it should be true or false
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
-					try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {
-				logger.debug(e);
-				return;
-			}
-
-		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
-		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
+		replayHandler.getReplaySender().setReplaySpeed(0.01);
+		try {
+			Thread.sleep(30);
+		} catch (InterruptedException e) {
+			logger.debug(e);
+			return;
+		}
+		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
-		replayHandler.getReplaySender().setReplaySpeed(1);
 
 		int i = 0;
 		for (i=0;i<5;i++) {
@@ -507,30 +514,25 @@ public class GuiPathing {
 			LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
 		}
 
-
-		
-		
 		// Position cursor at end of playback so we can get camera parameters there
+		// This is where everything fails
 		LOGGER.debug("RAH Manually adding new TIME/POSTIION keyframe @ " + endTime_ms);
 		timeline.setCursorPosition(endTime_ms);
 		LOGGER.debug("RAH: getCursorPosition: " + timeline.getCursorPosition());
 		replayHandler.doJump(endTime_ms,true);
-		replayHandler.getReplaySender().setReplaySpeed(0.1);
-					try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {
-				logger.debug(e);
-				return;
-			}
+		replayHandler.getReplaySender().setReplaySpeed(0.01);
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			logger.debug(e);
+			return;
+		}
 		LOGGER.debug("RAH: currentTimeStamp: " + replayHandler.getReplaySender().currentTimeStamp());
-		//timeline.setCursorPosition(endTime_ms);
 		updateKeyframe(SPPath.TIME);
 		updateKeyframe(SPPath.POSITION);
-		
-		
 	}
 
-	// RAH, brought in from another module
+	// RAH, brought in from another package
 	private static boolean isSpectator(EntityPlayer e) {
         //#if MC>=10904
         return e.isInvisible() && e.getActivePotionEffect(MobEffects.INVISIBILITY) == null;
