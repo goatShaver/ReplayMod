@@ -453,9 +453,9 @@ public class GuiPathing {
 		//        3.) updateKeyframe for time and Position 
 		//        repeat 2 and 3 for end of file
 
-		int startTime_ms = 40000;
-		//int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
-		int endTime_ms =   80000;
+		int startTime_ms = 100;
+		int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
+		//int endTime_ms =   80000;
 		int spectatedId = -1;
 
 		// Step 1
