@@ -115,6 +115,9 @@ public class ReplaySender extends ChannelDuplexHandler {
             //#endif
     );
 
+	//RAH
+	private int automationInitialization = false;
+
     private static int TP_DISTANCE_LIMIT = 128;
 
     /**
@@ -869,6 +872,11 @@ public class ReplaySender extends ChannelDuplexHandler {
                                     // Pause after jumping
                                     setReplaySpeed(0);
                                 }
+								// RAH 
+								if (!isHurring() && lastTimeStamp > 100 && !automationInitialization) {
+									replayHandler.startedReplay();
+									automationInitialization = true;
+								}
                             } catch (EOFException eof) {
                                 // Reached end of file
                                 // Pause the replay which will cause it to freeze before getting restarted
