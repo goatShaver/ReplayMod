@@ -206,9 +206,9 @@ public class GuiHandler {
             if (getButton(event).id == BUTTON_REPLAY_VIEWER) {
 				LOGGER.debug("Main Menu Replay Viewer Button Press");
 				// RAH - we can bypass guiReplayViewer completely
-				guiReplayViewer = new GuiReplayViewer(mod);
-				guiReplayViewer.display(); // RAH - added variable and made it a member variable
-				//processFile();
+				//guiReplayViewer = new GuiReplayViewer(mod);
+				//guiReplayViewer.display(); // RAH - added variable and made it a member variable
+				processFile();
 				// RAH, this doesn't work because we are not the MC thread.
 				//delayedClick(5000); // RAH - after a few seconds, load the selected item - which is the first file
 				//guiReplayViewer.loadButton.onClick();
