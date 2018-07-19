@@ -112,7 +112,7 @@ public class GuiPathing {
 
 			initKeyFrames(); // RAH - before doing render, set start/stop keyframes
 
-			/*
+			
             if (!preparePathsForPlayback()) return;
 
             // Clone the timeline passed to the settings gui as it may be stored for later rendering in a queue
@@ -132,9 +132,9 @@ public class GuiPathing {
 			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			//renderSettings.display();
 			LOGGER.debug("Setting up renderer and then rendering the file");
-			//noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			//renderSettings.doRender();
-			*/
+			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			renderSettings.doRender();
+			
 			// RAH end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
@@ -765,7 +765,7 @@ public class GuiPathing {
                     mod.setSelected(null, 0);
                 } else {
                     LOGGER.debug("No time keyframe found -> adding new keyframe");
-                    timeline.addTimeKeyframe(time, currentTimeStamp);
+                    timeline.addTimeKeyframe(time, currentTimeStamp	);
                     mod.setSelected(path, time);
                 }
                 break;
