@@ -437,8 +437,7 @@ public class GuiPathing {
 
     }
 
-	// RAH
-	/**
+	/** RAH - all new
 	* This is for automation, set keyframes (time and position) so this file can be rendered
 	* It is called from renderButton.run() - at that point in the code, the framework is loaded and available to query
 	*
@@ -446,20 +445,19 @@ public class GuiPathing {
 	public void initKeyFrames() {
 
 		// Trying to set keyframes for automation.
-		// Not setting keyframes at very edge in case there are boundary issues - or start -up issues
 		// Steps:
 		//        1.) Spectate the first player that comes up
-		//        2.) Set currentTimeStamp to beginning of the video - use doJump for this - doJump won't update until it plays so setReplaySpeed to non zero before updateKeyframe
+		//        2.) Set currentTimeStamp to beginning of the video
 		//        3.) updateKeyframe for time and Position 
 		//        repeat 2 and 3 for end of file
 
-		int startTime_ms = 100;
-		int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
-		//int endTime_ms =   80000;
-		int spectatedId = -1;
+		LOGGER.debug("-------------------------------------------------------------------------");
+		int startTime_ms = 0; // This is set below
+		int endTime_ms = replayHandler.getReplaySender().replayLength()- 3000; // 3 seconds, because after a jump, we need to play some and I want some cushion
+		int spectatedId = -1; // This is set below
 
 		// Step 1
-		// - This code foolishly assumes only 1 player per world --- or it takes the first player
+		// - This code foolishly takes the first player
         List<EntityPlayer> players = world(replayHandler.getOverlay().getMinecraft()).getPlayers(EntityPlayer.class, new Predicate() {
             @Override
             public boolean apply(Object input) {
@@ -476,26 +474,19 @@ public class GuiPathing {
 				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 				//}
 				spectatedId = p.getEntityId();
-				LOGGER.debug("SpectatedId-> " + spectatedId);
+				LOGGER.debug("\tSpectatedId-> " + spectatedId);
 			}
 		}
-
-		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + startTime_ms);
 		
 		// Step 2
 		//timeline.setCursorPosition(startTime_ms);
 		//replayHandler.doJump(startTime_ms,false);
-		startTime_ms = replayHandler.getReplaySender().currentTimeStamp();
+
+		// Set the start of the render at the current position - we will need to reserve this time somewhere so we can use it in the filename
 		replayHandler.getReplaySender().setReplaySpeed(0);
+		startTime_ms = replayHandler.getReplaySender().currentTimeStamp();
 		timeline.setCursorPosition(0);
-		/*
-		try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-				logger.debug(e);
-                return;
-        }
-		*/
+
 
 		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		//replayHandler.doJump(starTime_ms,false); // true means maintain camera position. Should be true
@@ -508,7 +499,6 @@ public class GuiPathing {
 
 		
 		// Position cursor at end of playback so we can get camera parameters there
-		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + endTime_ms + "currentTimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		timeline.setCursorPosition(endTime_ms);
 		replayHandler.doJump(endTime_ms,false);
 		replayHandler.getReplaySender().setReplaySpeed(1);
@@ -521,10 +511,9 @@ public class GuiPathing {
 
 		replayHandler.getReplaySender().setReplaySpeed(0);
 		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		updateKeyframe(SPPath.TIME); // ,(endTime_ms - startTime_ms));
-		updateKeyframe(SPPath.POSITION,spectatedId); // ,(endTime_ms - startTime_ms));
-		//replayHandler.getReplaySender().setReplaySpeed(0);
-		
+		updateKeyframe(SPPath.TIME); 
+		updateKeyframe(SPPath.POSITION,spectatedId); 
+		LOGGER.debug("-------------------------------------------------------------------------");
 	}
 
 	// RAH, brought in from another package
