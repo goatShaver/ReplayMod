@@ -92,7 +92,6 @@ public class ReplayHandler {
 
     private EmbeddedChannel channel;
 
-
     /**
      * The position at which the camera should be located after the next jump.
      */
@@ -106,7 +105,7 @@ public class ReplayHandler {
 
         FML_BUS.post(new ReplayOpenEvent.Pre(this));
 
-        markers = new ArrayList<>(replayFile.getMarkers().or(Collections.r
+		markers = new ArrayList<>(replayFile.getMarkers().or(Collections.emptySet()));
         replaySender = new ReplaySender(this, replayFile, false);
 
         setup();
