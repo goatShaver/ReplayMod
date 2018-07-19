@@ -133,7 +133,7 @@ public class GuiPathing {
 			//renderSettings.display();
 			LOGGER.debug("Setting up renderer and then rendering the file");
 			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			renderSettings.doRender();
+			renderSettings.doRender(renderStartTime_ms,renderEndTime_ms);
 			
 			// RAH end
         }
@@ -295,6 +295,8 @@ public class GuiPathing {
     private EntityPositionTracker entityTracker;
     private Consumer<Double> entityTrackerLoadingProgress;
     private SettableFuture<Void> entityTrackerFuture;
+	private int renderStartTime_ms = 0; // RAH
+	private int renderEndTime_ms = 0; // RAH
 
     public GuiPathing(final ReplayMod core, final ReplayModSimplePathing mod, final ReplayHandler replayHandler) {
         this.core = core;
@@ -487,7 +489,8 @@ public class GuiPathing {
 		replayHandler.getReplaySender().setReplaySpeed(0);
 		startTime_ms = replayHandler.getReplaySender().currentTimeStamp();
 		timeline.setCursorPosition(0);
-
+		renderStartTime_ms = startTime_ms;
+	
 
 		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		//replayHandler.doJump(starTime_ms,false); // true means maintain camera position. Should be true
@@ -511,7 +514,7 @@ public class GuiPathing {
 				logger.debug(e);
                 return;
         }
-
+		renderEndTime_ms = replayHandler.getReplaySender().currentTimeStamp();
 		replayHandler.getReplaySender().setReplaySpeed(0);
 		updateKeyframe(SPPath.TIME); 
 		updateKeyframe(SPPath.POSITION,spectatedId); 
