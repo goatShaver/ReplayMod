@@ -26,6 +26,9 @@ import org.lwjgl.opengl.Display;
 import java.io.IOException;
 import java.util.*;
 
+import org.apache.logging.log4j.LogManager; // RAH
+import org.apache.logging.log4j.Logger; // RAH
+
 //#if MC>=10800
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -136,14 +139,14 @@ public class ReplayHandler {
 		// RAH end
 
 		// RAH - begin
-		LOGGER.debug("Attempting to launch buttons after setting asyncMode");
+		LogManager.getLogger().debug("Attempting to launch buttons after setting asyncMode");
 		try {
 			Thread.sleep(6000);
 		} catch (InterruptedException e) {
-			LOGGER.debug(e);
+			LogManager.getLogger().debug(e);
 			return;
 		}
-		LOGGER.debug("Video should be playing by now");
+		LogManager.getLogger().debug("Video should be playing by now");
 		// RAH - end
     }
 
