@@ -80,7 +80,7 @@ public class ReplayModSimplePathing {
 		//guiPathing.playPauseButton.onClick();
 		//delayedClick(5000); // RAH
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
 			return;
