@@ -134,6 +134,17 @@ public class ReplayHandler {
 
 		//FML_BUS.post(new ReplayOpenEvent.Post(this));
 		// RAH end
+
+		// RAH - begin
+		LOGGER.debug("Attempting to launch buttons after setting asyncMode");
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e) {
+			LOGGER.debug(e);
+			return;
+		}
+		LOGGER.debug("Video should be playing by now");
+		// RAH - end
     }
 
     void restartedReplay() {
