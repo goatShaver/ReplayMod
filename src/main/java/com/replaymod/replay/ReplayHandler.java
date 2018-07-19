@@ -92,6 +92,8 @@ public class ReplayHandler {
 
     private EmbeddedChannel channel;
 
+	private boolean 
+
     /**
      * The position at which the camera should be located after the next jump.
      */
@@ -105,8 +107,7 @@ public class ReplayHandler {
 
         FML_BUS.post(new ReplayOpenEvent.Pre(this));
 
-        markers = new ArrayList<>(replayFile.getMarkers().or(Collections.emptySet()));
-
+        markers = new ArrayList<>(replayFile.getMarkers().or(Collections.r
         replaySender = new ReplaySender(this, replayFile, false);
 
         setup();
@@ -116,39 +117,20 @@ public class ReplayHandler {
 
         FML_BUS.post(new ReplayOpenEvent.Post(this));
 
-        replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
-		//replaySender.setReplaySpeed(0.01);
-		/*
-		// RAH - dumb idea?
-		// Query replaySender for entity, once we have a non-zero value, set it
-		int playerID = -1;
-		while (playerID < 0 ) {
-			playerID = replaySender.getPlayerId();
-			if (playerID < 0)
-			try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-					logger.debug(e);
-                    return;
-                }
-		}
-		//spectateEntity(e);
-		*/
+        replaySender.setAsyncMode(asyncMode);
 
-		//FML_BUS.post(new ReplayOpenEvent.Post(this));
-		// RAH end
-
-		// RAH - begin
-		LogManager.getLogger().debug("Attempting to launch buttons after setting asyncMode");
-		try {
-			Thread.sleep(6000);
-		} catch (InterruptedException e) {
-			LogManager.getLogger().debug(e);
-			return;
-		}
-		LogManager.getLogger().debug("Video should be playing by now");
-		// RAH - end
+		// RAH This function has to return - it is blocking 
     }
+
+
+	/** RAH - 
+	* Planning to have replaySender call this function once replay begins
+	*
+	**/
+
+	void startedReplay() {
+		LogManager.getLogger().debug("Video is playing per replaySender");
+	}
 
     void restartedReplay() {
         channel.close();
