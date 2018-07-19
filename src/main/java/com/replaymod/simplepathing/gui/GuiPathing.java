@@ -765,7 +765,7 @@ public class GuiPathing {
                     mod.setSelected(null, 0);
                 } else {
                     LOGGER.debug("No time keyframe found -> adding new keyframe");
-                    timeline.addTimeKeyframe(time, currentTimeStamp());
+                    timeline.addTimeKeyframe(time, currentTimeStamp);
                     mod.setSelected(path, time);
                 }
                 break;
