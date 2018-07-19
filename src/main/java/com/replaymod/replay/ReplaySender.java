@@ -116,7 +116,7 @@ public class ReplaySender extends ChannelDuplexHandler {
     );
 
 	//RAH
-	private int automationInitialization = false;
+	private boolean automationInitialization = false;
 
     private static int TP_DISTANCE_LIMIT = 128;
 
@@ -873,7 +873,7 @@ public class ReplaySender extends ChannelDuplexHandler {
                                     setReplaySpeed(0);
                                 }
 								// RAH 
-								if (!isHurring() && lastTimeStamp > 100 && !automationInitialization) {
+								if (!isHurrying() && lastTimeStamp > 100 && !automationInitialization) {
 									replayHandler.startedReplay();
 									automationInitialization = true;
 								}
