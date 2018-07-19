@@ -75,9 +75,8 @@ public class ReplayModSimplePathing {
     @SubscribeEvent
     public void postReplayOpen(ReplayOpenEvent.Post event) {
         clearCurrentTimeline();
-		LOGGER.debug("RAH: Lauching guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		delayedClick(10000); // RAH
+		//delayedClick(10000); // RAH - this allows the event to return, however the new thread doesn't have necessary pieces to launch - must be same thread
     }
 
 	// RAH 
