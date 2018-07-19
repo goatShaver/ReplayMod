@@ -112,7 +112,6 @@ public class GuiPathing {
 
 			initKeyFrames(); // RAH - before doing render, set start/stop keyframes
 
-			
             if (!preparePathsForPlayback()) return;
 
             // Clone the timeline passed to the settings gui as it may be stored for later rendering in a queue
