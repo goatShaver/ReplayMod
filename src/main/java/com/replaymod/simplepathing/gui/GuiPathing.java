@@ -127,15 +127,12 @@ public class GuiPathing {
                 return;
             }
 
-            // RAH OLD: new GuiRenderSettings(replayHandler, timeline).display();
-			// RAH - this just launched the settings gui - we might be able to call the 'onCick' button here
-			//GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
-			//renderSettings.display();
-			LOGGER.debug("Setting up renderer and then rendering the file");
+			// RAH removed - GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
+			// RAH removed - renderSettings.display();
+			// RAH Added - begin
 			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			renderSettings.doRender(renderStartTime_ms,renderEndTime_ms);
-			
-			// RAH end
+			renderSettings.doRender(renderStartTime_ms,renderEndTime_ms); // Since our rendering is not static, need render start/end relative to the whole 'file' or 'session'
+			// RAH Added - end
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
             .setTooltip(new GuiTooltip().setI18nText("replaymod.gui.ingame.menu.renderpath"));
