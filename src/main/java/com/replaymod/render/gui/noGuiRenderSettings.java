@@ -133,7 +133,7 @@ public class noGuiRenderSettings  {
 	// RAH - when removing gui, I wiped out encodingPresets BC it is part of the GUI framework - use hardcoded values
 	protected File generateOutputFile() {
 		String dateStr = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
-		String fileName = String.format("CMURL_%10d_%10d-",startTime_ms,endTime_ms) + dateStr;
+		String fileName = String.format("CMURL_%010d_%010d-",startTime_ms,endTime_ms) + dateStr;
         File folder = ReplayModRender.instance.getVideoFolder();
 		return new File(folder, fileName + ".MP4");  // No longer have encodingPreset, hardcoding to MP4
     }
