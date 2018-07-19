@@ -111,7 +111,7 @@ public class ReplayHandler {
         overlay = new GuiReplayOverlay(this);
         overlay.setVisible(true);
 
-        // RAh - moving to below FML_BUS.post(new ReplayOpenEvent.Post(this));
+        FML_BUS.post(new ReplayOpenEvent.Post(this));
 
         replaySender.setAsyncMode(asyncMode); // RAH: NB - this launches the player - it starts the player
 		//replaySender.setReplaySpeed(0.01);
@@ -132,7 +132,7 @@ public class ReplayHandler {
 		//spectateEntity(e);
 		*/
 
-		FML_BUS.post(new ReplayOpenEvent.Post(this));
+		//FML_BUS.post(new ReplayOpenEvent.Post(this));
 		// RAH end
     }
 
