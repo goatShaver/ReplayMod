@@ -92,7 +92,6 @@ public class ReplayHandler {
 
     private EmbeddedChannel channel;
 
-	private boolean 
 
     /**
      * The position at which the camera should be located after the next jump.
