@@ -453,9 +453,9 @@ public class GuiPathing {
 		//        3.) updateKeyframe for time and Position 
 		//        repeat 2 and 3 for end of file
 
-		int startTime_ms = 1000;
+		int startTime_ms = 40000;
 		//int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
-		int endTime_ms = 50000;
+		int endTime_ms = 1000000;
 		int spectatedId = -1;
 
 		// Step 1
@@ -501,6 +501,7 @@ public class GuiPathing {
 		updateKeyframe(SPPath.TIME,0);
 		updateKeyframe(SPPath.POSITION,0);
 
+		/*
 		// Position cursor at end of playback so we can get camera parameters there
 		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + endTime_ms + "currentTimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		timeline.setCursorPosition(endTime_ms);
@@ -517,6 +518,7 @@ public class GuiPathing {
 		updateKeyframe(SPPath.TIME,(endTime_ms - startTime_ms));
 		updateKeyframe(SPPath.POSITION,(endTime_ms - startTime_ms));
 		replayHandler.getReplaySender().setReplaySpeed(0);
+		*/
 	}
 
 	// RAH, brought in from another package
