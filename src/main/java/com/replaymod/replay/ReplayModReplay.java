@@ -203,16 +203,6 @@ public class ReplayModReplay {
             }
         }
         replayHandler = new ReplayHandler(replayFile, true);
-		// RAH Begin
-		LogManager.getLogger().debug("Attempting to launch buttons after setting asyncMode");
-		try {
-			Thread.sleep(6000);
-		} catch (InterruptedException e) {
-			LogManager.getLogger().debug(e);
-			return;
-		}
-		LogManager.getLogger().debug("Video should be playing by now");
-		// RAH end
     }
 
     public void forcefullyStopReplay() {
