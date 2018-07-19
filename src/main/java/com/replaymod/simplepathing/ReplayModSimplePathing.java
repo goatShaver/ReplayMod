@@ -77,18 +77,17 @@ public class ReplayModSimplePathing {
         clearCurrentTimeline();
 		LOGGER.debug("RAH: Lauching guiPathing");
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		guiPathing.playPauseButton.onClick();
+		//guiPathing.playPauseButton.onClick();
 		//delayedClick(5000); // RAH
-		/*
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			LOGGER.debug(e);
 			return;
 		}
 		LOGGER.debug("RAH: clicking render button");
-		guiPathing.renderButton.onClick();
-		*/
+		guiPathing.playPauseButton.onClick();
+		
     }
 
 	// RAH 
