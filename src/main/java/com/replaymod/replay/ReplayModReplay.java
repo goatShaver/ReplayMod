@@ -174,7 +174,6 @@ public class ReplayModReplay {
     public void init(FMLInitializationEvent event) {
         Minecraft mc = core.getMinecraft();
         mc.timer = new InputReplayTimer(mc.timer, this);
-		//LOGGER.debug("RA: registering GuiHandler");
         new GuiHandler(this).register();
     }
 
@@ -203,11 +202,7 @@ public class ReplayModReplay {
             }
         }
         replayHandler = new ReplayHandler(replayFile, true);
-		// RAH - Added this - we can pause playback or slowdown playback, however things aren't initialized yet
-		ReplaySender replaySender = replayHandler.getReplaySender();
-		//replaySender.setReplaySpeed(0.5);
-		// RAH commented out replaySender.sendPacketsTill(100);
-
+		// RAH - this is the launch point, however things aren't up so we can't do much here
     }
 
     public void forcefullyStopReplay() {
