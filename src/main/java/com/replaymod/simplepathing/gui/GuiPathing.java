@@ -455,7 +455,7 @@ public class GuiPathing {
 
 		int startTime_ms = 40000;
 		//int endTime_ms = replayHandler.getReplaySender().replayLength()-10000; // In case there are complications, cut last second off
-		int endTime_ms = 1000000;
+		int endTime_ms =   80000;
 		int spectatedId = -1;
 
 		// Step 1
@@ -476,6 +476,7 @@ public class GuiPathing {
 				//	spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
 				//}
 				spectatedId = p.getEntityId();
+				LOGGER.debug("SpectatedId-> " + spectatedId);
 			}
 		}
 
@@ -486,6 +487,7 @@ public class GuiPathing {
 		//replayHandler.doJump(startTime_ms,false);
 		startTime_ms = replayHandler.getReplaySender().currentTimeStamp();
 		replayHandler.getReplaySender().setReplaySpeed(0);
+		timeline.setCursorPosition(0);
 		/*
 		try {
                 Thread.sleep(100);
@@ -502,7 +504,7 @@ public class GuiPathing {
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME);
-		updateKeyframe(SPPath.POSITION);
+		updateKeyframe(SPPath.POSITION,spectatedId);
 
 		
 		// Position cursor at end of playback so we can get camera parameters there
@@ -520,7 +522,7 @@ public class GuiPathing {
 		replayHandler.getReplaySender().setReplaySpeed(0);
 		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME); // ,(endTime_ms - startTime_ms));
-		updateKeyframe(SPPath.POSITION); // ,(endTime_ms - startTime_ms));
+		updateKeyframe(SPPath.POSITION,spectatedId); // ,(endTime_ms - startTime_ms));
 		//replayHandler.getReplaySender().setReplaySpeed(0);
 		
 	}
@@ -768,7 +770,7 @@ public class GuiPathing {
         }
     }
 
-	private void updateKeyframe(SPPath path, int currentTimeStamp) {
+	private void updateKeyframe(SPPath path, int spectatedId) {
         if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
 
         int time = timeline.getCursorPosition();
@@ -803,11 +805,15 @@ public class GuiPathing {
                 } else {
                     LOGGER.debug("No position keyframe found -> adding new keyframe");
                     CameraEntity camera = replayHandler.getCameraEntity();
+					/*
                     int spectatedId = -1;
                     if (!replayHandler.isCameraView()) {
                         spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
                     }
-                    timeline.addPositionKeyframe(time, 0, 0, 0,0, 0,0, spectatedId);
+					*/
+                    //timeline.addPositionKeyframe(time, 0, 0, 0,0, 0,0, spectatedId);
+					timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
+                            camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
                     mod.setSelected(path, time);
                 }
                 break;
