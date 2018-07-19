@@ -130,7 +130,7 @@ public class noGuiRenderSettings  {
         return new File(folder, fileName + "." + encodingPreset.getFileExtension());
     }
 
-	// RAH - when removing gui, I wiped out encodingPresets - use hardcoded values
+	// RAH - when removing gui, I wiped out encodingPresets BC it is part of the GUI framework - use hardcoded values
 	protected File generateOutputFile() {
 		String dateStr = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
 		String fileName = String.format("CMURL_{0}_{1}-",startTime_ms,endTime_ms) + dateStr;
@@ -141,9 +141,9 @@ public class noGuiRenderSettings  {
     private RenderSettings getDefaultRenderSettings() {
 	// RAh - the null was for serialized - we are going to file only
         //return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, 1920, 1080, 60, 10 << 20, null,
-		int width = 640; // RAH - made these variables to be more easily readable
-		int height = 480;
-		int frameRate = 30;
+		int width = 320; // RAH - made these variables to be more easily readable
+		int height = 240;
+		int frameRate = 15;
 		// N.B. When bitRate was set to 10, a 1920x1080 at 60 fps resulted in a final bitRate in the file of 19,930 kbps - that is a crazy amount of data
 		int bitRate = 10; // Do know what this is, mbps, kbps - some other value? There is a shift happening - be careful
 		return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, width, height, frameRate, bitRate << 20, generateOutputFile(),
