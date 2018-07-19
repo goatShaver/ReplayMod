@@ -479,6 +479,7 @@ public class GuiPathing {
 		}
 		
 		// Step 2
+		// There were problems with doJump, so we simply take the 'current' state and use this as the 'starting' point and position the end
 		//timeline.setCursorPosition(startTime_ms);
 		//replayHandler.doJump(startTime_ms,false);
 
@@ -501,7 +502,9 @@ public class GuiPathing {
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
 		replayHandler.doJump(endTime_ms,false);
-		replayHandler.getReplaySender().setReplaySpeed(1);
+		replayHandler.getReplaySender().setReplaySpeed(1); // doJump pauses video, however internal variables aren't updated until a play happens
+		// Sleep a bit so the engine and play and update variables.
+		// Maybe we could just fix doJump?
 		try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -510,7 +513,6 @@ public class GuiPathing {
         }
 
 		replayHandler.getReplaySender().setReplaySpeed(0);
-		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		updateKeyframe(SPPath.TIME); 
 		updateKeyframe(SPPath.POSITION,spectatedId); 
 		LOGGER.debug("-------------------------------------------------------------------------");
