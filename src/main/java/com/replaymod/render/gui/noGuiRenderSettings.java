@@ -70,6 +70,25 @@ public class noGuiRenderSettings  {
             }
 			LOGGER.debug("Done with Render");
     }
+	public void doRender (int starttime_ms, int endtime_ms)
+	{
+		startTime_ms = starttime_ms;
+		endTime_ms = endtime_ms;
+        try {
+            //VideoRenderer videoRenderer = new VideoRenderer(save(false), replayHandler, timeline);
+			VideoRenderer videoRenderer = new VideoRenderer(getDefaultRenderSettings(), replayHandler, timeline);
+            videoRenderer.renderVideo();
+        } catch (VideoWriter.NoFFmpegException e) {
+            LOGGER.error("Rendering video:", e);
+            //getMinecraft().displayGuiScreen(errorScreen);
+        } catch (VideoWriter.FFmpegStartupException e) {
+			e.printStackTrace();
+        } catch (Throwable t) {
+            //error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
+			LOGGER.error("Rendering video:", t);
+        }
+		LOGGER.debug("Done with Render");
+    }
 
 
 
@@ -77,6 +96,8 @@ public class noGuiRenderSettings  {
     private final Timeline timeline;
     private File outputFile;
     private boolean outputFileManuallySet;
+	private int startTime_ms = 0; // Given a replay file, this is our start point for rendering
+	private int endTime_ms = 0;   // The final point of the render file
 
     public noGuiRenderSettings(ReplayHandler replayHandler, Timeline timeline) {
         this.replayHandler = replayHandler;
@@ -102,21 +123,33 @@ public class noGuiRenderSettings  {
 
     }
 
-    //protected File generateOutputFile(RenderSettings.EncodingPreset encodingPreset) {
-	protected File generateOutputFile() {
+    protected File generateOutputFile(RenderSettings.EncodingPreset encodingPreset) {
         String fileName = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+
         File folder = ReplayModRender.instance.getVideoFolder();
-        //return new File(folder, fileName + "." + encodingPreset.getFileExtension());
-		// RAH - crap, we no longer have encodingPreset, hardcoding to MP4
-		return new File(folder, fileName + ".MP4");
+        return new File(folder, fileName + "." + encodingPreset.getFileExtension());
+    }
+
+	// RAH - when removing gui, I wiped out encodingPresets - use hardcoded values
+	protected File generateOutputFile() {
+		String dateStr = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+		String fileName = new String.format("CMURL_{0}_{1}-",startTime_ms,endTime_ms) + dateStr;
+        File folder = ReplayModRender.instance.getVideoFolder();
+		return new File(folder, fileName + ".MP4");  // No longer have encodingPreset, hardcoding to MP4
     }
 
     private RenderSettings getDefaultRenderSettings() {
 	// RAh - the null was for serialized - we are going to file only
         //return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, 1920, 1080, 60, 10 << 20, null,
-		return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, 1920, 1080, 60, 10 << 20, generateOutputFile(),
+		int width = 640; // RAH - made these variables to be more easily readable
+		int height = 480;
+		int frameRate = 30;
+		// N.B. When bitRate was set to 10, a 1920x1080 at 60 fps resulted in a final bitRate in the file of 19,930 kbps - that is a crazy amount of data
+		int bitRate = 10; // Do know what this is, mbps, kbps - some other value? There is a shift happening - be careful
+		return new RenderSettings(RenderSettings.RenderMethod.DEFAULT, RenderSettings.EncodingPreset.MP4_DEFAULT, width, height, frameRate, bitRate << 20, generateOutputFile(),
                 true, false, false, false, null, false, RenderSettings.AntiAliasing.NONE, "", RenderSettings.EncodingPreset.MP4_DEFAULT.getValue(), false);
     }
+
 
     public void close() {
         RenderSettings settings = save(true);
