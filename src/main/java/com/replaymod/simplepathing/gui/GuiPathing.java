@@ -320,7 +320,7 @@ public class GuiPathing {
         }).onClick(new Runnable() {
             @Override
             public void run() {
-				LOGGER.debug("------------------------GUIPATHING End------------------------");
+				LOGGER.debug("------------------------GUIPATHING Begin------------------------");
                 if (player.isActive()) {
                     player.getFuture().cancel(false);
                 } else {
