@@ -22,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 
+import org.apache.logging.log4j.LogManager; // RAH
 //#if MC>=10800
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
