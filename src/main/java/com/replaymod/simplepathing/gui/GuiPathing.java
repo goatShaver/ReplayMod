@@ -481,39 +481,26 @@ public class GuiPathing {
 		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + startTime_ms);
 		
 		// Step 2
-		timeline.setCursorPosition(endTime_ms);
+		timeline.setCursorPosition(startTime_ms);
 		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		replayHandler.doJump(endTime_ms,false); // true means maintain camera position. Should be true
-		replayHandler.getReplaySender().setReplaySpeed(1);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			logger.debug(e);
-			return;
-		}
+		//replayHandler.doJump(starTime_ms,false); // true means maintain camera position. Should be true
+		replayHandler.getReplaySender().setReplaySpeed(0);
+
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		updateKeyframe(SPPath.TIME);
-		updateKeyframe(SPPath.POSITION);
+		updateKeyframe(SPPath.TIME,0);
+		updateKeyframe(SPPath.POSITION,0);
 
-		/*
 		// Position cursor at end of playback so we can get camera parameters there
-		endTime_ms = replayHandler.getReplaySender().currentTimeStamp() + 20000;
 		LOGGER.debug("-------------------------\nTIME/POSTIION keyframe @ " + endTime_ms + "currentTimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
 		timeline.setCursorPosition(endTime_ms);
-		replayHandler.doJump(endTime_ms,false);
-		replayHandler.getReplaySender().setReplaySpeed(	1);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			logger.debug(e);
-			return;
-		}
+		//replayHandler.doJump(endTime_ms,false);
+		//replayHandler.getReplaySender().setReplaySpeed(	1);
+
 		LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		updateKeyframe(SPPath.TIME);
-		updateKeyframe(SPPath.POSITION);
-		*/
-		replayHandler.getReplaySender().setReplaySpeed(0);
+		updateKeyframe(SPPath.TIME,(endTime_ms - startTime_ms));
+		updateKeyframe(SPPath.POSITION,(endTime_ms - startTime_ms));
+		
 	}
 
 	// RAH, brought in from another package
@@ -753,6 +740,52 @@ public class GuiPathing {
                     }
                     timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
                             camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+                    mod.setSelected(path, time);
+                }
+                break;
+        }
+    }
+
+	private void updateKeyframe(SPPath path, int currentTimeStamp) {
+        if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
+
+        int time = timeline.getCursorPosition();
+        SPTimeline timeline = mod.getCurrentTimeline();
+		LOGGER.debug("Updating keyframe on path {}" + path + "@ " + time);
+
+        switch (path) {
+            case TIME:
+                if (mod.getSelectedPath() == path) {
+                    LOGGER.debug("Selected keyframe is time keyframe -> removing keyframe");
+                    timeline.removeTimeKeyframe(mod.getSelectedTime());
+                    mod.setSelected(null, 0);
+                } else if (timeline.isTimeKeyframe(time)) {
+                    LOGGER.debug("Keyframe at cursor position is time keyframe -> removing keyframe");
+                    timeline.removeTimeKeyframe(time);
+                    mod.setSelected(null, 0);
+                } else {
+                    LOGGER.debug("No time keyframe found -> adding new keyframe");
+                    timeline.addTimeKeyframe(time, currentTimeStamp());
+                    mod.setSelected(path, time);
+                }
+                break;
+            case POSITION:
+                if (mod.getSelectedPath() == path) {
+                    LOGGER.debug("Selected keyframe is position keyframe -> removing keyframe");
+                    timeline.removePositionKeyframe(mod.getSelectedTime());
+                    mod.setSelected(null, 0);
+                } else if (timeline.isPositionKeyframe(time)) {
+                    LOGGER.debug("Keyframe at cursor position is position keyframe -> removing keyframe");
+                    timeline.removePositionKeyframe(time);
+                    mod.setSelected(null, 0);
+                } else {
+                    LOGGER.debug("No position keyframe found -> adding new keyframe");
+                    CameraEntity camera = replayHandler.getCameraEntity();
+                    int spectatedId = -1;
+                    if (!replayHandler.isCameraView()) {
+                        spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+                    }
+                    timeline.addPositionKeyframe(time, 0, 0, 0,0, 0,0, spectatedId);
                     mod.setSelected(path, time);
                 }
                 break;
