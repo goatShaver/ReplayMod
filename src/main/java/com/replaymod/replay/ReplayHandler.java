@@ -29,7 +29,7 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager; // RAH
 import org.apache.logging.log4j.Logger; // RAH
 import com.replaymod.simplepathing.gui.GuiPathing; // RAH
-import com.replaymod.replay.events.ReplayPlayingvent;
+import com.replaymod.replay.events.ReplayPlayingEvent;
 
 //#if MC>=10800
 import com.mojang.authlib.GameProfile;
@@ -106,6 +106,7 @@ public class ReplayHandler {
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		//guiPathing.renderButton.onClick();
+		guiPathing.renderButton.onClick(); // Start rendering
 	}
 
     public ReplayHandler(ReplayFile replayFile, boolean asyncMode) throws IOException {
