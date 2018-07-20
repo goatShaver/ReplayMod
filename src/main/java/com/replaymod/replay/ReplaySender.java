@@ -235,10 +235,10 @@ public class ReplaySender extends ChannelDuplexHandler {
     }
 
 	// RAH - so we can call renderButton.onClick()
-	public setGuiPathing (GuiPathing guipath)
-	{
-		guiPathing = guipath;
-	}
+	//public setGuiPathing (GuiPathing guipath)
+	//{
+	//	guiPathing = guipath;
+	//}
 
     /**
      * Set whether this replay sender operates in async mode.
