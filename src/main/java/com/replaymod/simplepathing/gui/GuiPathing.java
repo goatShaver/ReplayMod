@@ -92,11 +92,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent; // RAH
 public class GuiPathing {
     private static final Logger logger = LogManager.getLogger();
 
+	/*
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		LogManager.getLogger().debug("**************************** Video is playing per replaySender ");
 		renderButton.onClick();
 	}
+	*/
 
     public final GuiTexturedButton playPauseButton = new GuiTexturedButton() {
         @Override
@@ -314,13 +316,13 @@ public class GuiPathing {
 
 		replayHandler.setGuiPathing(this);
 
-		/*
+		
 		@SubscribeEvent
 		public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 			LogManager.getLogger().debug("^^^^^^^^^^^^^^^^^^^^^^^^^ Video is playing per replaySender ");
 			renderButton.onClick();
 		}
-		*/
+		
 
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
