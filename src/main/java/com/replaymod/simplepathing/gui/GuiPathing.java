@@ -1,4 +1,4 @@
-guipathinpackage com.replaymod.simplepathing.gui;
+package com.replaymod.simplepathing.gui;
 
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.FutureCallback;
