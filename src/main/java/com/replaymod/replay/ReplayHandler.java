@@ -29,6 +29,7 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager; // RAH
 import org.apache.logging.log4j.Logger; // RAH
 import com.replaymod.simplepathing.gui.GuiPathing; // RAH
+import com.replaymod.replay.events.ReplayPlayingvent;
 
 //#if MC>=10800
 import com.mojang.authlib.GameProfile;
@@ -101,6 +102,12 @@ public class ReplayHandler {
 
     private UUID spectating;
 
+		/** RAH **/
+	@SubscribeEvent
+	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		//guiPathing.renderButton.onClick();
+	}
+
     public ReplayHandler(ReplayFile replayFile, boolean asyncMode) throws IOException {
         Preconditions.checkState(mc.isCallingFromMinecraftThread(), "Must be called from Minecraft thread.");
         this.replayFile = replayFile;
@@ -127,7 +134,6 @@ public class ReplayHandler {
 	{
 		LogManager.getLogger().debug("RAH: ReplayHandler-> Setting guiPathing"); 
 		guiPathing = guipath;
-		//replaySender.setGuiPathing(guiPathing);
 	}
 
 
@@ -137,7 +143,6 @@ public class ReplayHandler {
 	**/
 	void startedReplay() {
 		LogManager.getLogger().debug("Video is playing per replaySender");
-		//replaySender.setReplaySpeed(0);
 		guiPathing.renderButton.onClick(); // Start rendering
 	}
 
@@ -393,7 +398,6 @@ public class ReplayHandler {
     }
 
     public void doJump(int targetTime, boolean retainCameraPosition) {
-		LogManager.getLogger().debug("RAH: doJump " + targetTime + " RetainCameraPosition-> " + retainCameraPosition + " hurrying-> " + replaySender.isHurrying());
         if (replaySender.isHurrying()) {
             return; // When hurrying, no Timeline jumping etc. is possible
         }

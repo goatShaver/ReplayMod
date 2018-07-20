@@ -118,7 +118,6 @@ public class ReplaySender extends ChannelDuplexHandler {
 
 	//RAH
 	private boolean automationInitialization = false;
-	//private GuiPathing guiPathing;
 	// RAH
 
     private static int TP_DISTANCE_LIMIT = 128;
@@ -235,14 +234,8 @@ public class ReplaySender extends ChannelDuplexHandler {
         }
     }
 
-	/*
-	// RAH - so we can call renderButton.onClick()
-	public void setGuiPathing (GuiPathing guipath)
-	{
-		LogManager.getLogger().debug("RAH: ReplaySender -> Setting guiPathing"); 
-		guiPathing = guipath;
-	}
-	*/
+	
+
 
     /**
      * Set whether this replay sender operates in async mode.
@@ -884,14 +877,13 @@ public class ReplaySender extends ChannelDuplexHandler {
                                     // Pause after jumping
                                     setReplaySpeed(0);
                                 }
-								// RAH Begin
+								// RAH Begin - If replay is playing, everything is setup, so we can launch initKeyFrames and rendering
+								// Things are complicated because this thread is not the MC threads, so we have to jump through hoops
 								if (!isHurrying() && lastTimeStamp > 2000 && !automationInitialization) {
 									automationInitialization = true;
-									//  LogManager.getLogger().debug("RAH: Sending event that video is playing"); 
-									//  FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
-									replayHandler.startedReplay();
-
-
+									/// Events to ReplayModSimplePathing weren't adequate - resulted in No OpenGL context found in thread error
+									FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
+									//replayHandler.startedReplay();
 								}
 								// RAH End
                             } catch (EOFException eof) {
