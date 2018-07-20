@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static com.replaymod.core.versions.MCVer.*;
 
+import com.replaymod.replay.events.ReplayPlayingEvent; // RAH
+
 @Mod(modid = ReplayModSimplePathing.MOD_ID,
         version = "@MOD_VERSION@",
         acceptedMinecraftVersions = "@MC_VERSION@",
@@ -81,7 +83,7 @@ public class ReplayModSimplePathing {
 
 	// RAH 
 	/**
-	* The thing calling this doesn't have a connection to guiPathing so this was easiest
+	* 
 	*
 	**/
 	@SubscribeEvent

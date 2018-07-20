@@ -117,7 +117,7 @@ public class ReplaySender extends ChannelDuplexHandler {
 
 	//RAH
 	private boolean automationInitialization = false;
-	private GuiPathing guiPathing;
+	//private GuiPathing guiPathing;
 	// RAH
 
     private static int TP_DISTANCE_LIMIT = 128;
