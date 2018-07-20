@@ -883,7 +883,7 @@ public class ReplaySender extends ChannelDuplexHandler {
 								// RAH Begin
 								if (!isHurrying() && lastTimeStamp > 1000 && !automationInitialization) {
 									automationInitialization = true;
-									FML_BUS.post(new ReplayPlayingEvent.Pre(replayHandler)); // This goes to ReplayModSimplePathing
+									FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // This goes to ReplayModSimplePathing
 								}
 								// RAH End
                             } catch (EOFException eof) {
