@@ -26,6 +26,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import static com.replaymod.core.versions.MCVer.*;
 
+import org.apache.logging.log4j.LogManager; // RAH
+import org.apache.logging.log4j.Logger; // RAH
 import com.replaymod.replay.events.ReplayPlayingEvent; // RAH
 
 @Mod(modid = ReplayModSimplePathing.MOD_ID,
