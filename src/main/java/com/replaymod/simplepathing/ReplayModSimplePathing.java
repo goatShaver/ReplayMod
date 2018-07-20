@@ -78,15 +78,14 @@ public class ReplayModSimplePathing {
     public void postReplayOpen(ReplayOpenEvent.Post event) {
         clearCurrentTimeline();
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
-		//delayedClick(10000); // RAH - this allows the event to return, however the new thread doesn't have necessary pieces to launch - must be same thread
     }
 
-	/** RAH 
+	/** RAH  */
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		LogManager.getLogger().debug(" ////////////////////////// Video is playing per replaySender ");
 		guiPathing.renderButton.onClick();
 	}
-	**/
 
     @SubscribeEvent
     public void onReplayClose(ReplayCloseEvent.Post event) {
