@@ -316,14 +316,6 @@ public class GuiPathing {
 
 		replayHandler.setGuiPathing(this);
 
-		
-		@SubscribeEvent
-		public void postReplayPlaying(ReplayPlayingEvent.Post event) {
-			LogManager.getLogger().debug("^^^^^^^^^^^^^^^^^^^^^^^^^ Video is playing per replaySender ");
-			renderButton.onClick();
-		}
-		
-
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
             public int getX() {
@@ -457,6 +449,13 @@ public class GuiPathing {
         startLoadingEntityTracker();
 
     }
+
+	@SubscribeEvent
+	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		LogManager.getLogger().debug("^^^^^^^^^^^^^^^^^^^^^^^^^ Video is playing per replaySender ");
+		renderButton.onClick();
+	}
+		
 
 	/** RAH - all new
 	* This is for automation, set keyframes (time and position) so this file can be rendered
