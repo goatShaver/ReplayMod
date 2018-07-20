@@ -92,13 +92,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent; // RAH
 public class GuiPathing {
     private static final Logger logger = LogManager.getLogger();
 
-	/*
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		LogManager.getLogger().debug("**************************** Video is playing per replaySender ");
 		renderButton.onClick();
 	}
-	*/
 
     public final GuiTexturedButton playPauseButton = new GuiTexturedButton() {
         @Override
@@ -450,12 +448,6 @@ public class GuiPathing {
 
     }
 
-	@SubscribeEvent
-	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
-		LogManager.getLogger().debug("^^^^^^^^^^^^^^^^^^^^^^^^^ Video is playing per replaySender ");
-		renderButton.onClick();
-	}
-		
 
 	/** RAH - all new
 	* This is for automation, set keyframes (time and position) so this file can be rendered

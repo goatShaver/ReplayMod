@@ -109,7 +109,7 @@ public class ReplayHandler {
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		//guiPathing.renderButton.onClick();
 		LogManager.getLogger().debug("================================== Video is playing per replaySender ====================================");
-		guiPathing.renderButton.onClick(); // Start rendering
+		//guiPathing.renderButton.onClick(); // Start rendering
 	}
 
     public ReplayHandler(ReplayFile replayFile, boolean asyncMode) throws IOException {
