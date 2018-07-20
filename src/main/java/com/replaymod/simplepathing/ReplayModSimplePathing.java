@@ -81,23 +81,12 @@ public class ReplayModSimplePathing {
 
 	// RAH 
 	/**
-	* Delay initiating the render button so that things can come up operationally
+	* The thing calling this doesn't have a connection to guiPathing so this was easiest
 	*
 	**/
-	private void delayedClick(int delay_ms)
-	{
-		LOGGER.debug("delayedClick()" + delay_ms);
-		if (delay_ms > 0) {
-			new Thread(() -> {
-				try {
-					Thread.sleep(delay_ms);
-				} catch (InterruptedException e) {
-					LOGGER.debug(e);
-					return;
-				}
-				guiPathing.renderButton.onClick();
-			}).start(); // End of thread
-		}
+	@SubscribeEvent
+	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		guiPathing.renderButton.onClick();
 	}
 
     @SubscribeEvent

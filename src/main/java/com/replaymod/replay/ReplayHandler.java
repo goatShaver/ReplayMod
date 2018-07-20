@@ -128,6 +128,7 @@ public class ReplayHandler {
 
 	void startedReplay() {
 		LogManager.getLogger().debug("Video is playing per replaySender");
+		replaySender.setReplaySpeed(0);
 	}
 
     void restartedReplay() {

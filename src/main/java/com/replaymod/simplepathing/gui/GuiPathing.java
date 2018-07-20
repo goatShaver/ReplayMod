@@ -81,6 +81,7 @@ import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
 import com.replaymod.extras.playeroverview.PlayerOverview;
 import net.minecraft.init.MobEffects;
+import com.replaymod.replay.events.ReplayPlayingEvent;
 
 
 /**
@@ -319,7 +320,6 @@ public class GuiPathing {
         }).onClick(new Runnable() {
             @Override
             public void run() {
-				LOGGER.debug("------------------------GUIPATHING Begin------------------------");
                 if (player.isActive()) {
                     player.getFuture().cancel(false);
                 } else {
@@ -354,7 +354,6 @@ public class GuiPathing {
                         }
                     });
                 }
-				LOGGER.debug("------------------------GUIPATHING End------------------------");
             }
         });
 
@@ -803,7 +802,6 @@ public class GuiPathing {
                         spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
                     }
 					*/
-                    //timeline.addPositionKeyframe(time, 0, 0, 0,0, 0,0, spectatedId);
 					timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
                             camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
                     mod.setSelected(path, time);

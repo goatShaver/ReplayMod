@@ -117,6 +117,8 @@ public class ReplaySender extends ChannelDuplexHandler {
 
 	//RAH
 	private boolean automationInitialization = false;
+	private GuiPathing guiPathing;
+	// RAH
 
     private static int TP_DISTANCE_LIMIT = 128;
 
@@ -231,6 +233,12 @@ public class ReplaySender extends ChannelDuplexHandler {
             new Thread(asyncSender, "replaymod-async-sender").start();
         }
     }
+
+	// RAH - so we can call renderButton.onClick()
+	public setGuiPathing (GuiPathing guipath)
+	{
+		guiPathing = guipath;
+	}
 
     /**
      * Set whether this replay sender operates in async mode.
@@ -872,11 +880,12 @@ public class ReplaySender extends ChannelDuplexHandler {
                                     // Pause after jumping
                                     setReplaySpeed(0);
                                 }
-								// RAH 
-								if (!isHurrying() && lastTimeStamp > 100 && !automationInitialization) {
-									replayHandler.startedReplay();
+								// RAH Begin
+								if (!isHurrying() && lastTimeStamp > 1000 && !automationInitialization) {
 									automationInitialization = true;
+									FML_BUS.post(new ReplayPlayingEvent.Pre(replayHandler)); // This goes to ReplayModSimplePathing
 								}
+								// RAH End
                             } catch (EOFException eof) {
                                 // Reached end of file
                                 // Pause the replay which will cause it to freeze before getting restarted
