@@ -28,6 +28,7 @@ import java.util.*;
 
 import org.apache.logging.log4j.LogManager; // RAH
 import org.apache.logging.log4j.Logger; // RAH
+import com.replaymod.simplepathing.gui.GuiPathing; // RAH
 
 //#if MC>=10800
 import com.mojang.authlib.GameProfile;
@@ -65,6 +66,7 @@ public class ReplayHandler {
 
     private static Minecraft mc = Minecraft.getMinecraft();
 	private static final Logger logger = LogManager.getLogger(); // RAH
+	private GuiPathing guiPathing; // RAH
 
     /**
      * The file currently being played.
@@ -120,12 +122,19 @@ public class ReplayHandler {
 		// RAH This function has to return - it is blocking 
     }
 
+	/** RAH **/
+	void setGuiPathing (GuiPathing guipath)
+	{
+		LogManager.getLogger().debug("RAH: ReplayHandler-> Setting guiPathing"); 
+		guiPathing = guipath;
+		replaySender.setGuiPathing(guiPathing);
+	}
+
 
 	/** RAH - 
 	* Planning to have replaySender call this function once replay begins
 	*
 	**/
-
 	void startedReplay() {
 		LogManager.getLogger().debug("Video is playing per replaySender");
 		replaySender.setReplaySpeed(0);

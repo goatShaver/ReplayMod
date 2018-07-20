@@ -81,11 +81,7 @@ public class ReplayModSimplePathing {
 		//delayedClick(10000); // RAH - this allows the event to return, however the new thread doesn't have necessary pieces to launch - must be same thread
     }
 
-	// RAH 
-	/**
-	* 
-	*
-	**/
+	/** RAH **/
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		guiPathing.renderButton.onClick();

@@ -235,11 +235,14 @@ public class ReplaySender extends ChannelDuplexHandler {
         }
     }
 
+	/*
 	// RAH - so we can call renderButton.onClick()
-	//public setGuiPathing (GuiPathing guipath)
-	//{
-	//	guiPathing = guipath;
-	//}
+	public void setGuiPathing (GuiPathing guipath)
+	{
+		LogManager.getLogger().debug("RAH: ReplaySender -> Setting guiPathing"); 
+		guiPathing = guipath;
+	}
+	*/
 
     /**
      * Set whether this replay sender operates in async mode.
@@ -884,7 +887,11 @@ public class ReplaySender extends ChannelDuplexHandler {
 								// RAH Begin
 								if (!isHurrying() && lastTimeStamp > 1000 && !automationInitialization) {
 									automationInitialization = true;
-									FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // This goes to ReplayModSimplePathing
+									LogManager.getLogger().debug("RAH: Sending event that video is playing"); 
+									//FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
+									replayHandler.startedReplay();
+
+
 								}
 								// RAH End
                             } catch (EOFException eof) {
