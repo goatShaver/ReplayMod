@@ -1,4 +1,4 @@
-package com.replaymod.simplepathing.gui;
+guipathinpackage com.replaymod.simplepathing.gui;
 
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.FutureCallback;
@@ -81,7 +81,9 @@ import java.util.stream.Collectors;
 import com.google.common.base.Predicate;
 import com.replaymod.extras.playeroverview.PlayerOverview;
 import net.minecraft.init.MobEffects;
-import com.replaymod.replay.events.ReplayPlayingEvent;
+import com.replaymod.replay.events.ReplayPlayingEvent; // RAH
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent; //RAH
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent; // RAH
 
 
 /**
@@ -89,6 +91,12 @@ import com.replaymod.replay.events.ReplayPlayingEvent;
  */
 public class GuiPathing {
     private static final Logger logger = LogManager.getLogger();
+
+	@SubscribeEvent
+	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+		LogManager.getLogger().debug("**************************** Video is playing per replaySender ");
+		renderButton.onClick();
+	}
 
     public final GuiTexturedButton playPauseButton = new GuiTexturedButton() {
         @Override

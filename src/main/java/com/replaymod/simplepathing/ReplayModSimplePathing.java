@@ -82,12 +82,13 @@ public class ReplayModSimplePathing {
         guiPathing = new GuiPathing(core, this, event.getReplayHandler());
     }
 
-	/** RAH  */
+	/** RAH  
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		LogManager.getLogger().debug(" ////////////////////////// Video is playing per replaySender ");
 		guiPathing.renderButton.onClick();
 	}
+	*/
 
     @SubscribeEvent
     public void onReplayClose(ReplayCloseEvent.Post event) {
