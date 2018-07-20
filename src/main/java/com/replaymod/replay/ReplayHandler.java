@@ -127,7 +127,7 @@ public class ReplayHandler {
 	{
 		LogManager.getLogger().debug("RAH: ReplayHandler-> Setting guiPathing"); 
 		guiPathing = guipath;
-		replaySender.setGuiPathing(guiPathing);
+		//replaySender.setGuiPathing(guiPathing);
 	}
 
 
