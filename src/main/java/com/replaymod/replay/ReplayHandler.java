@@ -29,7 +29,9 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager; // RAH
 import org.apache.logging.log4j.Logger; // RAH
 import com.replaymod.simplepathing.gui.GuiPathing; // RAH
-import com.replaymod.replay.events.ReplayPlayingEvent;
+import com.replaymod.replay.events.ReplayPlayingEvent; // RAH
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent; //RAH
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent; // RAH
 
 //#if MC>=10800
 import com.mojang.authlib.GameProfile;
