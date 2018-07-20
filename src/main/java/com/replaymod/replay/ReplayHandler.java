@@ -108,6 +108,7 @@ public class ReplayHandler {
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		//guiPathing.renderButton.onClick();
+		LogManager.getLogger().debug("Video is playing per replaySender");
 		guiPathing.renderButton.onClick(); // Start rendering
 	}
 
