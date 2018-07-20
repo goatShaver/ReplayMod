@@ -314,6 +314,12 @@ public class GuiPathing {
 
 		replayHandler.setGuiPathing(this);
 
+		@SubscribeEvent
+		public void postReplayPlaying(ReplayPlayingEvent.Post event) {
+			LogManager.getLogger().debug("^^^^^^^^^^^^^^^^^^^^^^^^^ Video is playing per replaySender ");
+			renderButton.onClick();
+		}
+
         playPauseButton.setTexturePosH(new ReadablePoint() {
             @Override
             public int getX() {
