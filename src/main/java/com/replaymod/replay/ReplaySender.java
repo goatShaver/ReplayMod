@@ -35,6 +35,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager; // RAH
 import org.apache.logging.log4j.Logger; // RAH
+import com.replaymod.replay.events.ReplayPlayingEvent; // RAH - Alert ReplayModSimplePathing that the video is playing
 
 
 //#if MC>=11200
