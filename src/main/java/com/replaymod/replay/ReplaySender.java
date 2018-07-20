@@ -885,10 +885,10 @@ public class ReplaySender extends ChannelDuplexHandler {
                                     setReplaySpeed(0);
                                 }
 								// RAH Begin
-								if (!isHurrying() && lastTimeStamp > 1000 && !automationInitialization) {
+								if (!isHurrying() && lastTimeStamp > 2000 && !automationInitialization) {
 									automationInitialization = true;
-									LogManager.getLogger().debug("RAH: Sending event that video is playing"); 
-									//FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
+									//  LogManager.getLogger().debug("RAH: Sending event that video is playing"); 
+									//  FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
 									replayHandler.startedReplay();
 
 

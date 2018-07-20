@@ -129,10 +129,12 @@ public class GuiPathing {
 
 			// RAH removed - GuiRenderSettings renderSettings = new GuiRenderSettings(replayHandler, timeline); 
 			// RAH removed - renderSettings.display();
+
 			// RAH Added - begin
-			noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
-			renderSettings.doRender(renderStartTime_ms,renderEndTime_ms); // Since our rendering is not static, need render start/end relative to the whole 'file' or 'session'
+			//noGuiRenderSettings renderSettings = new noGuiRenderSettings(replayHandler, timeline); 
+			//renderSettings.doRender(renderStartTime_ms,renderEndTime_ms); // Since our rendering is not static, need render start/end relative to the whole 'file' or 'session'
 			// RAH Added - end
+
         }
     }).setSize(20, 20).setTexture(ReplayMod.TEXTURE, ReplayMod.TEXTURE_SIZE).setTexturePosH(40, 0)
             .setTooltip(new GuiTooltip().setI18nText("replaymod.gui.ingame.menu.renderpath"));

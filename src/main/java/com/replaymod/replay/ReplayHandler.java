@@ -137,7 +137,8 @@ public class ReplayHandler {
 	**/
 	void startedReplay() {
 		LogManager.getLogger().debug("Video is playing per replaySender");
-		replaySender.setReplaySpeed(0);
+		//replaySender.setReplaySpeed(0);
+		guiPathing.renderButton.onClick(); // Start rendering
 	}
 
     void restartedReplay() {
