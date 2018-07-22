@@ -3,6 +3,7 @@ package com.replaymod.render.gui;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.gson.Gson;
+import com.google.common.io.Files; // RAh
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
 import com.replaymod.render.RenderSettings;
