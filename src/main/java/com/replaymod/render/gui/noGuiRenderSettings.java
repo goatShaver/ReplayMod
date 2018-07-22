@@ -88,6 +88,12 @@ public class noGuiRenderSettings  {
 			LOGGER.error("Rendering video:", t);
         }
 		LOGGER.debug("Done with Render");
+
+		// RAH - Create an output file to communicate we are done rendering
+		FileOutputStream out = new FileOutputStream("finished.txt");
+		out.write('DONE');
+		out.close();
+		System.exit(0);
     }
 
 

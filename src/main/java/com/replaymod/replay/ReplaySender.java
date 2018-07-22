@@ -891,6 +891,7 @@ public class ReplaySender extends ChannelDuplexHandler {
 								// RAH End
                             } catch (EOFException eof) {
                                 // Reached end of file
+								LogManager.getLogger().debug("End of File");
                                 // Pause the replay which will cause it to freeze before getting restarted
                                 setReplaySpeed(0);
                                 // Then wait until the user tells us to continue
