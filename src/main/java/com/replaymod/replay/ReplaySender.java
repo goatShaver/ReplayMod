@@ -879,7 +879,8 @@ public class ReplaySender extends ChannelDuplexHandler {
                                 }
 								// RAH Begin - If replay is playing, everything is setup, so we can launch initKeyFrames and rendering
 								// Things are complicated because this thread is not the MC threads, so we have to jump through hoops
-								if (!isHurrying() && lastTimeStamp > 2000 && !automationInitialization) {
+								// I need to be able to send a message to replayHandler or guiPathing - somehow!
+								if (!isHurrying() && lastTimeStamp > 5000 && !automationInitialization) {
 									LogManager.getLogger().debug("Triggering event");
 									automationInitialization = true;
 									setReplaySpeed(0);
