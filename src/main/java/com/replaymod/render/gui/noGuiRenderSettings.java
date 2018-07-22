@@ -88,7 +88,7 @@ public class noGuiRenderSettings  {
             //error(LOGGER, noGuiRenderSettings.this, CrashReport.makeCrashReport(t, "Rendering video"), () -> {});
 			LOGGER.error("Rendering video:", t);
         }
-		LOGGER.debug("Done with Render");
+		LOGGER.debug("Done with Render, writing text file");
 
 		// RAH - Create an output file to communicate we are done rendering
 		File file = new File("finished.txt");
@@ -98,9 +98,7 @@ public class noGuiRenderSettings  {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		//FileOutputStream out = new FileOutputStream("finished.txt");
-		//out.close();
-		System.exit(0);
+		//System.exit(0);
     }
 
 
