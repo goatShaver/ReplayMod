@@ -92,6 +92,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent; // RAH
 public class GuiPathing {
     private static final Logger logger = LogManager.getLogger();
 
+	// RAH Added event - unfortunately sending events to a separate thread doesnt appear to work, but this seems silly
+	// Either way, the event is throwing by replaySender, however it is not received here
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		LogManager.getLogger().debug("**************************** Video is playing per replaySender ");

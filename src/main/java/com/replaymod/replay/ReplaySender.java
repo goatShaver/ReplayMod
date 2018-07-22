@@ -882,6 +882,7 @@ public class ReplaySender extends ChannelDuplexHandler {
 								if (!isHurrying() && lastTimeStamp > 2000 && !automationInitialization) {
 									LogManager.getLogger().debug("Triggering event");
 									automationInitialization = true;
+									setReplaySpeed(0);
 									/// Events to ReplayModSimplePathing weren't adequate - resulted in No OpenGL context found in thread error
 									FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
 									//replayHandler.startedReplay();

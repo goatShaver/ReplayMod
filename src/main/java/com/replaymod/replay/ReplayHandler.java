@@ -104,7 +104,7 @@ public class ReplayHandler {
 
     private UUID spectating;
 
-	/** RAH **/
+	/* RAH I added this even handler, I am pretty sure the even is never received */
 	@SubscribeEvent
 	public void postReplayPlaying(ReplayPlayingEvent.Post event) {
 		//guiPathing.renderButton.onClick();
@@ -133,7 +133,7 @@ public class ReplayHandler {
 		// RAH This function has to return - it is blocking 
     }
 
-	/** RAH **/
+	/** RAH --- Not used, as of now */
 	public void setGuiPathing (GuiPathing guipath)
 	{
 		LogManager.getLogger().debug("RAH: ReplayHandler-> Setting guiPathing"); 
@@ -142,7 +142,7 @@ public class ReplayHandler {
 
 
 	/** RAH - 
-	* Planning to have replaySender call this function once replay begins
+	* ReplaySender calls this once the video is playing, however it is in the wrong thread so we can't push the renderButton here - keep for now - may find another work around
 	*
 	**/
 	void startedReplay() {
