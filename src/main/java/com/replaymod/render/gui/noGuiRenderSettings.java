@@ -90,9 +90,10 @@ public class noGuiRenderSettings  {
 		LOGGER.debug("Done with Render");
 
 		// RAH - Create an output file to communicate we are done rendering
-		//File destination = new File("finished.txt");
-		FileOutputStream out = new FileOutputStream("finished.txt");
-		out.close();
+		File destination = new File("finished.txt");
+		destination.close();
+		//FileOutputStream out = new FileOutputStream("finished.txt");
+		//out.close();
 		System.exit(0);
     }
 
