@@ -95,7 +95,7 @@ public class noGuiRenderSettings  {
 		if ( ! file.exists( ) )
 			try {
 				file.createNewFile( );
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		//FileOutputStream out = new FileOutputStream("finished.txt");
