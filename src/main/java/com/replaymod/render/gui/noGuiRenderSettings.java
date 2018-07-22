@@ -92,8 +92,10 @@ public class noGuiRenderSettings  {
 		// RAH - Create an output file to communicate we are done rendering
 		File file = new File("finished.txt");
 		if ( ! file.exists( ) )
-			{
+			try {
 				file.createNewFile( );
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		//FileOutputStream out = new FileOutputStream("finished.txt");
 		//out.close();
