@@ -467,7 +467,7 @@ public class GuiPathing {
 
 		LOGGER.debug("-------------------------------------------------------------------------");
 		int startTime_ms = 0; // This is set below
-		int endTime_ms = replayHandler.getReplaySender().replayLength()- 3000; // 3 seconds, because after a jump, we need to play some and I want some cushion
+		int endTime_ms = replayHandler.getReplaySender().replayLength()- 2000; // 3 seconds, because after a jump, we need to play some and I want some cushion
 		int spectatedId = -1; // This is set below
 
 		// Step 1
