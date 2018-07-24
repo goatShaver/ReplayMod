@@ -70,7 +70,7 @@ public class noGuiRenderSettings  {
 				LOGGER.error("Rendering video:", t);
             }
 			LOGGER.debug("Done with Render");
-			replayHandler.endReplay(); // RAH - after done with rendering, return to the main MC screen
+			
     }
 	public void doRender (int starttime_ms, int endtime_ms)
 	{
@@ -100,6 +100,8 @@ public class noGuiRenderSettings  {
 				e.printStackTrace();
 			}
 		//System.exit(0);
+		//mod.getReplayHandler().endReplay();
+		this.replayHandler.endReplay(); // RAH - after done with rendering, return to the main MC screen
     }
 
 
