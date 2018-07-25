@@ -880,12 +880,12 @@ public class ReplaySender extends ChannelDuplexHandler {
 								// RAH Begin - If replay is playing, everything is setup, so we can launch initKeyFrames and rendering
 								// Things are complicated because this thread is not the MC threads, so we have to jump through hoops
 								// I need to be able to send a message to replayHandler or guiPathing - somehow!
-								if (!isHurrying() && lastTimeStamp > 5000 && !automationInitialization) {
+								if (!autoInitialization && lastTimeStamp >= 6000) {
 									LogManager.getLogger().debug("Triggering event");
 									automationInitialization = true;
 									setReplaySpeed(0);
 									/// Events to ReplayModSimplePathing weren't adequate - resulted in No OpenGL context found in thread error
-									FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
+									//FML_BUS.post(new ReplayPlayingEvent.Post(replayHandler)); // Events spawn a new thread, must be MC thread
 									//replayHandler.startedReplay();
 								}
 								// RAH End
