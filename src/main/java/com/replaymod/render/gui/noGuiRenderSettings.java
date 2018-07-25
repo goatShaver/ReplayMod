@@ -158,8 +158,8 @@ public class noGuiRenderSettings  {
 
     private RenderSettings getDefaultRenderSettings() {
 		// RAh - the null was for serialized - we are going to file only - replaced null with generateOutputFile()
-		int width = 1280; // RAH - made these variables to be more easily readable
-		int height = 1024;
+		int width = 320; // RAH - made these variables to be more easily readable
+		int height = 240;
 		int frameRate = 60;
 		// N.B. When bitRate was set to 10, a 1920x1080 at 60 fps resulted in a final bitRate in the file of 19,930 kbps - that is a crazy amount of data
 		int bitRate = 8; // was 10 - Do know what this is, mbps, kbps - some other value? There is a shift happening - be careful
