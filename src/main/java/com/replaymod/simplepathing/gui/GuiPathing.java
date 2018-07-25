@@ -467,7 +467,7 @@ public class GuiPathing {
 
 		LOGGER.debug("-------------------------------------------------------------------------");
 		int startTime_ms = 0; // This is set below
-		int endTime_ms = replayHandler.getReplaySender().replayLength()- 2000; // 3 seconds, because after a jump, we need to play some and I want some cushion
+		int endTime_ms = replayHandler.getReplaySender().replayLength()- 500; 
 		int spectatedId = -1; // This is set below
 
 		// Step 1
@@ -671,7 +671,6 @@ public class GuiPathing {
         int lastTime = 0;
         for (Keyframe keyframe : timeline.getTimePath().getKeyframes()) {
             int time = keyframe.getValue(TimestampProperty.PROPERTY).orElseThrow(IllegalStateException::new);
-			LOGGER.debug("RAH: keyframe time: " + time);
             if (time < lastTime) {
                 // We are going backwards in time
                 GuiInfoPopup.open(replayHandler.getOverlay(),
