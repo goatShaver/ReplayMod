@@ -459,15 +459,14 @@ public class GuiPathing {
 	public void initKeyFrames() {
 
 		// Trying to set keyframes for automation.
-		// Steps:``
+		// Steps:
 		//        1.) Spectate the first player that comes up
 		//        2.) Set currentTimeStamp to beginning of the video
 		//        3.) updateKeyframe for time and Position 
 		//        repeat 2 and 3 for end of file
 
-		LOGGER.debug("-------------------------------------------------------------------------");
 		int startTime_ms = 0; // This is set below
-		int endTime_ms = replayHandler.getReplaySender().replayLength()- 500; 
+		int endTime_ms = replayHandler.getReplaySender().replayLength(); 
 		int spectatedId = -1; // This is set below
 
 		// Step 1
@@ -499,39 +498,33 @@ public class GuiPathing {
 
 		// Set the start of the render at the current position - we will need to reserve this time somewhere so we can use it in the filename
 		replayHandler.getReplaySender().setReplaySpeed(0);
-		startTime_ms = replayHandler.getReplaySender().currentTimeStamp();
+		startTime_ms = replayHandler.getReplaySender().currentTimeStamp(); 
 		timeline.setCursorPosition(0);
 		renderStartTime_ms = startTime_ms;
-	
-
-		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		//replayHandler.doJump(starTime_ms,false); // true means maintain camera position. Should be true
-		//replayHandler.getReplaySender().setReplaySpeed(0);
 
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
-		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		myUpdateKeyframe(SPPath.TIME,startTime_ms); // Yuk - I hate having to change the function name
+		myUpdateKeyframe(SPPath.TIME,startTime_ms); // Yuk - I hate having to change the function name - myUpdateKeyframe used startTime_ms instead of replaySender.currentTimeSamp()
 		updateKeyframe(SPPath.POSITION,spectatedId);
 
 		
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
-		// BAH - the proposal is that we should be able to get rid of the doJump
+
+		// BAH's proposal is that we should be able to get rid of the doJump - it seems to work - so we don't need this jump
 		//replayHandler.doJump(endTime_ms,false);
-		replayHandler.getReplaySender().setReplaySpeed(1); // doJump pauses video, however internal variables aren't updated until a play happens
+		replayHandler.getReplaySender().setReplaySpeed(1); // video was paused, we need to let it play a small amount so we can get new camera parameters to make the system happy
 		// Sleep a bit so the engine and play and update variables.
-		// Maybe we could just fix doJump?
 		try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+				Thread.sleep(000);
+			} catch (InterruptedException e) {
 				logger.debug(e);
-                return;
-        }
-		renderEndTime_ms = replayHandler.getReplaySender().currentTimeStamp();
+				return;
+		}
+		//renderEndTime_ms = replayHandler.getReplaySender().currentTimeStamp();
+		renderEndTime_ms = endTime_ms - startTime_ms; // !!!!!! - I am not sure this logic is coorect
 		replayHandler.getReplaySender().setReplaySpeed(0);
-		myUpdateKeyframe(SPPath.TIME,endTime_ms); 
+		myUpdateKeyframe(SPPath.TIME,renderEndTime_ms);  
 		updateKeyframe(SPPath.POSITION,spectatedId); 
-		LOGGER.debug("-------------------------------------------------------------------------");
 	}
 
 	// RAH, brought in from another package
