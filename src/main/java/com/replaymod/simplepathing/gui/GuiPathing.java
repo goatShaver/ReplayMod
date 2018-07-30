@@ -516,12 +516,13 @@ public class GuiPathing {
 		
 		// Position cursor at end of playback so we can get camera parameters there
 		timeline.setCursorPosition(endTime_ms);
+		// BAH - the proposal is that we should be able to get rid of the doJump
 		//replayHandler.doJump(endTime_ms,false);
 		replayHandler.getReplaySender().setReplaySpeed(1); // doJump pauses video, however internal variables aren't updated until a play happens
 		// Sleep a bit so the engine and play and update variables.
 		// Maybe we could just fix doJump?
 		try {
-                Thread.sleep(100);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
 				logger.debug(e);
                 return;
