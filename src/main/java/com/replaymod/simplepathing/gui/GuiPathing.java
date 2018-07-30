@@ -510,7 +510,7 @@ public class GuiPathing {
 
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		updateKeyframe(SPPath.TIME,startTime_ms);
+		myUpdateKeyframe(SPPath.TIME,startTime_ms); // Yuk - I hate having to change the function name
 		updateKeyframe(SPPath.POSITION,spectatedId);
 
 		
@@ -529,7 +529,7 @@ public class GuiPathing {
         }
 		renderEndTime_ms = replayHandler.getReplaySender().currentTimeStamp();
 		replayHandler.getReplaySender().setReplaySpeed(0);
-		updateKeyframe(SPPath.TIME,endTime_ms); 
+		myUpdateKeyframe(SPPath.TIME,endTime_ms); 
 		updateKeyframe(SPPath.POSITION,spectatedId); 
 		LOGGER.debug("-------------------------------------------------------------------------");
 	}
@@ -777,7 +777,7 @@ public class GuiPathing {
     }
 
 	// RAH - Adding a endTimeStamp instead of using replayHandler.getReplaySender().currentTimeStamp() -- this allows us to avoid a doJump because it is expensive
-    private void updateKeyframe(SPPath path, int timeStamp_ms) {
+    private void myUpdateKeyframe(SPPath path, int timeStamp_ms) {
         if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
 
         int time = timeline.getCursorPosition();
