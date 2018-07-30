@@ -510,7 +510,7 @@ public class GuiPathing {
 
 		// Step 3 - update Key frames - uses replaySender.currentTimeStamp()
 		//LOGGER.debug("\ttimeStamp-> " + replayHandler.getReplaySender().currentTimeStamp());
-		updateKeyframe(SPPath.TIME);
+		updateKeyframe(SPPath.TIME,startTime_ms);
 		updateKeyframe(SPPath.POSITION,spectatedId);
 
 		
@@ -529,7 +529,7 @@ public class GuiPathing {
         }
 		renderEndTime_ms = replayHandler.getReplaySender().currentTimeStamp();
 		replayHandler.getReplaySender().setReplaySpeed(0);
-		updateKeyframe(SPPath.TIME); 
+		updateKeyframe(SPPath.TIME,endTime_ms); 
 		updateKeyframe(SPPath.POSITION,spectatedId); 
 		LOGGER.debug("-------------------------------------------------------------------------");
 	}
@@ -749,6 +749,55 @@ public class GuiPathing {
                 } else {
                     LOGGER.debug("No time keyframe found -> adding new keyframe");
                     timeline.addTimeKeyframe(time, replayHandler.getReplaySender().currentTimeStamp());
+                    mod.setSelected(path, time);
+                }
+                break;
+            case POSITION:
+                if (mod.getSelectedPath() == path) {
+                    LOGGER.debug("Selected keyframe is position keyframe -> removing keyframe");
+                    timeline.removePositionKeyframe(mod.getSelectedTime());
+                    mod.setSelected(null, 0);
+                } else if (timeline.isPositionKeyframe(time)) {
+                    LOGGER.debug("Keyframe at cursor position is position keyframe -> removing keyframe");
+                    timeline.removePositionKeyframe(time);
+                    mod.setSelected(null, 0);
+                } else {
+                    LOGGER.debug("No position keyframe found -> adding new keyframe");
+                    CameraEntity camera = replayHandler.getCameraEntity();
+                    int spectatedId = -1;
+                    if (!replayHandler.isCameraView()) {
+                        spectatedId = getRenderViewEntity(replayHandler.getOverlay().getMinecraft()).getEntityId();
+                    }
+                    timeline.addPositionKeyframe(time, camera.posX, camera.posY, camera.posZ,
+                            camera.rotationYaw, camera.rotationPitch, camera.roll, spectatedId);
+                    mod.setSelected(path, time);
+                }
+                break;
+        }
+    }
+
+	// RAH - Adding a endTimeStamp instead of using replayHandler.getReplaySender().currentTimeStamp() -- this allows us to avoid a doJump because it is expensive
+    private void updateKeyframe(SPPath path, int timeStamp_ms) {
+        if (!ensureEntityTracker(() -> updateKeyframe(path))) return;
+
+        int time = timeline.getCursorPosition();
+        SPTimeline timeline = mod.getCurrentTimeline();
+		LOGGER.debug("Updating keyframe on path {}" + path + "@ " + time);
+
+        switch (path) {
+            case TIME:
+                if (mod.getSelectedPath() == path) {
+                    LOGGER.debug("Selected keyframe is time keyframe -> removing keyframe");
+                    timeline.removeTimeKeyframe(mod.getSelectedTime());
+                    mod.setSelected(null, 0);
+                } else if (timeline.isTimeKeyframe(time)) {
+                    LOGGER.debug("Keyframe at cursor position is time keyframe -> removing keyframe");
+                    timeline.removeTimeKeyframe(time);
+                    mod.setSelected(null, 0);
+                } else {
+                    LOGGER.debug("No time keyframe found -> adding new keyframe");
+                    //timeline.addTimeKeyframe(time, replayHandler.getReplaySender().currentTimeStamp());
+					timeline.addTimeKeyframe(time, timeStamp_ms);
                     mod.setSelected(path, time);
                 }
                 break;
